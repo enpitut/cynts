@@ -29,4 +29,7 @@
 
 また，[Sensy] とは違い，[おしゃれ初心者向けであり，みんながいいと思っているコーデを知ることができ，購入できる]サービスです．
 
+With great power comes great responsibility.
+
 1%でいい、昨日の自分を超えてみせろ。
+
