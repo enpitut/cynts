@@ -29,4 +29,5 @@
 
 また，[Sensy] とは違い，[おしゃれ初心者向けであり，みんながいいと思っているコーデを知ることができ，購入できる]サービスです．
 
-たすをてすと．
+
+With great power comes great responsibility.
