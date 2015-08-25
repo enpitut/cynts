@@ -38,3 +38,5 @@ With great power comes great responsibility.
 1%でいい、昨日の自分を超えてみせろ。
 
 英語を読もう
+
+Google is Your Friend :)
