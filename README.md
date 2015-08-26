@@ -40,3 +40,5 @@ With great power comes great responsibility.
 英語を読もう
 
 Google is Your Friend :)
+
+やっとできた.
