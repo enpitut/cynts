@@ -46,8 +46,8 @@ class ShopsFixture extends TestFixture
             'url' => 'Lorem ipsum dolor sit amet',
             'address' => 'Lorem ipsum dolor sit amet',
             'photos' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'created_at' => '2015-08-27 06:57:09',
-            'updated_at' => 1440658629
+            'created_at' => '2015-08-27 08:44:31',
+            'updated_at' => 1440665071
         ],
     ];
 }

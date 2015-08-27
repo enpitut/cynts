@@ -82,6 +82,7 @@
     <?php if (!empty($user->favorites)): ?>
     <table cellpadding="0" cellspacing="0">
         <tr>
+            <th><?= __('Id') ?></th>
             <th><?= __('User Id') ?></th>
             <th><?= __('Coordinate Id') ?></th>
             <th><?= __('Status') ?></th>
@@ -91,6 +92,7 @@
         </tr>
         <?php foreach ($user->favorites as $favorites): ?>
         <tr>
+            <td><?= h($favorites->id) ?></td>
             <td><?= h($favorites->user_id) ?></td>
             <td><?= h($favorites->coordinate_id) ?></td>
             <td><?= h($favorites->status) ?></td>
@@ -98,11 +100,11 @@
             <td><?= h($favorites->updated_at) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Favorites', 'action' => 'view', $favorites->]) ?>
+                <?= $this->Html->link(__('View'), ['controller' => 'Favorites', 'action' => 'view', $favorites->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Favorites', 'action' => 'edit', $favorites->]) ?>
+                <?= $this->Html->link(__('Edit'), ['controller' => 'Favorites', 'action' => 'edit', $favorites->id]) ?>
 
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Favorites', 'action' => 'delete', $favorites->], ['confirm' => __('Are you sure you want to delete # {0}?', $favorites->)]) ?>
+                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Favorites', 'action' => 'delete', $favorites->id], ['confirm' => __('Are you sure you want to delete # {0}?', $favorites->id)]) ?>
 
             </td>
         </tr>

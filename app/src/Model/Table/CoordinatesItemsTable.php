@@ -27,6 +27,8 @@ class CoordinatesItemsTable extends Table
         parent::initialize($config);
 
         $this->table('coordinates_items');
+        $this->displayField('id');
+        $this->primaryKey('id');
 
         $this->belongsTo('Coordinates', [
             'foreignKey' => 'coordinate_id',
@@ -46,6 +48,10 @@ class CoordinatesItemsTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
+        $validator
+            ->add('id', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('id', 'create');
+
         $validator
             ->allowEmpty('color');
 
