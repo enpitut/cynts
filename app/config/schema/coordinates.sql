@@ -13,15 +13,3 @@ CREATE TABLE coordinates (
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4;
-
-INSERT INTO coordinates (
-    user_id,
-    photos,
-    n_like,
-    n_unlike
-) VALUES (
-    :user_id,
-    :photos,
-    :n_like,
-    :n_unlike
-);
