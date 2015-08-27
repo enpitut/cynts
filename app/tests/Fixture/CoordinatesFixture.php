@@ -52,8 +52,8 @@ class CoordinatesFixture extends TestFixture
             'n_like' => 1,
             'n_unlike' => 1,
             'status' => 1,
-            'created_at' => '2015-08-27 06:55:32',
-            'updated_at' => 1440658532
+            'created_at' => '2015-08-27 08:44:04',
+            'updated_at' => 1440665044
         ],
     ];
 }

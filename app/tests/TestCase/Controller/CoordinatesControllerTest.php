@@ -20,6 +20,7 @@ class CoordinatesControllerTest extends IntegrationTestCase
         'app.users',
         'app.favorites',
         'app.items',
+        'app.shops',
         'app.coordinates_items'
     ];
 
