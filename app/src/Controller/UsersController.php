@@ -1,14 +1,14 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
+use App\Controller\PostsController;
 
 /**
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends AppController
+class UsersController extends PostsController
 {
 
     /**
@@ -113,7 +113,7 @@ class UsersController extends AppController
             $this->Flash->error('Your username or password is incorrect');
         }
     }
-    /*
+    
     public function logout(){
         $this->Flash->success('You are now logged out.');
         return $this->redirect($this->Auth->logout());
@@ -122,10 +122,11 @@ class UsersController extends AppController
     public function beforeFilter(\cake\Event\Event $event){
         $this->Auth->allow(['add'], ['logout']);
     }
+
     public function isAuthorized($user = null){
         $action = $this->request->params['action'];
         // 一覧と詳細は認証さえ通ればだれでも許可
-        if(in_array($action, ['view'])) {
+        if(in_array($action, ['index'])) {
             return true;
         }
     
@@ -139,5 +140,5 @@ class UsersController extends AppController
         }
         // 抜けたものはとりあえず非許可
         return false;
-    }*/
+    }
 }

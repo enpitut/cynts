@@ -14,7 +14,7 @@
  */
 namespace App\Controller;
 
-use Cake\Controller\Controller;
+use App\Controller\AppController;
 
 /**
  * Application Controller
@@ -24,19 +24,33 @@ use Cake\Controller\Controller;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
 
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * @return void
-     */
+class PostsController extends AppController
+{
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('Flash');
+        $this->loadComponent('Auth', [
+            'authorize' => 'Controller',
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'name',
+                        'password' => 'password'
+                    ]
+                ]
+            ],
+            'loginAction' => [
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'unauthorizedRedirect' => $this->referer()
+        ]);
+
+        $this->Auth->allow(['display']);
+    }
+    
+    public function isAuthorized($user){
+        return true;
     }
 }

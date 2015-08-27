@@ -16,6 +16,7 @@ class SubAuthComponent extends Component
      * @var array
      */
     protected $_defaultConfig = [];
+    public $components = array('Auth');
     
     public function initialize(){
         $this->loadComponent('Auth', [
