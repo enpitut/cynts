@@ -102,4 +102,42 @@ class UsersController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function login(){
+        if($this->request->is('post')){
+            $user = $this->Auth->identify();
+            if($user){
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error('Your username or password is incorrect');
+        }
+    }
+    /*
+    public function logout(){
+        $this->Flash->success('You are now logged out.');
+        return $this->redirect($this->Auth->logout());
+    }
+    
+    public function beforeFilter(\cake\Event\Event $event){
+        $this->Auth->allow(['add'], ['logout']);
+    }
+    public function isAuthorized($user = null){
+        $action = $this->request->params['action'];
+        // 一覧と詳細は認証さえ通ればだれでも許可
+        if(in_array($action, ['view'])) {
+            return true;
+        }
+    
+        if(in_array($action, ['login'])){
+            return false;
+        }
+
+        // それ以外は役割がadminだったら許可
+        if($user['name'] === 'admin'){
+            return true;
+        }
+        // 抜けたものはとりあえず非許可
+        return false;
+    }*/
 }
