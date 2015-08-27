@@ -17,6 +17,7 @@ class FavoritesFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
+        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'coordinate_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'status' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -26,6 +27,7 @@ class FavoritesFixture extends TestFixture
             'status' => ['type' => 'index', 'columns' => ['status'], 'length' => []],
         ],
         '_constraints' => [
+            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'user_id' => ['type' => 'unique', 'columns' => ['user_id', 'coordinate_id'], 'length' => []],
         ],
         '_options' => [
@@ -42,11 +44,12 @@ class FavoritesFixture extends TestFixture
      */
     public $records = [
         [
+            'id' => 1,
             'user_id' => 1,
             'coordinate_id' => 1,
             'status' => 1,
-            'created_at' => '2015-08-27 06:58:28',
-            'updated_at' => 1440658708
+            'created_at' => '2015-08-27 08:40:02',
+            'updated_at' => 1440664802
         ],
     ];
 }

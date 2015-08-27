@@ -27,6 +27,8 @@ class FavoritesTable extends Table
         parent::initialize($config);
 
         $this->table('favorites');
+        $this->displayField('id');
+        $this->primaryKey('id');
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
@@ -46,6 +48,10 @@ class FavoritesTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
+        $validator
+            ->add('id', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('id', 'create');
+
         $validator
             ->add('status', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('status');
