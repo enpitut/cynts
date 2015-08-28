@@ -52,7 +52,6 @@ class PagesController extends AppController
             $subpage = $path[1];
         }
         $this->set(compact('page', 'subpage'));
-        $this->autoLayout = false;
 
         try {
             $this->render(implode('/', $path));

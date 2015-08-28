@@ -71,16 +71,16 @@ $(function(){
 <div id="maincolumn">
 <div id="centermenu">
 <ul>
-<li><?= $this->Html->image('menu1.png', array('height' => '160px')) ?><br />好きなコーディネートを選ぶ</li>
-<li><?= $this->Html->image('menu2.png', array('height' => '160px')) ?><br />コーディネートランキングを見る</li>
-<li><?= $this->Html->image('menu3.png', array('height' => '160px')) ?><br />オリジナルコーディネートを投稿する</li>
+<li><?= $this->Html->image('view/menu1.png', array('height' => '160px')) ?><br />好きなコーディネートを選ぶ</li>
+<li><?= $this->Html->image('view/menu2.png', array('height' => '160px')) ?><br />コーディネートランキングを見る</li>
+<li><?= $this->Html->image('view/menu3.png', array('height' => '160px')) ?><br />オリジナルコーディネートを投稿する</li>
 </ul>
 </div>
 
 <footer>
 <div id="footer">
-<?= $this->Html->image('facebook.png', array('width' => '24px', 'height' => '24px')) ?> 
-<?= $this->Html->image('twitter.png', array('width' => '24px', 'height' => '24px')) ?>
+<?= $this->Html->image('view/facebook.png', array('width' => '24px', 'height' => '24px')) ?> 
+<?= $this->Html->image('view/twitter.png', array('width' => '24px', 'height' => '24px')) ?>
 </div>
 </footer>
 
