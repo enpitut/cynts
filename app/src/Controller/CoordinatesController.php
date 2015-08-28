@@ -37,8 +37,13 @@ class CoordinatesController extends AppController
         $coordinate = $this->Coordinates->get($id, [
             'contain' => ['Users', 'Items', 'Favorites']
         ]);
+        $total_price = 0;
+        foreach ($coordinate->items as $item) {
+            $total_price += $item->price;
+        }
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
+        $this->set('total_price', $total_price);
     }
 
     /**
