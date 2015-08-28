@@ -13,6 +13,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
+<?= $this->Flash->render('auth') ?>
 <!DOCTYPE html>
 <html>
 <head>

@@ -8,7 +8,7 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\FavoritesTable $Favorites
  */
-class FavoritesController extends AppController
+class FavoritesController extends PostsController
 {
 
     /**
@@ -108,5 +108,17 @@ class FavoritesController extends AppController
             $this->Flash->error(__('The favorite could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function isAuthorized($user = null)
+    {
+        $action = $this->request->params['action'];
+
+        if (in_array($action, ['add', 'index', 'delete'])) {
+            return true;
+        }
+
+        // 抜けたものはとりあえず非許可
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Entity;
 
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
@@ -21,4 +22,10 @@ class User extends Entity
         '*' => true,
         'id' => false,
     ];
+
+    public function setPassword($password)
+    {
+        $hashedPass = (new DefaultPasswordHasher())->hash($password);
+        return $hashedPass;
+    }
 }
