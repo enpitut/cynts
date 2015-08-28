@@ -20,21 +20,8 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
 
 <body class="home">
 <div id="topcolumn">
-<header>
-<div id="header">
-<ul>
-<li>
-Play
-</li>
-<li>
-Ranking
-</li>
-<li>
-Post
-</li>
-</ul>
-</div>
-</header>
+
+<?= $this->element('header') ?>
 
 <script>
 $(function(){
@@ -77,12 +64,7 @@ $(function(){
 </ul>
 </div>
 
-<footer>
-<div id="footer">
-<?= $this->Html->image('view/facebook.png', array('width' => '24px', 'height' => '24px')) ?> 
-<?= $this->Html->image('view/twitter.png', array('width' => '24px', 'height' => '24px')) ?>
-</div>
-</footer>
+<?= $this->element('footer') ?>
 
 <script>
 var fit_topcolumn = function() {
