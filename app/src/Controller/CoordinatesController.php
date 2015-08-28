@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Exception\Exception;
 
 /**
  * Coordinates Controller
@@ -109,15 +110,27 @@ class CoordinatesController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    /**
+     * @return \Cake\Network\Response|void
+     */
     public function battle()
     {
         $coordinates = $this->Coordinates->find(
             'all',
             [
                 'order' => 'rand()',
-                'limit' => 2
+                'limit' => 2,
             ]
         );
+        if (count($coordinates->toArray()) < 2) {
+            error_log('Too few coordinates');
+            return $this->redirect(
+                [
+                    'controller' => 'Pages',
+                    'action' => 'display',
+                ]
+            );
+        }
         $this->set(compact('coordinates'));
     }
 
