@@ -47,12 +47,11 @@ class UsersController extends PostsController
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $_password = $user->get('password');
-            $user->set('password', $user->_setPassword($_password));
+            $password = $user->get('password');
+            $user->set('password', $user->setPassword($password));
             $user = $this->Users->patchEntity($user, $this->request->data);
             $user->set('created_at', time());
             $user->set('updated_at', time());
-            var_dump($user);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
