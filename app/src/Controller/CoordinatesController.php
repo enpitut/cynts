@@ -10,7 +10,6 @@ use App\Controller\AppController;
  */
 class CoordinatesController extends AppController
 {
-
     /**
      * Index method
      *
@@ -108,5 +107,45 @@ class CoordinatesController extends AppController
             $this->Flash->error(__('The coordinate could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function battle()
+    {
+        if ($this->request->is('post')){
+            $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
+        }
+
+        $coordinates = $this->Coordinates->find('all',
+                                                ['order' => 'rand()',
+                                                 'limit' => 2]);
+        $this->set(compact('coordinates'));
+    }
+
+    public function send(){
+        $pushed_coordinate_id = $this->request->data('id');
+        $pushed_coordinate = $this->Coordinates->get($pushed_coordinate_id);
+        $pushed_coordinate->n_like = $pushed_coordinate->n_like+1;
+        $this->Coordinates->save($pushed_coordinate);
+
+        $unpushed_coordinate_id = $this->request->data('d_id');
+        $unpushed_coordinate = $this->Coordinates->get($unpushed_coordinate_id);
+        $unpushed_coordinate->n_unlike = $unpushed_coordinate->n_unlike+1;
+        $this->Coordinates->save($unpushed_coordinate);
+
+        $flag = false;
+        while (true) {
+            $coordinates = $this->Coordinates->find('all',
+                                                    ['order' => 'rand()',
+                                                     'limit' => 1]);
+            foreach ($coordinates as $coordinate){
+                if ($pushed_coordinate_id == $coordinate->id ||
+                $unpushed_coordinate_id == $coordinate->id)
+                    continue;
+                echo "{id:\"" . $coordinate->id . "\", url:\"" . $coordinate->photos . "\"}";
+                $flag = true;
+            }
+            if ($flag)
+                break;
+        }
     }
 }
