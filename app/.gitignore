@@ -3,3 +3,4 @@
 /config/app_develop.php
 /tmp/*
 /logs/*
+/webroot/img/coordinates/*
