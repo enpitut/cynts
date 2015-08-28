@@ -110,13 +110,14 @@ class FavoritesController extends PostsController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function isAuthorized($user = null){
+    public function isAuthorized($user = null)
+    {
         $action = $this->request->params['action'];
-        
+
         if (in_array($action, ['add', 'index', 'delete'])) {
             return true;
         }
-    
+
         // 抜けたものはとりあえず非許可
         return false;
     }

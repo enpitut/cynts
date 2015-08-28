@@ -24,7 +24,6 @@ use App\Controller\AppController;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-
 class PostsController extends AppController
 {
     public function initialize()
@@ -52,13 +51,14 @@ class PostsController extends AppController
         ]);
 
         $this->Auth->allow(['display']);
-        
+
         $this->Auth->loginRedirect = [];
         $session = $this->request->session();
-        $session->write('Auth.redirect', ['controller'=>'Pages', 'action' => 'home']);
+        $session->write('Auth.redirect', ['controller' => 'Pages', 'action' => 'home']);
     }
-    
-    public function isAuthorized($user){
+
+    public function isAuthorized($user)
+    {
         return false;
     }
 }

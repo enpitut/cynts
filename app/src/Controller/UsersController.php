@@ -107,38 +107,43 @@ class UsersController extends PostsController
         }
         return $this->redirect(['action' => 'index']);
     }
-    
-    public function signup(){
+
+    public function signup()
+    {
         $this->add();
     }
-    
-    public function login(){        
-        if($this->request->is('post')){
+
+    public function login()
+    {
+        if ($this->request->is('post')) {
             $user = $this->Auth->identify();
-            if($user){
-                    $this->Auth->setUser($user);
-                    return $this->redirect($this->Auth->redirectUrl());             
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error('Your username or password is incorrect');
         }
     }
-    
-    public function logout(){
+
+    public function logout()
+    {
         $this->Flash->success('You are now logged out.');
         return $this->redirect($this->Auth->logout());
     }
-    
-    public function beforeFilter(\cake\Event\Event $event){
+
+    public function beforeFilter(\cake\Event\Event $event)
+    {
         parent::beforeFilter($event);
         $this->Auth->allow(['signup']);
     }
-    
-    public function isAuthorized($user = null){
-         $action = $this->request->params['action'];
-        
+
+    public function isAuthorized($user = null)
+    {
+        $action = $this->request->params['action'];
+
         if (in_array($action, ['index', 'logout'])) {
             return true;
         }
-  
+
     }
 }
