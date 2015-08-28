@@ -34,7 +34,7 @@ class PostsController extends AppController
             'authenticate' => [
                 'Form' => [
                     'fields' => [
-                        'username' => 'name',
+                        'username' => 'mail',
                         'password' => 'password'
                     ]
                 ]
