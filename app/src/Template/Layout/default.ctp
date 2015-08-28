@@ -12,29 +12,17 @@
  * @since         0.10.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
-$cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <?= $this->Flash->render('auth') ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
-
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
-
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+<?= $this->Html->charset() ?>
+<title>
+</title>
 </head>
 <body>
+<<<<<<< HEAD
     <header>
         <div class="header-title">
             <span><?= $this->fetch('title') ?></span>
@@ -56,5 +44,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <footer>
         </footer>
     </div>
+=======
+<header>
+</header>
+<footer>
+</footer>
+</div>
+>>>>>>> 78e948d796f75ef36ef138f90cf520401b848467
 </body>
 </html>
