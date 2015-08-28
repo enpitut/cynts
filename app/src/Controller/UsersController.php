@@ -47,7 +47,12 @@ class UsersController extends PostsController
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
+            $_password = $user->get('password');
+            $user->set('password', $user->_setPassword($_password));
             $user = $this->Users->patchEntity($user, $this->request->data);
+            $user->set('created_at', time());
+            $user->set('updated_at', time());
+            var_dump($user);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -103,12 +108,16 @@ class UsersController extends PostsController
         return $this->redirect(['action' => 'index']);
     }
     
-    public function login(){
+    public function signup(){
+        $this->add();
+    }
+    
+    public function login(){        
         if($this->request->is('post')){
             $user = $this->Auth->identify();
             if($user){
-                $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+                    $this->Auth->setUser($user);
+                    return $this->redirect($this->Auth->redirectUrl());             
             }
             $this->Flash->error('Your username or password is incorrect');
         }
@@ -120,25 +129,16 @@ class UsersController extends PostsController
     }
     
     public function beforeFilter(\cake\Event\Event $event){
-        $this->Auth->allow(['add'], ['logout']);
+        parent::beforeFilter($event);
+        $this->Auth->allow(['signup']);
     }
-
-    public function isAuthorized($user = null){
-        $action = $this->request->params['action'];
-        // 一覧と詳細は認証さえ通ればだれでも許可
-        if(in_array($action, ['index'])) {
-            return true;
-        }
     
-        if(in_array($action, ['login'])){
-            return false;
-        }
-
-        // それ以外は役割がadminだったら許可
-        if($user['name'] === 'admin'){
+    public function isAuthorized($user = null){
+         $action = $this->request->params['action'];
+        
+        if (in_array($action, ['index', 'logout'])) {
             return true;
         }
-        // 抜けたものはとりあえず非許可
-        return false;
+  
     }
 }

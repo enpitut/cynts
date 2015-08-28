@@ -23,8 +23,8 @@ class User extends Entity
         'id' => false,
     ];
     
-    protected function _setPassword($value){
-        $hasher = new DefaultPasswordHasher();
-        return $hasher->hash($value);
+    public function _setPassword($password){
+        $_password = (new DefaultPasswordHasher())->hash($password);
+        return $_password;
     }
 }

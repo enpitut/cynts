@@ -44,13 +44,21 @@ class PostsController extends AppController
                 'controller' => 'Users',
                 'action' => 'login'
             ],
+            'logoutAction' => [
+                'controller' => 'Users',
+                'action' => 'logout'
+            ],
             'unauthorizedRedirect' => $this->referer()
         ]);
 
         $this->Auth->allow(['display']);
+        
+        $this->Auth->loginRedirect = [];
+        $session = $this->request->session();
+        $session->write('Auth.redirect', ['controller'=>'Pages', 'action' => 'home']);
     }
     
     public function isAuthorized($user){
-        return true;
+        return false;
     }
 }
