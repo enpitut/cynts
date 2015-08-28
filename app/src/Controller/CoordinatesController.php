@@ -43,7 +43,7 @@ class CoordinatesController extends AppController
     /**
      * Add method
      *
-     * @return void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Network\Response|void
      */
     public function add()
     {
@@ -67,7 +67,7 @@ class CoordinatesController extends AppController
      * Edit method
      *
      * @param string|null $id Coordinate id.
-     * @return void Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Network\Response|void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
@@ -94,7 +94,7 @@ class CoordinatesController extends AppController
      * Delete method
      *
      * @param string|null $id Coordinate id.
-     * @return void Redirects to index.
+     * @return \Cake\Network\Response|void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function delete($id = null)
@@ -111,41 +111,60 @@ class CoordinatesController extends AppController
 
     public function battle()
     {
-        if ($this->request->is('post')){
-            $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
-        }
-
-        $coordinates = $this->Coordinates->find('all',
-                                                ['order' => 'rand()',
-                                                 'limit' => 2]);
+        $coordinates = $this->Coordinates->find(
+            'all',
+            [
+                'order' => 'rand()',
+                'limit' => 2
+            ]
+        );
         $this->set(compact('coordinates'));
     }
 
-    public function send(){
+    /**
+     * ajax 用の関数だから，echo してる（他では使わないこと）
+     */
+    public function send()
+    {
         $pushed_coordinate_id = $this->request->data('id');
         $pushed_coordinate = $this->Coordinates->get($pushed_coordinate_id);
-        $pushed_coordinate->n_like = $pushed_coordinate->n_like+1;
+        $pushed_coordinate->n_like = $pushed_coordinate->n_like + 1;
         $this->Coordinates->save($pushed_coordinate);
 
         $unpushed_coordinate_id = $this->request->data('d_id');
         $unpushed_coordinate = $this->Coordinates->get($unpushed_coordinate_id);
-        $unpushed_coordinate->n_unlike = $unpushed_coordinate->n_unlike+1;
+        $unpushed_coordinate->n_unlike = $unpushed_coordinate->n_unlike + 1;
         $this->Coordinates->save($unpushed_coordinate);
 
-        $flag = false;
+        $duplicated_flg = false;
+        $n_loop = 0;
         while (true) {
-            $coordinates = $this->Coordinates->find('all',
-                                                    ['order' => 'rand()',
-                                                     'limit' => 1]);
-            foreach ($coordinates as $coordinate){
+            $coordinates = $this->Coordinates->find(
+                'all',
+                [
+                    'order' => 'rand()',
+                    'limit' => 1
+                ]
+            );
+
+            foreach ($coordinates as $coordinate) {
                 if ($pushed_coordinate_id == $coordinate->id ||
-                $unpushed_coordinate_id == $coordinate->id)
+                    $unpushed_coordinate_id == $coordinate->id
+                ) {
                     continue;
+                }
                 echo "{id:\"" . $coordinate->id . "\", url:\"" . $coordinate->photos . "\"}";
-                $flag = true;
+                $duplicated_flg = true;
             }
-            if ($flag)
+
+            if ($duplicated_flg) {
                 break;
+            }
+
+            // セーフティブレーク
+            if (++$n_loop > 20) {
+                break;
+            }
         }
     }
 }
