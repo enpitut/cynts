@@ -1,7 +1,14 @@
-<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
     var coordinate_id0;
     var coordinate_id1;
+
+    /**
+     * 押下されたコーデを加点後，次に表示するコーデを取得し，表示を切り替える
+     */
     function img_update(obj, coordinate_id, dislike_id) {
         var data = {id: coordinate_id, d_id: dislike_id};
         $.ajax({
@@ -24,17 +31,50 @@
         });
     }
 </script>
+<?= $this->Html->css('base.css') ?>
+<?= $this->Html->css('battle.css') ?>
+</head>
+<body>
 
+<?= $this->Html->image('/img/view/header.png'); ?>
+<?= $this->element('header') ?>
+
+<div id="centermessage">
+  <p>Which do you like?</p>
+</div>
+
+<div id="battlecolumn">
+<ul>
 <?php
 $photo_id = 0;
 foreach ($coordinates as $coordinate) {
-    echo '<script>coordinate_id' . $photo_id . ' = ' . $coordinate->id . '</script>';
+    echo '<script>coordinate_id' . $photo_id . ' = ' . $coordinate->id . '</script>' . PHP_EOL;
+    echo '<li>' . PHP_EOL;
+
+    echo '<div class="phototags">';
+    if ($photo_id == 0) {
+        echo $this->Html->image('/img/view/battle_A.png', array('id' => 'phototag' . $photo_id));
+    } else {
+        echo $this->Html->image('/img/view/battle_B.png', array('id' => 'phototag' . $photo_id));
+    }
+
+    echo '</div>';
+    echo '<div class="battlephotos">' . PHP_EOL;
     echo $this->Html->image($coordinate->photos,
         array(
-            'height' => '300px',
             'onClick' => 'img_update(this, coordinate_id' . $photo_id . ', coordinate_id' . (($photo_id + 1) % 2) . ')',
-            'id' => "photo" . $photo_id++
-        ));
+            'id' => "photo" . $photo_id++,
+        )) . PHP_EOL;
+    echo '</div>';
+
+    echo '</li>' . PHP_EOL;
 }
 $photo_id = 0;
 ?>
+</ul>
+</div>
+
+<?= $this->element('footer') ?>
+
+</body>
+</html>
