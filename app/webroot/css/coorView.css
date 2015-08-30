@@ -1,0 +1,136 @@
+#body {
+	height: 100%;
+}
+
+#centermessage {
+    margin: 10px 0 0 0;
+    padding: 0;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#coorDetail {
+	width: 1368px;
+	height: 160%;
+	position: relative;
+	margin-top: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#coorPhoto {
+	text-align: center;
+}
+
+#favBtn {
+	text-align: center;
+	margin-top: 30px;
+}
+
+button.favBtn {
+    font-size: 14px;
+    padding: 5px 10px 5px 10px;
+    background-color: #ffac00;
+    color: #fff;
+    border-style: none;
+}
+
+#coorcolumn {
+	float: left;
+	width: 45%;
+	height: 100%;
+	padding: 10px;
+	padding-right: 20px;
+    display: inline-block;
+}
+
+#itemcolumn {
+	float: left;
+	width: 45%;
+	padding:10px;
+	padding-left: 20px;
+	display: inline-block;
+}
+
+#photos {
+	float: left;
+    background-color: #fff;
+    display: inline-block;
+}
+
+#itemDetail {
+	float: left;
+	width: 60%;
+	display: inline-block;
+	margin-left: 20px;
+}
+
+#sizeBtns {
+	padding-left: 40px;
+}
+
+#sizeBtns input{
+	display: none;
+}
+#sizeBtns label{
+	display: block;
+	float: left;
+	cursor: pointer;
+	width: 45px;
+	margin: 5px;
+	padding: 5px 5px;
+	border-right: 1px solid #abb2b7;
+	background: #bdc3c7;
+	color: #444;
+	font-size: 14px;
+	text-align: center;
+	line-height: 1;
+	transition: .2s;
+}
+#sizeBtns input[type="radio"]:checked + label {
+	background-color: #ee4400;
+	color: #fff;
+}
+
+#itemPrice {
+	float: left;
+	width: 80%;
+	display: inline-block;
+	margin-left: 10px;
+	margin-top: 20px;
+}
+
+#buyBtn {
+	display: inline-block;
+	float: left;
+}
+
+button.btn {
+    font-size: 14px;
+    padding: 5px 10px 5px 10px;
+    background-color: #e40;
+    color: #fff;
+    border-style: none;
+}
+
+#buyAll {
+	float: left;
+	display: inline-block;
+	width: 27%;
+	padding-left: 18%;
+	margin-left: 9px;
+	border-top: solid 1px #ccc;
+	padding-top: 10px;
+}
+
+#coorPrice {
+	float: left;
+	display: inline-block;
+	margin-left: 10px;
+	width: 76%;
+}

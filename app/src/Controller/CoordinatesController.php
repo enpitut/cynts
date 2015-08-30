@@ -41,10 +41,11 @@ class CoordinatesController extends AppController
         foreach ($coordinate->items as $item) {
             $total_price += $item->price;
         }
+        
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
-    }
+   }
 
     /**
      * Add method
