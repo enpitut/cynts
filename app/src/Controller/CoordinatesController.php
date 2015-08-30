@@ -38,9 +38,13 @@ class CoordinatesController extends AppController
             'contain' => ['Users', 'Items', 'Favorites']
         ]);
         $total_price = 0;
+        $sizes;
         foreach ($coordinate->items as $item) {
             $total_price += $item->price;
+            $sizes = $item->sizeArray;
+        //   var_dump($item->sizeArray);
         }
+        
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
@@ -184,5 +188,9 @@ class CoordinatesController extends AppController
                 break;
             }
         }
+    }
+
+    public function buy(){
+        echo "buy";
     }
 }
