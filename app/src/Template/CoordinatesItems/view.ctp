@@ -19,8 +19,6 @@
             <p><?= $coordinatesItem->has('coordinate') ? $this->Html->link($coordinatesItem->coordinate->id, ['controller' => 'Coordinates', 'action' => 'view', $coordinatesItem->coordinate->id]) : '' ?></p>
             <h6 class="subheader"><?= __('Item') ?></h6>
             <p><?= $coordinatesItem->has('item') ? $this->Html->link($coordinatesItem->item->name, ['controller' => 'Items', 'action' => 'view', $coordinatesItem->item->id]) : '' ?></p>
-            <h6 class="subheader"><?= __('Color') ?></h6>
-            <p><?= h($coordinatesItem->color) ?></p>
             <h6 class="subheader"><?= __('Size') ?></h6>
             <p><?= h($coordinatesItem->size) ?></p>
         </div>

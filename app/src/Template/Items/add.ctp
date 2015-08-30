@@ -15,7 +15,7 @@
         <?php
             echo $this->Form->input('name');
             echo $this->Form->input('shop_id', ['options' => $shops, 'empty' => true]);
-            echo $this->Form->input('colors');
+            echo $this->Form->input('color');
             echo $this->Form->input('sizes');
             echo $this->Form->input('category');
             echo $this->Form->input('price');
