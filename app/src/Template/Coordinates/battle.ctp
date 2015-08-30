@@ -57,17 +57,26 @@ foreach ($coordinates as $coordinate) {
     } else {
         echo $this->Html->image('/img/view/battle_B.png', array('id' => 'phototag' . $photo_id));
     }
-
     echo '</div>';
-    echo '<div class="battlephotos">' . PHP_EOL;
+
+    echo '<div class="photos">' . PHP_EOL;
     echo $this->Html->image($coordinate->photos,
         array(
             'onClick' => 'img_update(this, coordinate_id' . $photo_id . ', coordinate_id' . (($photo_id + 1) % 2) . ')',
-            'id' => "photo" . $photo_id++,
+            'id' => "photo" . $photo_id,
+            'class' => "battlephotos",
         )) . PHP_EOL;
+    echo $this->Html->image($coordinate->photos,
+        array(
+            'id' => "fadephoto" . $photo_id,
+            'class' => "fadephotos",
+        )
+    );
     echo '</div>';
 
     echo '</li>' . PHP_EOL;
+
+    $photo_id++;
 }
 $photo_id = 0;
 ?>
