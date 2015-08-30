@@ -2,14 +2,17 @@
 <html>
 <head>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.1.0/velocity.js"></script>
 <script>
     var coordinate_id0;
     var coordinate_id1;
+    var push_enable = true;
 
     /**
      * 押下されたコーデを加点後，次に表示するコーデを取得し，表示を切り替える
      */
     function img_update(obj, coordinate_id, dislike_id) {
+        if (!push_enable){ return; }
         var data = {id: coordinate_id, d_id: dislike_id};
         $.ajax({
             type: "POST",
@@ -17,18 +20,64 @@
             data: data,
             success: function (data, dataType) {
                 data = (new Function("return " + data))();
-                if (obj.id[5] == "0") {
-                    $("#" + "photo1").attr("src", data["url"]);
-                    coordinate_id1 = data["id"];
-                } else {
-                    $("#" + "photo0").attr("src", data["url"]);
-                    coordinate_id0 = data["id"];
-                }
+                img_animate(obj.id[5], data);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert('Error : ' + errorThrown);
             }
         });
+    }
+
+    /**
+     * 次のコーデ画像へアニメーションする
+     */
+    function img_animate(obj_id, coordinate_data) {
+        obj_id = String((Number(obj_id)+1)%2);
+
+        push_enable = false;
+
+        // フェードアウト用画像を表面に持ってくる
+        $("#fadephoto" + obj_id).css({
+            "opacity":0.75,
+            "z-index":1
+        });
+        $("#photo" + obj_id).css({
+            "z-index":0
+        });
+
+        // 裏にまわった画像を次の画像に置き換える
+        $("#photo" + obj_id).attr("src", coordinate_data["url"]);
+        if (Number(obj_id)){
+            coordinate_id1 = coordinate_data["id"];
+        } else {
+            coordinate_id0 = coordinate_data["id"];
+        }
+
+        // フェードアウト
+        $("#fadephoto" + obj_id).velocity(
+            {
+                left: 200,
+                opacity: 0,
+            },
+            500,
+            function () {
+                $("#fadephoto" + obj_id).css({
+                    "z-index":0
+                });
+                // fadephoto を表示済みの画像に置き換える
+                $("#fadephoto" + obj_id).attr("src", coordinate_data["url"]);
+                $("#photo" + obj_id).css({
+                    "z-index":1
+                });
+                $("#fadephoto" + obj_id).velocity(
+                    {
+                        left:0
+                    },
+                    0,
+                    function () { push_enable=true; }
+                );
+            }
+        );
     }
 </script>
 <?= $this->Html->css('base.css') ?>

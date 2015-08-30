@@ -57,10 +57,15 @@ img:hover.battlephotos {
 }
 
 img.fadephotos {
+    display: block;
     position: absolute;
     top: 30px;
     right: 0px;
     margin: 0 auto;
+    opacity:0.75;
+    filter:alpha(opacity=75);
+    -ms-filter: "alpha( opacity=75 )";
+    -moz-opacity:0.75;
     padding: 0;
     opacity: 0;
     z-index: 0;
