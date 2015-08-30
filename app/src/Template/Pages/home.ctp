@@ -31,26 +31,22 @@ $(function(){
     });
 </script>
 <div id="title">
-<div style="font-size: 64px; margin: 150px 0 25px 0;">Unichronicle</div>
+Unichronicle
 </div>
 <div id="fader">
-<div>
-<div style="font-size: 32px; margin: 0 0 25px 0;">もうダサいなんて言わせない</div>
-<br />
-<div style="width: 800px;">
-何を着ればいいか分からない問題を解決したい、おしゃれしないけど、ダサいのは嫌な大学生向けの服選びの楽しさを理解させ、小奇麗にするオンラインコーディネートバトルサービスです。
-</div>
-</div>
-<div>
-<div style="width: 800px;">
-ここにコーデバトルの説明文とかが入ります
-</div>
-</div>
-<div>
-<div style="width: 800px;">
-<img src="https://camo.githubusercontent.com/c635a8cf40b8bf8dacd31e2aca4d0f466caef8b2/68747470733a2f2f692e6779617a6f2e636f6d2f66656663363665616434313262316534353637393738346631653566363663342e706e67" />
-</div>
-</div>
+  <div style="width: 100%; height:100%;">
+    <div style="font-size: 32px; margin: 1% auto;">もうダサいなんて言わせない</div>
+    <br />
+    <div>
+    何を着ればいいか分からない問題を解決したい、おしゃれしないけど、ダサいのは嫌な大学生向けの服選びの楽しさを理解させ、小奇麗にするオンラインコーディネートバトルサービスです。
+    </div>
+  </div>
+  <div style="width: 100%;">
+    ここにコーデバトルの説明文とかが入ります!!!!!!!!!!!!!!!!!!!
+  </div>
+  <div style="width: 100%;">
+    <img src="https://camo.githubusercontent.com/c635a8cf40b8bf8dacd31e2aca4d0f466caef8b2/68747470733a2f2f692e6779617a6f2e636f6d2f66656663363665616434313262316534353637393738346631653566363663342e706e67" />
+  </div>
 </div>
 
 </div>
