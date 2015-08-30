@@ -1,13 +1,13 @@
 #centerMessage {
-    margin: 10px 0 0 0;
-    padding: 0;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 30px;
-    font-size: 20px;
-    text-align: center;
+	margin: 10px 0 0 0;
+	padding: 0;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 30px;
+	font-size: 20px;
+	text-align: center;
 }
 
 #coordinateDetail {
@@ -29,11 +29,11 @@
 }
 
 button.favoriteButton {
-    font-size: 14px;
-    padding: 5px 10px 5px 10px;
-    background-color: #ffac00;
-    color: #fff;
-    border-style: none;
+	font-size: 14px;
+	padding: 5px 10px 5px 10px;
+	background-color: #ffac00;
+	color: #fff;
+	border-style: none;
 }
 
 #coordinateColumn {
@@ -42,7 +42,7 @@ button.favoriteButton {
 	height: 100%;
 	padding: 10px;
 	padding-right: 5px;
-    display: inline-block;
+	display: inline-block;
 }
 
 .itemColumn {
@@ -55,9 +55,8 @@ button.favoriteButton {
 
 .itemPhoto {
 	float: left;
-    background-color: #fff;
-    
-    display: inline-block;
+	background-color: #fff;
+	display: inline-block;
 }
 
 .itemDetail {
@@ -72,10 +71,10 @@ button.favoriteButton {
 	padding-left: 40px;
 }
 
-.sizeButtons input{
+.sizeButtons input {
 	display: none;
 }
-.sizeButtons label{
+.sizeButtons label {
 	display: block;
 	float: left;
 	cursor: pointer;
@@ -109,12 +108,12 @@ button.favoriteButton {
 }
 
 button.buyButton {
-    font-size: 14px;
-    margin-top: 20px;
-    padding: 5px 10px 5px 10px;
-    background-color: #e40;
-    color: #fff;
-    border-style: none;
+	font-size: 14px;
+	margin-top: 20px;
+	padding: 5px 10px 5px 10px;
+	background-color: #e40;
+	color: #fff;
+	border-style: none;
 }
 
 #buyAll {
