@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.1.0/velocity.js"></script>
-<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
 <?= $this->Html->css('base.css') ?>
 <?= $this->Html->css('coorView.css') ?>
 </head>
@@ -11,37 +8,38 @@
 
 <?= $this->element('eachpage_header') ?>
 
-<div id="centermessage">
+<div id="centerMessage">
   <p>コーディネートの詳細</p>
 </div>
 
-<div id="coorDetail">
-    <div id="coorcolumn">
-        <div id="coorPhoto">
+<div id="coordinateDetail">
+    <div id="coordinateColumn">
+        <div id="coordinatePhoto">
             <?php
-                echo $this->Html->image($coordinate->photo_path, array('width' => '500px'));
+                echo $this->Html->image($coordinate->photo_path, array('width' => '313px'));
             ?>
         </div>
-        <div id="favBtn">
-            <?php 
-                echo $this->Form->button('favorite', ['class' => 'favBtn']);
+        <div id="favorite">
+            <?php
+                echo $this->Form->create();
+                echo $this->Form->button('favorite', ['class' => 'favoriteButton']);
             ?>
         </div>
     </div>
-    <?php foreach ($coordinate->items as $items): ?>
-    <div id="itemcolumn">
-        <div id="photos">
-            <?php echo $this->Html->image($items->photos, array('width' => '200px')); ?>
+    <?php foreach ($coordinate->items as $item): ?>
+    <div class="itemColumn">
+        <div class="itemPhoto">
+            <?php echo $this->Html->image($item->photos, array('width' => '125px')); ?>
         </div>
-        <div id="itemDetail">
-            <p id="itemName">
-                <?php echo $items->name; ?>
+        <div class="itemDetail">
+            <p class="itemName">
+                <?php echo $item->name; ?>
             </p>
-            <p id="itemSize">
+            <p class="itemSize">
                 size
             </p>
-            <div id="sizeBtns">
-                <?php 
+            <div class="sizeButtons">
+                <?php
                     echo $this->Form->radio(
                         'size',
                         [
@@ -57,12 +55,13 @@
                     );
                 ?>
             </div>
-            <p id="itemPrice">
-                    <?php echo "￥".$items->price; ?>
+            <p class="itemPrice">
+                    <?php echo "￥".$item->price; ?>
             </p>
-            <p id="buyBtn">
+            <p class="buyButton">
                     <?php 
-                        echo $this->Form->button('Buy', ['class' => 'btn']);
+                        echo $this->Form->create();
+                        echo $this->Form->button('Buy', ['class' => 'buyButton']);
                     ?>
             </p>
         </div>
@@ -70,15 +69,17 @@
     <?php endforeach; ?>
     <div id="buyAll">
                  すべて購入
-        <p id="coorPrice">
+        <p id="coordinatePrice">
             <?php echo "￥".$total_price; ?>
         </p>
-        <p id="buyBtn">
+        <p class="buyButton">
             <?php
-                echo $this->Form->button('Buy', ['class' => 'btn']);
+                echo $this->Form->button('Buy', ['class' => 'buyButton']);
             ?>
         </p>
     </div>
 </div>
+
+<?= $this->element('footer') ?>
 </body>
 </html>

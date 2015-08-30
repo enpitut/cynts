@@ -1,8 +1,4 @@
-#body {
-	height: 100%;
-}
-
-#centermessage {
+#centerMessage {
     margin: 10px 0 0 0;
     padding: 0;
     z-index: 1;
@@ -14,25 +10,25 @@
     text-align: center;
 }
 
-#coorDetail {
-	width: 1368px;
-	height: 160%;
+#coordinateDetail {
+	width: 855px;
+	height: 150%;
 	position: relative;
 	margin-top: 30px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-#coorPhoto {
+#coordinatePhoto {
 	text-align: center;
 }
 
-#favBtn {
+#favorite {
 	text-align: center;
 	margin-top: 30px;
 }
 
-button.favBtn {
+button.favoriteButton {
     font-size: 14px;
     padding: 5px 10px 5px 10px;
     background-color: #ffac00;
@@ -40,44 +36,46 @@ button.favBtn {
     border-style: none;
 }
 
-#coorcolumn {
+#coordinateColumn {
 	float: left;
 	width: 45%;
 	height: 100%;
 	padding: 10px;
-	padding-right: 20px;
+	padding-right: 5px;
     display: inline-block;
 }
 
-#itemcolumn {
+.itemColumn {
 	float: left;
-	width: 45%;
-	padding:10px;
-	padding-left: 20px;
+	width: 50%;
+	padding: 5px;
+	padding-left: 5px;
 	display: inline-block;
 }
 
-#photos {
+.itemPhoto {
 	float: left;
     background-color: #fff;
+    
     display: inline-block;
 }
 
-#itemDetail {
+.itemDetail {
 	float: left;
-	width: 60%;
+	width: 65%;
 	display: inline-block;
 	margin-left: 20px;
 }
 
-#sizeBtns {
+.sizeButtons {
+	width: 100%;
 	padding-left: 40px;
 }
 
-#sizeBtns input{
+.sizeButtons input{
 	display: none;
 }
-#sizeBtns label{
+.sizeButtons label{
 	display: block;
 	float: left;
 	cursor: pointer;
@@ -92,12 +90,12 @@ button.favBtn {
 	line-height: 1;
 	transition: .2s;
 }
-#sizeBtns input[type="radio"]:checked + label {
+.sizeButtons input[type="radio"]:checked + label {
 	background-color: #ee4400;
 	color: #fff;
 }
 
-#itemPrice {
+.itemPrice {
 	float: left;
 	width: 80%;
 	display: inline-block;
@@ -105,13 +103,14 @@ button.favBtn {
 	margin-top: 20px;
 }
 
-#buyBtn {
+.buyButton {
 	display: inline-block;
 	float: left;
 }
 
-button.btn {
+button.buyButton {
     font-size: 14px;
+    margin-top: 20px;
     padding: 5px 10px 5px 10px;
     background-color: #e40;
     color: #fff;
@@ -121,16 +120,15 @@ button.btn {
 #buyAll {
 	float: left;
 	display: inline-block;
-	width: 27%;
+	width: 35%;
 	padding-left: 18%;
-	margin-left: 9px;
 	border-top: solid 1px #ccc;
 	padding-top: 10px;
 }
 
-#coorPrice {
+#coordinatePrice {
 	float: left;
 	display: inline-block;
 	margin-left: 10px;
-	width: 76%;
+	width: 73%;
 }

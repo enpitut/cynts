@@ -1,4 +1,3 @@
-<!--
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
@@ -98,11 +97,4 @@
     </table>
     <?php endif; ?>
     </div>
-</div>
--->
-<div id="itemcolumn">
-    <div id="photos">
-        <?php echo $this->Html->image($item->photos, array('height' => '150px')); ?>
-    </div>
-    ああああああああああああああああああああああ
 </div>
