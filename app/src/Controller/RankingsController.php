@@ -11,7 +11,7 @@ use Cake\ORM\TableRegistry;
  */
 class RankingsController extends AppController
 {
-    const RANKING_SHOW_LIMIT = 10;
+    const RANKING_SHOW_LIMIT = 12;
 
     const RANKING_TYPE_LIKE = 'like';
     const RANKING_TYPE_UNLIKE = 'unlike';
