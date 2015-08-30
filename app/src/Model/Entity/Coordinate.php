@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  */
 class Coordinate extends Entity
 {
+
     const COORDINATE_PHOTO_DIRECTORY_ROOT = 'coordinates/';
 
     /**
