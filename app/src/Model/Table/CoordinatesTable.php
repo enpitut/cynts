@@ -57,7 +57,7 @@ class CoordinatesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('photos');
+            ->allowEmpty('photo');
 
         $validator
             ->add('n_like', 'valid', ['rule' => 'numeric'])

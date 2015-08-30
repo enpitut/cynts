@@ -47,7 +47,7 @@
             <th><?= __('Id') ?></th>
             <th><?= __('Name') ?></th>
             <th><?= __('Shop Id') ?></th>
-            <th><?= __('Colors') ?></th>
+            <th><?= __('Color') ?></th>
             <th><?= __('Sizes') ?></th>
             <th><?= __('Category') ?></th>
             <th><?= __('Price') ?></th>
@@ -64,7 +64,7 @@
             <td><?= h($items->id) ?></td>
             <td><?= h($items->name) ?></td>
             <td><?= h($items->shop_id) ?></td>
-            <td><?= h($items->colors) ?></td>
+            <td><?= h($items->color) ?></td>
             <td><?= h($items->sizes) ?></td>
             <td><?= h($items->category) ?></td>
             <td><?= h($items->price) ?></td>
