@@ -1,7 +1,7 @@
 CREATE TABLE coordinates (
     id         INT NOT NULL AUTO_INCREMENT,
     user_id    INT,
-    photos     TEXT,
+    photo      TEXT,
     n_like     INT NOT NULL,
     n_unlike   INT NOT NULL,
     status     INT,

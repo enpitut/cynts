@@ -57,7 +57,7 @@ class ItemsTable extends Table
             ->notEmpty('name');
 
         $validator
-            ->allowEmpty('colors');
+            ->allowEmpty('color');
 
         $validator
             ->allowEmpty('sizes');

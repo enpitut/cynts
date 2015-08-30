@@ -15,7 +15,6 @@
             <th><?= $this->Paginator->sort('id') ?></th>
             <th><?= $this->Paginator->sort('coordinate_id') ?></th>
             <th><?= $this->Paginator->sort('item_id') ?></th>
-            <th><?= $this->Paginator->sort('color') ?></th>
             <th><?= $this->Paginator->sort('size') ?></th>
             <th><?= $this->Paginator->sort('status') ?></th>
             <th><?= $this->Paginator->sort('created_at') ?></th>
@@ -32,7 +31,6 @@
             <td>
                 <?= $coordinatesItem->has('item') ? $this->Html->link($coordinatesItem->item->name, ['controller' => 'Items', 'action' => 'view', $coordinatesItem->item->id]) : '' ?>
             </td>
-            <td><?= h($coordinatesItem->color) ?></td>
             <td><?= h($coordinatesItem->size) ?></td>
             <td><?= $this->Number->format($coordinatesItem->status) ?></td>
             <td><?= h($coordinatesItem->created_at) ?></td>

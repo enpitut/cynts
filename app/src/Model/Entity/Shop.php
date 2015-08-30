@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  */
 class Shop extends Entity
 {
+    const SHOP_PHOTO_DIRECTORY_ROOT = 'shops/';
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -21,4 +22,17 @@ class Shop extends Entity
         '*' => true,
         'id' => false,
     ];
+
+    /**
+     * @return string[]
+     */
+    protected function _getPhotoPaths()
+    {
+        $photos = json_decode($this->_properties['photos']);
+        $photo_paths = [];
+        foreach ($photos as $photo) {
+            $photo_paths[] = self::SHOP_PHOTO_DIRECTORY_ROOT . $photo;
+        }
+        return $photo_paths;
+    }
 }

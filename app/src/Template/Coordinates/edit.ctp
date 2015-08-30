@@ -22,7 +22,7 @@
         <legend><?= __('Edit Coordinate') ?></legend>
         <?php
             echo $this->Form->input('user_id', ['options' => $users, 'empty' => true]);
-            echo $this->Form->input('photos');
+            echo $this->Form->input('photo');
             echo $this->Form->input('n_like');
             echo $this->Form->input('n_unlike');
             echo $this->Form->input('status');
