@@ -23,9 +23,12 @@ class User extends Entity
         'id' => false,
     ];
 
-    public function setPassword($password)
+    /**
+     * @param string $password
+     * @return bool|string
+     */
+    public static function hashPassword($password)
     {
-        $hashedPass = (new DefaultPasswordHasher())->hash($password);
-        return $hashedPass;
+        return (new DefaultPasswordHasher())->hash($password);
     }
 }
