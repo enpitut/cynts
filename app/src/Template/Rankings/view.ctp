@@ -28,12 +28,14 @@
                 <span class="point_number"><?= $coordinate->n_like * 1000 ?></span> Points
             </span>
             <span class="user">
-                Posted by
-                <span class="user_name">
+                <?php if (isset($coordinate->user->name)) { ?>
+                    Posted by
+                    <span class="user_name">
                     <a href="/users/view/<?= $coordinate->user->id ?>">
                         <?= $coordinate->user->name ?>
                     </a>
                 </span>
+                <?php } ?>
             </span>
         </div>
 
