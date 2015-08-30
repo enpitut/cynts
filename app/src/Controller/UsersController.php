@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\PostsController;
+use App\Model\Entity\User;
 
 /**
  * Users Controller
@@ -41,15 +41,14 @@ class UsersController extends PostsController
     /**
      * Add method
      *
-     * @return void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Network\Response|void
      */
     public function add()
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $password = $user->get('password');
-            $user->set('password', $user->setPassword($password));
             $user = $this->Users->patchEntity($user, $this->request->data);
+            $user->set('password', User::hashPassword($user->get('password')));
             $user->set('created_at', time());
             $user->set('updated_at', time());
             if ($this->Users->save($user)) {
@@ -67,7 +66,7 @@ class UsersController extends PostsController
      * Edit method
      *
      * @param string|null $id User id.
-     * @return void Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Network\Response|void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
@@ -92,7 +91,7 @@ class UsersController extends PostsController
      * Delete method
      *
      * @param string|null $id User id.
-     * @return void Redirects to index.
+     * @return \Cake\Network\Response|void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function delete($id = null)
