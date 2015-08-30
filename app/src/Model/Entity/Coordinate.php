@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
  */
 class Coordinate extends Entity
 {
-    const COORDINATES_DIRECTORY_ROOT = "coordinates/";
+    const COORDINATE_PHOTO_DIRECTORY_ROOT = 'coordinates/';
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -23,7 +23,11 @@ class Coordinate extends Entity
         'id' => false,
     ];
 
-    protected function _getPhotoPath() {
-        return self::COORDINATES_DIRECTORY_ROOT . $this->_properties['photo'];
+    /**
+     * @return string
+     */
+    protected function _getPhotoPath()
+    {
+        return self::COORDINATE_PHOTO_DIRECTORY_ROOT . $this->_properties['photo'];
     }
 }

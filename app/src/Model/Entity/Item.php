@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  */
 class Item extends Entity
 {
+    const ITEM_PHOTO_DIRECTORY_ROOT = 'items/';
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -21,4 +22,25 @@ class Item extends Entity
         '*' => true,
         'id' => false,
     ];
+
+    /**
+     * @return string[]
+     */
+    protected function _getPhotoPaths()
+    {
+        $photos = json_decode($this->_properties['photos']);
+        $photo_paths = [];
+        foreach ($photos as $photo) {
+            $photo_paths[] = self::ITEM_PHOTO_DIRECTORY_ROOT . $photo;
+        }
+        return $photo_paths;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function _getSizeArray()
+    {
+        return json_decode($this->_properties['sizes']);
+    }
 }
