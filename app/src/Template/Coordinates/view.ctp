@@ -1,3 +1,4 @@
+<!--
 <div class="actions columns large-2 medium-3">
     <h3><?= __('Actions') ?></h3>
     <ul class="side-nav">
@@ -140,3 +141,35 @@
     <?php endif; ?>
     </div>
 </div>
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.1.0/velocity.js"></script>
+<script>
+    var coordinate_id;
+    var push_enable = true;
+</script>
+<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<?= $this->Html->css('base.css') ?>
+<?= $this->Html->css('battle.css') ?>
+</head>
+<body>
+    
+<?= $this->Html->image('/img/view/header.png'); ?>
+<?= $this->element('header') ?>
+
+<div id="centermessage">
+  <p>コーディネートの詳細</p>
+</div>
+
+<div id="battlecolumn">
+<ul>
+<?php
+$photo_id = 0;
+echo $this->Html->image($coordinate->photos,
+        array(
+            'id' => $coordinate->id
+        ));
