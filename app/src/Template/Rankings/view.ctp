@@ -20,7 +20,7 @@
         </div>
         <div class="photo">
             <a href="/coordinates/view/<?= $coordinate->id ?>">
-                <img src="/img/<?= $coordinate->photo ?>">
+                <?= $this->Html->image($coordinate->photo_path); ?>
             </a>
         </div>
         <div class="information">
