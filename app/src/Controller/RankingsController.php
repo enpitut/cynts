@@ -11,6 +11,8 @@ use Cake\ORM\TableRegistry;
  */
 class RankingsController extends AppController
 {
+    const RANKING_SHOW_LIMIT = 10;
+
     /**
      * View method
      *
@@ -21,10 +23,13 @@ class RankingsController extends AppController
     {
         /** @var \App\Model\Table\CoordinatesTable $coordinates */
         $coordinates = TableRegistry::get('Coordinates');
-        $ranking = $coordinates->find('all', [
-            'order' => ['Coordinates.n_like' => 'DESC'],
-            'contain' => ['Users', 'Items', 'Favorites'],
-        ]);
+        $ranking = $coordinates->find('all',
+            [
+                'order' => ['Coordinates.n_like' => 'DESC'],
+                'contain' => ['Users', 'Items', 'Favorites'],
+                'limit' => self::RANKING_SHOW_LIMIT,
+            ]
+        );
         $this->set('ranking', $ranking);
         $this->set('_serialize', ['ranking']);
     }
