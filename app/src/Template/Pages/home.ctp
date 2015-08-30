@@ -58,9 +58,32 @@ $(function(){
 <div id="maincolumn">
 <div id="centermenu">
 <ul>
-<li><?= $this->Html->image('view/menu1.png', array('height' => '160px')) ?><br />好きなコーディネートを選ぶ</li>
-<li><?= $this->Html->image('view/menu2.png', array('height' => '160px')) ?><br />コーディネートランキングを見る</li>
-<li><?= $this->Html->image('view/menu3.png', array('height' => '160px')) ?><br />オリジナルコーディネートを投稿する</li>
+  <li>
+    <?= $this->Html->image(
+        'view/menu1.png',
+        array(
+            'height' => '160px',
+            'url' => array('controller'=>'coordinates','action'=>'battle')
+        )) ?><br />
+    好きなコーディネートを選ぶ
+  </li>
+  <li>
+    <?= $this->Html->image(
+        'view/menu2.png',
+        array(
+            'height' => '160px',
+            'url' => array('controller'=>'rankings','action'=>'view')
+        )) ?><br />
+    コーディネートランキングを見る
+  </li>
+  <li>
+    <?= $this->Html->image(
+        'view/menu3.png',
+        array(
+            'height' => '160px',
+        )) ?><br />
+    オリジナルコーディネートを投稿する
+  </li>
 </ul>
 </div>
 
