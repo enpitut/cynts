@@ -21,7 +21,6 @@
         <?php
             echo $this->Form->input('coordinate_id', ['options' => $coordinates]);
             echo $this->Form->input('item_id', ['options' => $items]);
-            echo $this->Form->input('color');
             echo $this->Form->input('size');
             echo $this->Form->input('status');
             echo $this->Form->input('created_at');

@@ -42,7 +42,7 @@
         <tr>
             <th><?= __('Id') ?></th>
             <th><?= __('User Id') ?></th>
-            <th><?= __('Photos') ?></th>
+            <th><?= __('Photo') ?></th>
             <th><?= __('N Like') ?></th>
             <th><?= __('N Unlike') ?></th>
             <th><?= __('Status') ?></th>
@@ -54,7 +54,7 @@
         <tr>
             <td><?= h($coordinates->id) ?></td>
             <td><?= h($coordinates->user_id) ?></td>
-            <td><?= h($coordinates->photos) ?></td>
+            <td><?= h($coordinates->photo) ?></td>
             <td><?= h($coordinates->n_like) ?></td>
             <td><?= h($coordinates->n_unlike) ?></td>
             <td><?= h($coordinates->status) ?></td>

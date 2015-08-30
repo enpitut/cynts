@@ -2,7 +2,6 @@ CREATE TABLE coordinates_items (
     id            INT NOT NULL AUTO_INCREMENT,
     coordinate_id INT NOT NULL,
     item_id       INT NOT NULL,
-    color         VARCHAR(50),
     size          VARCHAR(50),
     status        INT,
     created_at    DATETIME,

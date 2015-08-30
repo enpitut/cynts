@@ -15,7 +15,7 @@
             <th><?= $this->Paginator->sort('id') ?></th>
             <th><?= $this->Paginator->sort('name') ?></th>
             <th><?= $this->Paginator->sort('shop_id') ?></th>
-            <th><?= $this->Paginator->sort('colors') ?></th>
+            <th><?= $this->Paginator->sort('color') ?></th>
             <th><?= $this->Paginator->sort('sizes') ?></th>
             <th><?= $this->Paginator->sort('category') ?></th>
             <th><?= $this->Paginator->sort('price') ?></th>
@@ -30,7 +30,7 @@
             <td>
                 <?= $item->has('shop') ? $this->Html->link($item->shop->name, ['controller' => 'Shops', 'action' => 'view', $item->shop->id]) : '' ?>
             </td>
-            <td><?= h($item->colors) ?></td>
+            <td><?= h($item->color) ?></td>
             <td><?= h($item->sizes) ?></td>
             <td><?= h($item->category) ?></td>
             <td><?= $this->Number->format($item->price) ?></td>

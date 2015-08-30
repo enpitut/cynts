@@ -39,8 +39,8 @@
     </div>
     <div class="row texts">
         <div class="columns large-9">
-            <h6 class="subheader"><?= __('Photos') ?></h6>
-            <?= $this->Text->autoParagraph(h($coordinate->photos)) ?>
+            <h6 class="subheader"><?= __('Photo') ?></h6>
+            <?= $this->Text->autoParagraph(h($coordinate->photo)) ?>
         </div>
     </div>
     <div class="row texts">
@@ -97,11 +97,11 @@
             <th><?= __('Id') ?></th>
             <th><?= __('Name') ?></th>
             <th><?= __('Shop Id') ?></th>
-            <th><?= __('Colors') ?></th>
+            <th><?= __('Color') ?></th>
             <th><?= __('Sizes') ?></th>
             <th><?= __('Category') ?></th>
             <th><?= __('Price') ?></th>
-            <th><?= __('Photos') ?></th>
+            <th><?= __('Photo') ?></th>
             <th><?= __('Description') ?></th>
             <th><?= __('Sex') ?></th>
             <th><?= __('Status') ?></th>
@@ -114,7 +114,7 @@
             <td><?= h($items->id) ?></td>
             <td><?= h($items->name) ?></td>
             <td><?= h($items->shop_id) ?></td>
-            <td><?= h($items->colors) ?></td>
+            <td><?= h($items->color) ?></td>
             <td><?= h($items->sizes) ?></td>
             <td><?= h($items->category) ?></td>
             <td><?= h($items->price) ?></td>

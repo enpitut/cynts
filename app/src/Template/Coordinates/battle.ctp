@@ -129,17 +129,17 @@ foreach ($coordinates as $coordinate) {
     }
     echo '</div>';
 
-    echo '<div class="photos">' . PHP_EOL;
-    echo $this->Html->image($coordinate->photos,
+    echo '<div class="photo">' . PHP_EOL;
+    echo $this->Html->image($coordinate->photo,
         array(
             'onClick' => 'img_update(this, coordinate_id' . $photo_id . ', coordinate_id' . (($photo_id + 1) % 2) . ')',
             'id' => "photo" . $photo_id,
-            'class' => "battlephotos",
+            'class' => "battlephoto",
         )) . PHP_EOL;
-    echo $this->Html->image($coordinate->photos,
+    echo $this->Html->image($coordinate->photo,
         array(
             'id' => "fadephoto" . $photo_id,
-            'class' => "fadephotos",
+            'class' => "fadephoto",
         )
     );
     echo '</div>';

@@ -30,17 +30,17 @@ div#battlecolumn li {
     overflow: hidden;
 }
 
-div.photos {
+div.photo {
     height: 540px; /* コーデの height + タグの height */
     position: relative;
 }
 
-div.photos img {
+div.photo img {
     height: 510px;
     width: 340px;
 }
 
-img.battlephotos {
+img.battlephoto {
     position: relative;
     opacity:0.75;
     filter:alpha(opacity=75);
@@ -49,14 +49,14 @@ img.battlephotos {
     z-index: 1;
 }
 
-img:hover.battlephotos {
+img:hover.battlephoto {
     opacity:1.0;
     filter:alpha(opacity=100);
     -ms-filter: "alpha( opacity=100 )";
     -moz-opacity:1.0;
 }
 
-img.fadephotos {
+img.fadephoto {
     display: block;
     position: absolute;
     top: 30px;
