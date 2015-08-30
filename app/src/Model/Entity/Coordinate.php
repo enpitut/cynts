@@ -8,8 +8,9 @@ use Cake\ORM\Entity;
  */
 class Coordinate extends Entity
 {
-    const COORDINATES_DIRECTORY_ROOT = "coordinates/";
-//    const ITEM_ORDER = ['tops', 'outer', 'bottoms', 'shoes'];
+
+    const COORDINATE_PHOTO_DIRECTORY_ROOT = 'coordinates/';
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      * Note that '*' is set to true, which allows all unspecified fields to be
@@ -22,18 +23,12 @@ class Coordinate extends Entity
         '*' => true,
         'id' => false,
     ];
-    
-    function cmp($a, $b) {
-        if ($a[1] == $b[1]) return 0;
-        return ($a[1] < $b[1]) ? -1 : 1;
-    }
 
-    public function sortCategory($coordinate){
-        foreach ($coordinate->items as $items) {
-            $category = $items->category;
-        }
-        
-        $sortedItems = array_multisort($category, $coordinate->items);
-        return $sortedItems;
+    /**
+     * @return string
+     */
+    protected function _getPhotoPath()
+    {
+        return self::COORDINATE_PHOTO_DIRECTORY_ROOT . $this->_properties['photo'];
     }
 }

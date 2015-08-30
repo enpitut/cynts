@@ -20,8 +20,8 @@
             <p><?= h($item->name) ?></p>
             <h6 class="subheader"><?= __('Shop') ?></h6>
             <p><?= $item->has('shop') ? $this->Html->link($item->shop->name, ['controller' => 'Shops', 'action' => 'view', $item->shop->id]) : '' ?></p>
-            <h6 class="subheader"><?= __('Colors') ?></h6>
-            <p><?= h($item->colors) ?></p>
+            <h6 class="subheader"><?= __('Color') ?></h6>
+            <p><?= h($item->color) ?></p>
             <h6 class="subheader"><?= __('Sizes') ?></h6>
             <p><?= h($item->sizes) ?></p>
             <h6 class="subheader"><?= __('Category') ?></h6>
@@ -65,7 +65,7 @@
         <tr>
             <th><?= __('Id') ?></th>
             <th><?= __('User Id') ?></th>
-            <th><?= __('Photos') ?></th>
+            <th><?= __('Photo') ?></th>
             <th><?= __('N Like') ?></th>
             <th><?= __('N Unlike') ?></th>
             <th><?= __('Status') ?></th>
@@ -77,7 +77,7 @@
         <tr>
             <td><?= h($coordinates->id) ?></td>
             <td><?= h($coordinates->user_id) ?></td>
-            <td><?= h($coordinates->photos) ?></td>
+            <td><?= h($coordinates->photo) ?></td>
             <td><?= h($coordinates->n_like) ?></td>
             <td><?= h($coordinates->n_unlike) ?></td>
             <td><?= h($coordinates->status) ?></td>

@@ -3,10 +3,6 @@
 <head>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.1.0/velocity.js"></script>
-<script>
-    var coordinate_id;
-    var push_enable = true;
-</script>
 <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
 <?= $this->Html->css('base.css') ?>
 <?= $this->Html->css('coorView.css') ?>
@@ -24,8 +20,7 @@
     <div id="coorcolumn">
         <div id="coorPhoto">
             <?php
-                $photo_id = 0;
-                echo $this->Html->image($coordinate->photos, array('width' => '500px'));
+                echo $this->Html->image($coordinate->photo_path, array('width' => '500px'));
             ?>
         </div>
         <div id="favBtn">
@@ -69,7 +64,7 @@
             <p id="buyBtn">
                     <?php 
                         echo $this->Form->button('Buy', ['class' => 'btn']);
-                     ?>
+                    ?>
             </p>
         </div>
     </div>
@@ -86,7 +81,5 @@
         </p>
     </div>
 </div>
-<?= $this->element('footer') ?>
-
 </body>
 </html>

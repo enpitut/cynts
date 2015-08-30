@@ -46,38 +46,60 @@
         });
 
         // 裏にまわった画像を次の画像に置き換える
-        $("#photo" + obj_id).attr("src", coordinate_data["url"]);
+        $("#photo" + obj_id).attr("src", "/img/" + coordinate_data["url"]);
         if (Number(obj_id)){
             coordinate_id1 = coordinate_data["id"];
+            $("#fadephoto" + obj_id).velocity(
+                {
+                    left: 200,
+                    opacity: 0,
+                },
+                500,
+                function () {
+                    dealing_after_animation(obj_id, coordinate_data);
+                }
+            );
         } else {
             coordinate_id0 = coordinate_data["id"];
+            $("#fadephoto" + obj_id).velocity(
+                {
+                    right: 200,
+                    opacity: 0,
+                },
+                500,
+                function () {
+                    dealing_after_animation(obj_id, coordinate_data);
+                }
+            );
         }
+    }
 
-        // フェードアウト
-        $("#fadephoto" + obj_id).velocity(
-            {
-                left: 200,
-                opacity: 0,
-            },
-            500,
-            function () {
-                $("#fadephoto" + obj_id).css({
-                    "z-index":0
-                });
-                // fadephoto を表示済みの画像に置き換える
-                $("#fadephoto" + obj_id).attr("src", coordinate_data["url"]);
-                $("#photo" + obj_id).css({
-                    "z-index":1
-                });
-                $("#fadephoto" + obj_id).velocity(
-                    {
-                        left:0
-                    },
-                    0,
-                    function () { push_enable=true; }
-                );
-            }
-        );
+    /**
+     * アニメーションの事後処理を行う．
+     * フェードアウトさせた画像の位置を戻したり，ボタン押下を有効化したり
+     */
+    function dealing_after_animation(obj_id, coordinate_data) {
+        $("#fadephoto" + obj_id).css({
+            "z-index":0
+        });
+        // fadephoto を表示済みの画像に置き換える
+        $("#fadephoto" + obj_id).attr("src", "/img/" + coordinate_data["url"]);
+        $("#photo" + obj_id).css({
+            "z-index":1
+        });
+        if (Number(obj_id)){
+            $("#fadephoto" + obj_id).velocity(
+                { left:0 },
+                0,
+                function () { push_enable=true; }
+            );
+        } else {
+            $("#fadephoto" + obj_id).velocity(
+                { right:0 },
+                0,
+                function () { push_enable=true; }
+            );
+        }
     }
 </script>
 <?= $this->Html->css('base.css') ?>
@@ -85,8 +107,7 @@
 </head>
 <body>
 
-<?= $this->Html->image('/img/view/header.png'); ?>
-<?= $this->element('header') ?>
+<?= $this->element('eachpage_header') ?>
 
 <div id="centermessage">
   <p>Which do you like?</p>
@@ -108,17 +129,17 @@ foreach ($coordinates as $coordinate) {
     }
     echo '</div>';
 
-    echo '<div class="photos">' . PHP_EOL;
-    echo $this->Html->image($coordinate->photos,
+    echo '<div class="photo">' . PHP_EOL;
+    echo $this->Html->image($coordinate->photo_path,
         array(
             'onClick' => 'img_update(this, coordinate_id' . $photo_id . ', coordinate_id' . (($photo_id + 1) % 2) . ')',
             'id' => "photo" . $photo_id,
-            'class' => "battlephotos",
+            'class' => "battlephoto",
         )) . PHP_EOL;
-    echo $this->Html->image($coordinate->photos,
+    echo $this->Html->image($coordinate->photo_path,
         array(
             'id' => "fadephoto" . $photo_id,
-            'class' => "fadephotos",
+            'class' => "fadephoto",
         )
     );
     echo '</div>';

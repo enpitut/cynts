@@ -53,9 +53,6 @@ class CoordinatesItemsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('color');
-
-        $validator
             ->allowEmpty('size');
 
         $validator
