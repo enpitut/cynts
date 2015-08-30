@@ -171,7 +171,7 @@ class CoordinatesController extends AppController
                 ) {
                     continue;
                 }
-                echo "{id:\"" . $coordinate->id . "\", url:\"" . $coordinate->photo . "\"}";
+                echo "{id:\"" . $coordinate->id . "\", url:\"" . $coordinate->photo_path . "\"}";
                 $duplicated_flg = true;
             }
 

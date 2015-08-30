@@ -46,7 +46,7 @@
         });
 
         // 裏にまわった画像を次の画像に置き換える
-        $("#photo" + obj_id).attr("src", coordinate_data["url"]);
+        $("#photo" + obj_id).attr("src", "/img/" + coordinate_data["url"]);
         if (Number(obj_id)){
             coordinate_id1 = coordinate_data["id"];
             $("#fadephoto" + obj_id).velocity(
@@ -83,7 +83,7 @@
             "z-index":0
         });
         // fadephoto を表示済みの画像に置き換える
-        $("#fadephoto" + obj_id).attr("src", coordinate_data["url"]);
+        $("#fadephoto" + obj_id).attr("src", "/img/" + coordinate_data["url"]);
         $("#photo" + obj_id).css({
             "z-index":1
         });
@@ -130,13 +130,13 @@ foreach ($coordinates as $coordinate) {
     echo '</div>';
 
     echo '<div class="photo">' . PHP_EOL;
-    echo $this->Html->image($coordinate->photo,
+    echo $this->Html->image($coordinate->photo_path,
         array(
             'onClick' => 'img_update(this, coordinate_id' . $photo_id . ', coordinate_id' . (($photo_id + 1) % 2) . ')',
             'id' => "photo" . $photo_id,
             'class' => "battlephoto",
         )) . PHP_EOL;
-    echo $this->Html->image($coordinate->photo,
+    echo $this->Html->image($coordinate->photo_path,
         array(
             'id' => "fadephoto" . $photo_id,
             'class' => "fadephoto",
