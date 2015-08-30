@@ -9,8 +9,7 @@
 </head>
 <body>
 
-<?= $this->Html->image('/img/view/header.png'); ?>
-<?= $this->element('header') ?>
+<?= $this->element('eachpage_header') ?>
 
 <div id="centermessage">
   <p>コーディネートの詳細</p>
