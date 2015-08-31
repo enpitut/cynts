@@ -29,7 +29,9 @@
     <?php foreach ($coordinate->items as $item): ?>
     <div class="itemColumn">
         <div class="itemPhoto">
-            <?php echo $this->Html->image($item->photos, array('width' => '125px')); ?>
+            <?php if (!empty($item->photoPaths)) { ?>
+                <?php echo $this->Html->image(array_shift($item->photoPaths), array('width' => '125px')); ?>
+            <?php } ?>
         </div>
         <div class="itemDetail">
             <p class="itemName">
@@ -59,7 +61,7 @@
                     <?php echo "￥".$item->price; ?>
             </p>
             <p class="buyButton">
-                    <?php 
+                    <?php
                         echo $this->Form->create();
                         echo $this->Form->button('Buy', ['class' => 'buyButton']);
                     ?>
