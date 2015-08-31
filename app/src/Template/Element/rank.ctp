@@ -2,13 +2,25 @@
 $one_digit = (int)substr($rank, -1);
 switch ($one_digit) {
     case 1:
-        echo '<span class="rank rank_1st">' . $rank . 'st</span>';
+        $class = 'rank';
+        if ($rank === 1) {
+            $class = 'rank rank_1st';
+        }
+        echo "<span class='$class'>" . $rank . 'st</span>';
         break;
     case 2:
-        echo '<span class="rank rank_2nd">' . $rank . 'nd</span>';
+        $class = 'rank';
+        if ($rank === 2) {
+            $class = 'rank rank_2nd';
+        }
+        echo "<span class='$class'>" . $rank . 'nd</span>';
         break;
     case 3:
-        echo '<span class="rank rank_3rd">' . $rank . 'rd</span>';
+        $class = 'rank';
+        if ($rank === 3) {
+            $class = 'rank rank_3rd';
+        }
+        echo "<span class='$class'>" . $rank . 'rd</span>';
         break;
     default:
         echo '<span class="rank">' . $rank . 'th</span>';
