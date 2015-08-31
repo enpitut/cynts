@@ -47,6 +47,7 @@ img.battlephoto {
     -ms-filter: "alpha( opacity=75 )";
     -moz-opacity:0.75;
     z-index: 1;
+    margin: -2px 0 0 0;
 }
 
 img:hover.battlephoto {
@@ -85,6 +86,7 @@ div.phototags img {
     top: 30px; /* phototag の height */
     width: 80px;
     height: 30px;
+    margin: 0px 2px 0 0;
     z-index: 2;
 }
 
