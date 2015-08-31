@@ -24,6 +24,7 @@ body {
 
 .photo img {
     width: 280px;
+    display: none;
 }
 
 .information {

@@ -131,3 +131,7 @@ button.buyButton {
 	margin-left: 10px;
 	width: 73%;
 }
+
+.image {
+    display: none;
+}

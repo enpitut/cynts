@@ -3,6 +3,12 @@
 <head>
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('ranking/base.css') ?>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".coordinate_image").fadeIn(700);
+        });
+    </script>
 </head>
 <body>
 
@@ -20,7 +26,13 @@
         </div>
         <div class="photo">
             <a href="/coordinates/view/<?= $coordinate->id ?>">
-                <?= $this->Html->image($coordinate->photo_path); ?>
+                <?= $this->Html->image(
+                    $coordinate->photo_path,
+                    [
+                        'class' => 'coordinate_image',
+                    ]
+                );
+                ?>
             </a>
         </div>
         <div class="information">
