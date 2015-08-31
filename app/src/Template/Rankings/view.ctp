@@ -25,15 +25,17 @@
             <?= $this->element('rank', ['rank' => $loop + 1]) ?>
         </div>
         <div class="photo">
-            <a href="/coordinates/view/<?= $coordinate->id ?>">
-                <?= $this->Html->image(
-                    $coordinate->photo_path,
-                    [
-                        'class' => 'coordinate_image',
-                    ]
-                );
-                ?>
-            </a>
+            <?= $this->Html->image(
+                $coordinate->photo_path,
+                [
+                    'class' => 'coordinate_image',
+                    'url' => [
+                        'controller' => 'Coordinates',
+                        'action' => 'view',
+                        $coordinate->id,
+                    ],
+                ]
+            ) ?>
         </div>
         <div class="information">
             <div class="information_left">
@@ -49,10 +51,15 @@
                     <?php if (isset($coordinate->user->name)) { ?>
                         Posted by
                         <span class="user_name">
-                        <a href="/users/view/<?= $coordinate->user->id ?>">
-                            <?= $coordinate->user->name ?>
-                        </a>
-                    </span>
+                            <?= $this->Html->link(
+                                $coordinate->user->name,
+                                [
+                                    'controller' => 'Users',
+                                    'action' => 'view',
+                                    $coordinate->user->id,
+                                ]
+                            ) ?>
+                        </span>
                     <?php } ?>
                 </div>
             </div>
