@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Coordinate;
+use App\Model\Entity\Item;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -48,7 +50,18 @@ class RankingsController extends AppController
                 );
         }
 
-        $this->set('ranking', $ranking);
+        /** @var Coordinate $coordinate */
+        $ranking_array = $ranking->toArray();
+        foreach ($ranking_array as $key => $coordinate) {
+            $total_price = 0;
+            /** @var Item $item */
+            foreach ($coordinate->items as $item) {
+                $total_price += $item->price;
+            }
+            $ranking_array[$key]->set('total_price', $total_price);
+        }
+
+        $this->set('ranking', $ranking_array);
         $this->set('_serialize', ['ranking']);
     }
 }
