@@ -38,14 +38,23 @@ Unichronicle
     <div style="font-size: 32px; margin: 1% auto;">もうダサいなんて言わせない</div>
     <br />
     <div>
-    何を着ればいいか分からない問題を解決したい、おしゃれしないけど、ダサいのは嫌な大学生向けの服選びの楽しさを理解させ、小奇麗にするオンラインコーディネートバトルサービスです。
+        <p>
+初めて来た人はまずコーディネートランキングへ。<br>
+ランキング1位はみんなが好きなコーディネート。<br>
+服をあまり買ったことない人は、ランキング1位の服をまとめて買っちゃおう！
+        </p>
     </div>
   </div>
-  <div style="width: 100%;">
-    ここにコーデバトルの説明文とかが入ります!!!!!!!!!!!!!!!!!!!
+  <div style="width: 100%; display: table-cell; vertical-align: middle;">
+        <img src="/img/view/description1.png" width="45%" style="float:left; margin: 0 30px 0 0">          
+            2択で自分の好きなコーディネートを選ぶだけ！<br>
+                            ゲームをしながら色々なコーディネートが見れる！ 
   </div>
   <div style="width: 100%;">
-    <img src="https://camo.githubusercontent.com/c635a8cf40b8bf8dacd31e2aca4d0f466caef8b2/68747470733a2f2f692e6779617a6f2e636f6d2f66656663363665616434313262316534353637393738346631653566363663342e706e67" />
+自分が組み合わせたコーディネートを勝ち抜きバトルにエントリー！<br>
+みんなが好きになるコーディネートを作ってみよう。<br><br>
+
+組み合わせは無限大！
   </div>
 </div>
 

@@ -1,31 +1,30 @@
 #centerMessage {
-	margin: 10px 0 0 0;
+  margin: 10px auto 0 auto;
 	padding: 0;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	width: 100%;
+	width: 60%;
 	height: 30px;
 	font-size: 20px;
 	text-align: center;
 }
 
 #coordinateDetail {
-	width: 855px;
-	height: 150%;
-	position: relative;
-	margin-top: 30px;
-	margin-left: auto;
-	margin-right: auto;
+	width: 900px;
+	margin: 30px auto 0 auto;
 }
 
 #coordinatePhoto {
+  position: relative;
+  float: left;
 	text-align: center;
+  width: 100%;
 }
 
 #favorite {
 	text-align: center;
-	margin-top: 30px;
+	margin: 30px auto 0 auto;
+  position: relative;
+  float: left;
+  width: 100%;
 }
 
 button.favoriteButton {
@@ -37,8 +36,10 @@ button.favoriteButton {
 }
 
 #coordinateColumn {
+  position: relative;
 	float: left;
-	width: 45%;
+  margin: 0 auto;
+	width: 400px;
 	height: 100%;
 	padding: 10px;
 	padding-right: 5px;
@@ -46,17 +47,20 @@ button.favoriteButton {
 }
 
 .itemColumn {
-	float: left;
-	width: 50%;
+  position: relative;
+	float: right;
+	width: 470px;
 	padding: 5px;
 	padding-left: 5px;
 	display: inline-block;
 }
 
 .itemPhoto {
+  position: relative;
 	float: left;
 	background-color: #fff;
 	display: inline-block;
+  margin: 5px auto;
 }
 
 .itemDetail {
@@ -67,7 +71,7 @@ button.favoriteButton {
 }
 
 .sizeButtons {
-	width: 100%;
+	width: 300px;
 	padding-left: 40px;
 }
 
@@ -96,7 +100,7 @@ button.favoriteButton {
 
 .itemPrice {
 	float: left;
-	width: 80%;
+	width: 240px;
 	display: inline-block;
 	margin-left: 10px;
 	margin-top: 20px;
@@ -104,7 +108,6 @@ button.favoriteButton {
 
 .buyButton {
 	display: inline-block;
-	float: left;
 }
 
 button.buyButton {
@@ -117,17 +120,20 @@ button.buyButton {
 }
 
 #buyAll {
-	float: left;
-	display: inline-block;
-	width: 35%;
-	padding-left: 18%;
-	border-top: solid 1px #ccc;
-	padding-top: 10px;
+  position: relative;
+	float: right;
+	width: 320px;
+	margin: 0;
+  text-align: left;
 }
 
 #coordinatePrice {
 	float: left;
 	display: inline-block;
-	margin-left: 10px;
-	width: 73%;
+	margin-left: 0px;
+	width: 240px;
+}
+
+.image {
+    display: none;
 }
