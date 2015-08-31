@@ -73,21 +73,23 @@ header {
   position: relative;
   float: left;
   width: 100%;
-  min-width: 1440px;
+  min-width: 900px;
   background-image: url("/img/view/top.jpg");
   background-size: 100% auto;
 }
 
 #title {
   position:relative;
-  margin: 240px auto 0px auto;
-  width: 70%;
+  margin: 12% auto 2% auto;
+  width: 850px;
+  font-size: 64px;
 }
 
 #fader {
   position:relative;
   margin: 0 auto;
-  width: 70%;
+  width: 850px;
+  height: 100%;
 }
 
 #fader > * {
@@ -95,14 +97,14 @@ header {
   left: 0;
   top: 0;
   display: block;
- }
+}
 
 #maincolumn {
   position: relative;
   float: left;
   margin: 20px auto;
   width: 100%;
-  min-width: 1440px;
+  min-width: 900px;
 }
 
 #centermenu ul {
