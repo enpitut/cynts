@@ -41,17 +41,18 @@
     <?php foreach ($coordinate->items as $item): ?>
         <div class="itemColumn">
             <div class="itemPhoto">
-                <?php if (!empty($item->photoPaths)) { ?>
-                    <?php
+                <?php
+                if (!empty($item->photoPaths)) {
+                    $photo_paths = $item->photoPaths;
                     echo $this->Html->image(
-                        array_shift($item->photoPaths),
+                        current($photo_paths),
                         [
                             'class' => 'image',
                             'width' => '125px',
                         ]
                     );
-                    ?>
-                <?php } ?>
+                }
+                ?>
             </div>
             <div class="itemDetail">
                 <p class="itemName">
