@@ -22,6 +22,18 @@ body {
     margin: 4px 0;
 }
 
+.rank .rank_1st {
+    color: gold;
+}
+
+.rank .rank_2nd {
+    color: silver;
+}
+
+.rank .rank_3rd {
+    color: sandybrown;
+}
+
 .photo img {
     width: 280px;
     display: none;
@@ -30,11 +42,21 @@ body {
 .information {
     font-size: 12px;
     padding: 0 4px;
+    color: darkgray;
+}
+
+.information_left {
+    float: left;
+    text-align: left;
+}
+
+.information_right {
+    float: right;
+    text-align: right;
 }
 
 .information .point {
     float: left;
-    color: darkgray;
 }
 
 .information .point .point_number {
@@ -42,8 +64,13 @@ body {
     color: darkorange;
 }
 
+.information .price_number {
+    margin: 0 0 0 3px;
+    font-size: 14px;
+    color: lightgray;
+}
+
 .information .user {
-    color: darkgray;
     float: right;
 }
 
