@@ -123,9 +123,19 @@ foreach ($coordinates as $coordinate) {
 
     echo '<div class="phototags">';
     if ($photo_id == 0) {
-        echo $this->Html->image('/img/view/battle_A.png', array('id' => 'phototag' . $photo_id));
+        echo $this->Html->image(
+            '/img/view/battle_A.png',
+            array(
+                'id' => 'phototag' . $photo_id,
+                'onClick' => 'img_update(image_obj0, coordinate_id0, coordinate_id1)',
+            ));
     } else {
-        echo $this->Html->image('/img/view/battle_B.png', array('id' => 'phototag' . $photo_id));
+        echo $this->Html->image(
+            '/img/view/battle_B.png',
+            array(
+                'id' => 'phototag' . $photo_id,
+                'onClick' => 'img_update(image_obj1, coordinate_id1, coordinate_id0)',
+            ));
     }
     echo '</div>';
 
@@ -148,6 +158,8 @@ foreach ($coordinates as $coordinate) {
 
     $photo_id++;
 }
+echo '<script>var image_obj0 = document.getElementById("photo0");</script>';
+echo '<script>var image_obj1 = document.getElementById("photo1");</script>';
 $photo_id = 0;
 ?>
 </ul>
