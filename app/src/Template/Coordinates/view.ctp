@@ -7,7 +7,6 @@
 <body>
 
 <?= $this->element('eachpage_header') ?>
-
 <div id="centerMessage">
   <p>コーディネートの詳細</p>
 </div>
@@ -58,28 +57,30 @@
             <p class="itemPrice">
                     <?php echo "￥".$item->price; ?>
             </p>
-            <p class="buyButton">
+            <span class="buyButton">
                     <?php 
                         echo $this->Form->create();
                         echo $this->Form->button('Buy', ['class' => 'buyButton']);
                     ?>
-            </p>
+            </span>
         </div>
     </div>
     <?php endforeach; ?>
-    <div id="buyAll">
-                 すべて購入
+    <hr style="position: relative; float: left;" width="470px" />
+    <div>
+    <div id="buyAll"><br />
+                 すべて購入<br />
         <p id="coordinatePrice">
             <?php echo "￥".$total_price; ?>
         </p>
-        <p class="buyButton">
+        <span class="buyButton">
             <?php
                 echo $this->Form->button('Buy', ['class' => 'buyButton']);
             ?>
-        </p>
+        </span>
+    </div>
     </div>
 </div>
-
 <?= $this->element('footer') ?>
 </body>
 </html>
