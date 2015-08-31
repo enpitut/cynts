@@ -29,6 +29,9 @@ class Item extends Entity
     protected function _getPhotoPaths()
     {
         $photos = json_decode($this->_properties['photos']);
+        if (is_null($photos)) {
+            $photos = [];
+        }
         $photo_paths = [];
         foreach ($photos as $photo) {
             $photo_paths[] = self::ITEM_PHOTO_DIRECTORY_ROOT . $photo;
