@@ -42,7 +42,7 @@ class CoordinatesController extends AppController
         foreach ($coordinate->items as $item) {
             $total_price += $item->price;
             $sizes = $item->sizeArray;
-        //   var_dump($item->sizeArray);
+            var_dump($item->sizeArray);
         }
         
         $this->set('coordinate', $coordinate);
