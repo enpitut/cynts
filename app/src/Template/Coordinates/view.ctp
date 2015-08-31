@@ -92,8 +92,8 @@
             </div>
         </div>
     <?php endforeach; ?>
-    <hr style="position: relative; float: left;" width="470px"/>
-    <div>
+    <hr style="position: relative; float: right;" width="470px"/>
+    <div style="position: relative; float: right; margin: 10px 0; width: 470px;">
         <div id="buyAll"><br/>
             すべて購入<br/>
 
