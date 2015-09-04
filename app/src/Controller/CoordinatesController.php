@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Core\Exception\Exception;
+use Cake\ORM\TableRegistry;
 
 /**
  * Coordinates Controller
@@ -190,5 +191,39 @@ class CoordinatesController extends AppController
     public function buy()
     {
         echo "buy";
+    }
+
+    public function favorite()
+    {
+        $session = $this->request->session()->read();
+        if (isset($session["Auth"]["User"]["id"]) &&
+            $this->request->is('post')
+        )
+        {
+            $favorite_coordinate_id = $this->request->data('favorite_id');
+            $uid = $session["Auth"]["User"]["id"];
+
+            $favorites = TableRegistry::get('Favorites');
+
+            $exist_check = $favorites->find()->where(
+            [
+                'Favorites.user_id' => $uid,
+                'Favorites.coordinate_id'=> $favorite_coordinate_id,
+            ]
+            );
+            if (count($exist_check->toArray()) == 0) {
+                $date = date("Y-m-d H:i:s");
+                $favorite = $favorites->newEntity(
+                    [
+                        'user_id' => $uid,
+                        'coordinate_id' => $favorite_coordinate_id,
+                        'updated_at' => $date,
+                    ]
+                );
+                $favorite->created_at = $date;
+                $favorites->save($favorite);
+                echo "saved";
+            }
+        }
     }
 }
