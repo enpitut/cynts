@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Core\Exception\Exception;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 
 /**
  * Coordinates Controller
@@ -212,15 +213,15 @@ class CoordinatesController extends AppController
                 ]
             );
             if (count($exist_check->toArray()) == 0) {
-                $date = date("Y-m-d H:i:s");
+                $time = Time::now();
                 $favorite = $favorites->newEntity(
                     [
                         'user_id' => $uid,
                         'coordinate_id' => $favorite_coordinate_id,
-                        'updated_at' => $date,
+                        'updated_at' => $time->i18nFormat('YYYY-MM-dd HH:mm:ss'),
                     ]
                 );
-                $favorite->created_at = $date;
+                $favorite->created_at = $time->i18nFormat('YYYY-MM-dd HH:mm:ss');
                 $favorites->save($favorite);
                 echo "saved";
             }
