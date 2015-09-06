@@ -212,7 +212,7 @@ class CoordinatesController extends AppController
                     'Favorites.coordinate_id'=> $favorite_coordinate_id,
                 ]
             );
-            if (count($exist_check->toArray()) == 0) {
+            if (empty(count($exist_check->toArray()))) {
                 $time = Time::now();
                 $favorite = $favorites->newEntity(
                     [
