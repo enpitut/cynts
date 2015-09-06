@@ -1,9 +1,9 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Model\Entity\Coordinate;
 use App\Model\Entity\Item;
+use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -14,9 +14,16 @@ use Cake\ORM\TableRegistry;
 class RankingsController extends AppController
 {
     const RANKING_SHOW_LIMIT = 9;
-
     const RANKING_TYPE_LIKE = 'like';
     const RANKING_TYPE_UNLIKE = 'unlike';
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(
+            ['view']
+        );
+    }
 
     /**
      * View method
