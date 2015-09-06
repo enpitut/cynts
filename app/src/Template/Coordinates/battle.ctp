@@ -8,7 +8,8 @@
     var coordinate_id1;
     var push_enable = true;
     var last_time_coordinate_id = -1;
-    var n_continuously_like = 0;
+    var n_continuously_like = 1;
+    const NUM_FOR_FAV = 10;
 
     /**
      * 押下されたコーデを加点後，次に表示するコーデを取得し，表示を切り替える
@@ -17,12 +18,12 @@
         if (!push_enable){ return; }
 
         if (coordinate_id == last_time_coordinate_id) {
-            if (++n_continuously_like >= 9) {
+            if (++n_continuously_like >= NUM_FOR_FAV) {
                 favorite_coordinate(coordinate_id);
-                n_continuously_like = 0;
+                n_continuously_like = 1;
             }
         } else {
-            n_continuously_like = 0;
+            n_continuously_like = 1;
         }
         last_time_coordinate_id = coordinate_id;
 
@@ -49,7 +50,7 @@
             data: send_data,
             success: function (send_data, dataType) {
                 if (send_data == "saved") {
-                    alert("10回連続で同じコーデを選んだので, お気に入りに登録しました!");
+                    alert(NUM_FOR_FAV + "回連続で同じコーデを選んだので, お気に入りに登録しました!");
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -60,9 +60,9 @@ class FavoritesTable extends Table
             ->add('created_at', 'valid', ['rule' => 'datetime'])
             ->allowEmpty('created_at');
 
-        // $validator
-        //     ->requirePresence('updated_at', 'create')
-        //     ->notEmpty('updated_at');
+        $validator
+            ->requirePresence('updated_at', 'create')
+            ->notEmpty('updated_at');
 
         return $validator;
     }

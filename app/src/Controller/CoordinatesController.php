@@ -206,10 +206,10 @@ class CoordinatesController extends AppController
             $favorites = TableRegistry::get('Favorites');
 
             $exist_check = $favorites->find()->where(
-            [
-                'Favorites.user_id' => $uid,
-                'Favorites.coordinate_id'=> $favorite_coordinate_id,
-            ]
+                [
+                    'Favorites.user_id' => $uid,
+                    'Favorites.coordinate_id'=> $favorite_coordinate_id,
+                ]
             );
             if (count($exist_check->toArray()) == 0) {
                 $date = date("Y-m-d H:i:s");
