@@ -12,7 +12,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/coordinates/create">
                     Post
                 </a>
             </li>
