@@ -206,8 +206,7 @@ class CoordinatesController extends AppController
         $session = $this->request->session()->read();
         if (isset($session["Auth"]["User"]["id"]) &&
             $this->request->is('post')
-        )
-        {
+        ) {
             $favorite_coordinate_id = $this->request->data('favorite_id');
             $uid = $session["Auth"]["User"]["id"];
 
@@ -216,19 +215,19 @@ class CoordinatesController extends AppController
             $exist_check = $favorites->find()->where(
                 [
                     'Favorites.user_id' => $uid,
-                    'Favorites.coordinate_id'=> $favorite_coordinate_id,
+                    'Favorites.coordinate_id' => $favorite_coordinate_id,
                 ]
             );
             if (empty(count($exist_check->toArray()))) {
-                $time = Time::now();
+                $now = new \DateTime();
                 $favorite = $favorites->newEntity(
                     [
                         'user_id' => $uid,
                         'coordinate_id' => $favorite_coordinate_id,
-                        'updated_at' => $time->i18nFormat('YYYY-MM-dd HH:mm:ss'),
+                        'updated_at' => $now->format('Y-m-d H:i:s'),
                     ]
                 );
-                $favorite->created_at = $time->i18nFormat('YYYY-MM-dd HH:mm:ss');
+                $favorite->created_at = $now->format('Y-m-d H:i:s');
                 $favorites->save($favorite);
                 echo "saved";
             }
