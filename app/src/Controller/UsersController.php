@@ -2,14 +2,22 @@
 namespace App\Controller;
 
 use App\Model\Entity\User;
+use Cake\Event\Event;
 
 /**
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends PostsController
+class UsersController extends AppController
 {
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(
+            ['signup', 'logout']
+        );
+    }
 
     /**
      * Index method
@@ -119,29 +127,17 @@ class UsersController extends PostsController
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error('Your username or password is incorrect');
+            $this->Flash->error(
+                __('Username or password is incorrect'),
+                'default',
+                [],
+                'auth'
+            );
         }
     }
 
     public function logout()
     {
-        $this->Flash->success('You are now logged out.');
         return $this->redirect($this->Auth->logout());
-    }
-
-    public function beforeFilter(\cake\Event\Event $event)
-    {
-        parent::beforeFilter($event);
-        $this->Auth->allow(['signup']);
-    }
-
-    public function isAuthorized($user = null)
-    {
-        $action = $this->request->params['action'];
-
-        if (in_array($action, ['index', 'logout'])) {
-            return true;
-        }
-
     }
 }

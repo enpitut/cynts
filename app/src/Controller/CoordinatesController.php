@@ -1,10 +1,9 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
-use Cake\Core\Exception\Exception;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\Time;
+use Cake\Event\Event;
 
 /**
  * Coordinates Controller
@@ -13,6 +12,14 @@ use Cake\I18n\Time;
  */
 class CoordinatesController extends AppController
 {
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(
+            ['view']
+        );
+    }
+
     /**
      * Index method
      *

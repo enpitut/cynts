@@ -26,6 +26,22 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    /**
+     * @var array
+     * @see \Cake\Controller\Component\AuthComponent::$components
+     */
+    public $components = [
+        'Auth' => [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'mail',
+                        'password' => 'password',
+                    ],
+                ],
+            ],
+        ],
+    ];
 
     /**
      * Initialization hook method.
@@ -39,5 +55,10 @@ class AppController extends Controller
         parent::initialize();
         $this->loadComponent('Flash');
         $this->autoLayout = false;
+    }
+
+    public function isAuthorized($user = null)
+    {
+        return true;
     }
 }
