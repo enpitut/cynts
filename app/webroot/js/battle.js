@@ -6,59 +6,100 @@ var n_continuously_like = 1;
 const NUM_FOR_FAV = 10;
 
 /**
- * 押下されたコーデを加点後，次に表示するコーデを取得し，表示を切り替える
+ * コーデ画像を更新する
+ * @param obj
+ * @param like_coordinate_id
+ * @param dislike_coordinate_id
  */
-function img_update(obj, coordinate_id, dislike_id) {
+function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id) {
+    var like_side_new_coordinate;
+    var dislike_side_new_coordinate;
+    var like_side_obj_id = obj.id[5];
+    var dislike_side_obj_id = String((Number(obj.id[5])+1)%2);
+
     if (!push_enable){ return; }
 
-    if (coordinate_id == last_time_coordinate_id) {
-        if (++n_continuously_like >= NUM_FOR_FAV) {
-            favorite_coordinate(coordinate_id);
+    try {
+        getNewCoordinateImage(like_coordinate_id, dislike_coordinate_id).done(
+            function(coordinate_data) {
+                dislike_side_new_coordinate = JSON.parse(coordinate_data);
+
+                animateCoordinateImage(
+                    dislike_side_obj_id,
+                    dislike_side_new_coordinate
+                );
+            }
+        );
+
+        if (like_coordinate_id == last_time_coordinate_id) {
+            if (++n_continuously_like >= NUM_FOR_FAV) {
+                alert(NUM_FOR_FAV + "回連続で同じコーデを選んだので, お気に入りに登録しました!");
+
+                favoriteCoordinate(like_coordinate_id).done(function (result) {
+                    if (result == "saved") {
+                        getNewCoordinateImage(like_coordinate_id, dislike_side_new_coordinate.id).done(
+                            function (coordinate_data) {
+                                like_side_new_coordinate = JSON.parse(coordinate_data);
+
+                                animateCoordinateImage(
+                                    like_side_obj_id,
+                                    like_side_new_coordinate
+                                )
+                            }
+                        );
+                    }
+                });
+                n_continuously_like = 1;
+            }
+        } else {
             n_continuously_like = 1;
         }
-    } else {
-        n_continuously_like = 1;
+        last_time_coordinate_id = like_coordinate_id;
+    } catch (exception) {
+        alert(exception);
     }
-    last_time_coordinate_id = coordinate_id;
+}
 
+/**
+ * 2つのコーデIDを与えると，それらと重複しない新たなコーデIDを取得してくる
+ * @param coordinate_id
+ * @param dislike_id
+ */
+function getNewCoordinateImage(coordinate_id, dislike_id) {
     var data = {id: coordinate_id, d_id: dislike_id};
-    $.ajax({
+    return $.ajax({
         type: "POST",
         url: "send",
         data: data,
-        success: function (data, dataType) {
-            data = (new Function("return " + data))();
-            img_animate(obj.id[5], data);
-        },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert('Error : ' + errorThrown);
+            throw new Error(errorThrown);
         }
     });
 }
 
-function favorite_coordinate(coordinate_id) {
+/**
+ * コーデをお気に入りする
+ * @param coordinate_id
+ */
+function favoriteCoordinate(coordinate_id) {
     var send_data = {favorite_id: coordinate_id};
-    $.ajax({
+    return $.ajax({
         type: "POST",
         url: "favorite",
         data: send_data,
-        success: function (send_data, dataType) {
-            if (send_data == "saved") {
-                alert(NUM_FOR_FAV + "回連続で同じコーデを選んだので, お気に入りに登録しました!");
-            }
-        },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert('Error : ' + errorThrown);
+            throw new Error(errorThrown);
         }
     })
 }
 
-/**
- * 次のコーデ画像へアニメーションする
- */
-function img_animate(obj_id, coordinate_data) {
-    obj_id = String((Number(obj_id)+1)%2);
 
+/**
+ * コーデ画像をアニメーションで置き換える
+ * @param obj_id
+ * @param coordinate_data
+ */
+function animateCoordinateImage(obj_id, coordinate_data) {
     push_enable = false;
 
     // フェードアウト用画像を表面に持ってくる
@@ -81,7 +122,7 @@ function img_animate(obj_id, coordinate_data) {
             },
             500,
             function () {
-                dealing_after_animation(obj_id, coordinate_data);
+                dealingAfterAnimation(obj_id, coordinate_data);
             }
         );
     } else {
@@ -93,17 +134,19 @@ function img_animate(obj_id, coordinate_data) {
             },
             500,
             function () {
-                dealing_after_animation(obj_id, coordinate_data);
+                dealingAfterAnimation(obj_id, coordinate_data);
             }
         );
     }
 }
 
+
 /**
- * アニメーションの事後処理を行う．
- * フェードアウトさせた画像の位置を戻したり，ボタン押下を有効化したり
+ * アニメーションの事後処理を行う
+ * @param obj_id
+ * @param coordinate_data
  */
-function dealing_after_animation(obj_id, coordinate_data) {
+function dealingAfterAnimation(obj_id, coordinate_data) {
     $("#fadephoto" + obj_id).css({
         "z-index":0
     });

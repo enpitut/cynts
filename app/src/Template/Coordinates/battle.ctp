@@ -30,14 +30,14 @@ foreach ($coordinates as $coordinate) {
             '/img/view/battle_A.png',
             [
                 'id' => 'phototag' . $photo_id,
-                'onClick' => 'img_update(image_obj0, coordinate_id0, coordinate_id1)',
+                'onClick' => 'updateCoordinateImage(image_obj0, coordinate_id0, coordinate_id1)',
             ]);
     } else {
         echo $this->Html->image(
             '/img/view/battle_B.png',
             [
                 'id' => 'phototag' . $photo_id,
-                'onClick' => 'img_update(image_obj1, coordinate_id1, coordinate_id0)',
+                'onClick' => 'updateCoordinateImage(image_obj1, coordinate_id1, coordinate_id0)',
             ]);
     }
     echo '</div>';
@@ -45,7 +45,7 @@ foreach ($coordinates as $coordinate) {
     echo '<div class="photo">' . PHP_EOL;
     echo $this->Html->image($coordinate->photo_path,
         [
-            'onClick' => 'img_update(this, coordinate_id' . $photo_id . ', coordinate_id' . (($photo_id + 1) % 2) . ')',
+            'onClick' => 'updateCoordinateImage(this, coordinate_id' . $photo_id . ', coordinate_id' . (($photo_id + 1) % 2) . ')',
             'id' => "photo" . $photo_id,
             'class' => "battlephoto",
         ]) . PHP_EOL;
