@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller;
-
-use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Items Controller
@@ -10,6 +9,13 @@ use App\Controller\AppController;
  */
 class ItemsController extends AppController
 {
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(
+            ['view']
+        );
+    }
 
     /**
      * Index method
