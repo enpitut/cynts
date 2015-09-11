@@ -203,16 +203,13 @@ class CoordinatesController extends AppController
 
     public function favorite()
     {
-        $session = $this->request->session()->read();
-        if (isset($session["Auth"]["User"]["id"]) &&
-            $this->request->is('post')
-        ) {
+        if ($this->request->is('post')) {
             $favorite_coordinate_id = $this->request->data('favorite_id');
-            $uid = $session["Auth"]["User"]["id"];
+            $uid = $this->Auth->user('id');
 
-            $favorites = TableRegistry::get('Favorites');
+            $favorites_table = TableRegistry::get('Favorites');
 
-            $exist_check = $favorites->find()->where(
+            $exist_check = $favorites_table->find()->where(
                 [
                     'Favorites.user_id' => $uid,
                     'Favorites.coordinate_id' => $favorite_coordinate_id,
@@ -220,15 +217,14 @@ class CoordinatesController extends AppController
             );
             if (empty(count($exist_check->toArray()))) {
                 $now = new \DateTime();
-                $favorite = $favorites->newEntity(
+                $favorite = $favorites_table->newEntity(
                     [
                         'user_id' => $uid,
                         'coordinate_id' => $favorite_coordinate_id,
-                        'updated_at' => $now->format('Y-m-d H:i:s'),
                     ]
                 );
                 $favorite->created_at = $now->format('Y-m-d H:i:s');
-                $favorites->save($favorite);
+                $favorites_table->save($favorite);
                 echo "saved";
             }
         }
