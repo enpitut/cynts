@@ -61,7 +61,7 @@ class FavoritesTable extends Table
             ->allowEmpty('created_at');
 
         $validator
-            ->requirePresence('updated_at', 'create')
+            ->requirePresence('updated_at', 'update')
             ->notEmpty('updated_at');
 
         return $validator;

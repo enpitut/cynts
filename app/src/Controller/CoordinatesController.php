@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 use Cake\Event\Event;
 
 /**
@@ -179,7 +181,7 @@ class CoordinatesController extends AppController
                 ) {
                     continue;
                 }
-                echo "{id:\"" . $coordinate->id . "\", url:\"" . $coordinate->photo_path . "\"}";
+                echo "{\"id\":\"" . $coordinate->id . "\", \"url\":\"" . $coordinate->photo_path . "\"}";
                 $duplicated_flg = true;
             }
 
@@ -197,5 +199,34 @@ class CoordinatesController extends AppController
     public function buy()
     {
         echo "buy";
+    }
+
+    public function favorite()
+    {
+        if ($this->request->is('post')) {
+            $favorite_coordinate_id = $this->request->data('favorite_id');
+            $uid = $this->Auth->user('id');
+
+            $favorites_table = TableRegistry::get('Favorites');
+
+            $exist_check = $favorites_table->find()->where(
+                [
+                    'Favorites.user_id' => $uid,
+                    'Favorites.coordinate_id' => $favorite_coordinate_id,
+                ]
+            );
+            if (empty(count($exist_check->toArray()))) {
+                $now = new \DateTime();
+                $favorite = $favorites_table->newEntity(
+                    [
+                        'user_id' => $uid,
+                        'coordinate_id' => $favorite_coordinate_id,
+                    ]
+                );
+                $favorite->created_at = $now->format('Y-m-d H:i:s');
+                $favorites_table->save($favorite);
+                echo "saved";
+            }
+        }
     }
 }
