@@ -130,6 +130,13 @@ class CoordinatesController extends AppController
      */
     public function battle()
     {
+        $max_n_battle = 0;
+        if ($this->request->is('post')) {
+            $max_n_battle = $this->request->data('max_n_battle');
+        } else {
+            return $this->redirect(['action' => 'selectBattleMode']);
+        }
+
         $coordinates = $this->Coordinates->find(
             'all',
             [
@@ -146,7 +153,7 @@ class CoordinatesController extends AppController
                 ]
             );
         }
-        $this->set(compact('coordinates'));
+        $this->set(compact('coordinates', 'max_n_battle'));
     }
 
     /**
@@ -201,6 +208,9 @@ class CoordinatesController extends AppController
         echo "buy";
     }
 
+    /**
+     * ajax用関数(echo を利用しているので他では使わない)
+     */
     public function favorite()
     {
         if ($this->request->is('post')) {
@@ -227,6 +237,66 @@ class CoordinatesController extends AppController
                 $favorites_table->save($favorite);
                 echo "saved";
             }
+        }
+    }
+
+    public function selectBattleMode()
+    {
+        // dummy
+    }
+
+    /**
+     * ajax用関数(echo を利用しているので他では使わない)
+     */
+    public function score()
+    {
+        if ($this->request->is('post')) {
+            $A_side_coordinate_id = $this->request->data('a_side_id');
+            $B_side_coordinate_id = $this->request->data('b_side_id');
+            $A_side_point = 0;
+            $B_side_point = 0;
+            $like_coordinate_id = $this->request->data('like_id');
+
+            $A_side_coordinates = $this->Coordinates->find()->where(
+                [
+                    'Coordinates.id' => $A_side_coordinate_id,
+                ]
+            );
+            $B_side_coordinates = $this->Coordinates->find()->where(
+                [
+                    'Coordinates.id' => $B_side_coordinate_id,
+                ]
+            );
+
+            // TODO: 引き分けの場合．コーデの得票数が少ない場合
+            foreach($A_side_coordinates as $A_side_coordinate) {
+                $A_side_point = $A_side_coordinate->n_like;
+            }
+            foreach($B_side_coordinates as $B_side_coordinate) {
+                $B_side_point = $B_side_coordinate->n_like;
+            }
+            $winner = $A_side_point > $B_side_point ? $A_side_coordinate_id : $B_side_coordinate_id;
+            $selected_winner = $winner == $like_coordinate_id ? true : false;
+            $score  = $selected_winner ? 100 : 0;
+
+            echo
+                '{"a_side_point":' . $A_side_point . ',' .
+                ' "b_side_point":' . $B_side_point . ',' .
+                ' "score":' . $score . '}';
+        }
+    }
+
+    public function result()
+    {
+        if ($this->request->is('post')) {
+            $json_data = json_decode($this->request->data('battle_history'));
+            $score = $json_data->{"score"};
+            $max_n_battle = $json_data->{"max_n_battle"};
+            $battle_history = $json_data->{"battle_history"};
+
+            $this->set(compact('score', 'max_n_battle', 'battle_history'));
+        } else {
+            return $this->redirect(['action' => 'selectBattleMode']);
         }
     }
 }

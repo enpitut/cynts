@@ -25,27 +25,26 @@ foreach ($coordinates as $coordinate) {
     echo '<li>' . PHP_EOL;
 
     echo '<div class="phototags">';
-    if ($photo_id == 0) {
-        echo $this->Html->image(
-            '/img/view/battle_A.png',
-            [
-                'id' => 'phototag' . $photo_id,
-                'onClick' => 'updateCoordinateImage(image_obj0, coordinate_id0, coordinate_id1)',
-            ]);
-    } else {
-        echo $this->Html->image(
-            '/img/view/battle_B.png',
-            [
-                'id' => 'phototag' . $photo_id,
-                'onClick' => 'updateCoordinateImage(image_obj1, coordinate_id1, coordinate_id0)',
-            ]);
-    }
+    echo $this->Html->image(
+        '/img/view/battle_' . $photo_id . '.png',
+        [
+            'id' => 'phototag' . $photo_id,
+            'onClick' => 'updateCoordinateImage(' .
+                'image_obj' . $photo_id . ', ' .
+                'coordinate_id' . $photo_id . ', ' .
+                'coordinate_id' . (($photo_id + 1) % 2) . ', ' .
+                $max_n_battle .
+                ')',
+        ]);
     echo '</div>';
 
     echo '<div class="photo">' . PHP_EOL;
     echo $this->Html->image($coordinate->photo_path,
         [
-            'onClick' => 'updateCoordinateImage(this, coordinate_id' . $photo_id . ', coordinate_id' . (($photo_id + 1) % 2) . ')',
+            'onClick' => 'updateCoordinateImage(this, ' .
+                'coordinate_id' . $photo_id . ' , ' .
+                'coordinate_id' . (($photo_id + 1) % 2) . ' , ' .
+                $max_n_battle . ')',
             'id' => "photo" . $photo_id,
             'class' => "battlephoto",
         ]) . PHP_EOL;
