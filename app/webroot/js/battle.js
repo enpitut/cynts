@@ -31,11 +31,11 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
         }
 
         // スコアを取得・記録する
-        sendPost("score",
+        sendPost("getScore",
             {
-                a_side_id: coordinate_id0,
-                b_side_id: coordinate_id1,
-                like_id: like_coordinate_id
+                a_side_coordinate_id: coordinate_id0,
+                b_side_coordinate_id: coordinate_id1,
+                liked_coordinate_id: like_coordinate_id
             }
         ).done(
             function(result) {
@@ -60,7 +60,12 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
         );
 
         // 押下されなかった画像を差し替える
-        sendPost("send", {id: like_coordinate_id, d_id: dislike_coordinate_id}).done(
+        sendPost("getNewCoordinate",
+            {
+                liked_coordinate_id: like_coordinate_id,
+                disliked_coordinate_id: dislike_coordinate_id
+            }
+        ).done(
             function(coordinate_data) {
                 dislike_side_new_coordinate = JSON.parse(coordinate_data);
 

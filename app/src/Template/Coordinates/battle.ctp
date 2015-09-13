@@ -29,22 +29,20 @@ foreach ($coordinates as $coordinate) {
         '/img/view/battle_' . $photo_id . '.png',
         [
             'id' => 'phototag' . $photo_id,
-            'onClick' => 'updateCoordinateImage(' .
-                'image_obj' . $photo_id . ', ' .
-                'coordinate_id' . $photo_id . ', ' .
-                'coordinate_id' . (($photo_id + 1) % 2) . ', ' .
-                $max_n_battle .
-                ')',
+            'onClick' => sprintf(
+                'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d, %d)',
+                $photo_id, $photo_id, (($photo_id + 1) % 2), $max_n_battle
+            ),
         ]);
     echo '</div>';
 
     echo '<div class="photo">' . PHP_EOL;
     echo $this->Html->image($coordinate->photo_path,
         [
-            'onClick' => 'updateCoordinateImage(this, ' .
-                'coordinate_id' . $photo_id . ' , ' .
-                'coordinate_id' . (($photo_id + 1) % 2) . ' , ' .
-                $max_n_battle . ')',
+            'onClick' => sprintf(
+                'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d, %d)',
+                $photo_id, $photo_id, (($photo_id + 1) % 2), $max_n_battle
+            ),
             'id' => "photo" . $photo_id,
             'class' => "battlephoto",
         ]) . PHP_EOL;

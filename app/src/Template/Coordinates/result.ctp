@@ -9,11 +9,9 @@
 <?= $this->element('eachpage_header') ?>
 
 <?php
-echo "you score:" . $score;
+echo "your score:" . $score;
 echo "<br>";
 echo "max score:" . $max_n_battle * 100;
-echo "<br>";
-//var_dump($battle_history);
 ?>
 
 <?= $this->element('footer') ?>

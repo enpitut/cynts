@@ -17,7 +17,7 @@ echo $this->Form->select(
     [
         10 => 10,
         30 => 30,
-        50 => 50
+        50 => 50,
     ]
 );
 echo $this->Form->button('Play!!');

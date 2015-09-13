@@ -157,49 +157,55 @@ class CoordinatesController extends AppController
     }
 
     /**
-     * ajax 用の関数だから，echo してる（他では使わないこと）
+     * ajax用関数(echo を利用しているので他では使わないこと)
+     * ここでレンダリングされたビュー(get_new_coordinate.ctp)は利用しないので，
+     * ajax から POST メソッドでデータが送られてきた場合のみ利用可能
      */
-    public function send()
+    public function getNewCoordinate()
     {
-        $pushed_coordinate_id = $this->request->data('id');
-        $pushed_coordinate = $this->Coordinates->get($pushed_coordinate_id);
-        $pushed_coordinate->n_like = $pushed_coordinate->n_like + 1;
-        $this->Coordinates->save($pushed_coordinate);
+        if ($this->request->is('post')) {
+            $pushed_coordinate_id = $this->request->data('liked_coordinate_id');
+            $pushed_coordinate = $this->Coordinates->get($pushed_coordinate_id);
+            $pushed_coordinate->n_like = $pushed_coordinate->n_like + 1;
+            $this->Coordinates->save($pushed_coordinate);
 
-        $unpushed_coordinate_id = $this->request->data('d_id');
-        $unpushed_coordinate = $this->Coordinates->get($unpushed_coordinate_id);
-        $unpushed_coordinate->n_unlike = $unpushed_coordinate->n_unlike + 1;
-        $this->Coordinates->save($unpushed_coordinate);
+            $unpushed_coordinate_id = $this->request->data('disliked_coordinate_id');
+            $unpushed_coordinate = $this->Coordinates->get($unpushed_coordinate_id);
+            $unpushed_coordinate->n_unlike = $unpushed_coordinate->n_unlike + 1;
+            $this->Coordinates->save($unpushed_coordinate);
 
-        $duplicated_flg = false;
-        $n_loop = 0;
-        while (true) {
-            $coordinates = $this->Coordinates->find(
-                'all',
-                [
-                    'order' => 'rand()',
-                    'limit' => 1
-                ]
-            );
+            $duplicated_flg = false;
+            $n_loop = 0;
+            while (true) {
+                $coordinates = $this->Coordinates->find(
+                    'all',
+                    [
+                        'order' => 'rand()',
+                        'limit' => 1
+                    ]
+                );
 
-            foreach ($coordinates as $coordinate) {
-                if ($pushed_coordinate_id == $coordinate->id ||
-                    $unpushed_coordinate_id == $coordinate->id
-                ) {
-                    continue;
+                foreach ($coordinates as $coordinate) {
+                    if ($pushed_coordinate_id == $coordinate->id ||
+                        $unpushed_coordinate_id == $coordinate->id
+                    ) {
+                        continue;
+                    }
+                    echo "{\"id\":\"" . $coordinate->id . "\", \"url\":\"" . $coordinate->photo_path . "\"}";
+                    $duplicated_flg = true;
                 }
-                echo "{\"id\":\"" . $coordinate->id . "\", \"url\":\"" . $coordinate->photo_path . "\"}";
-                $duplicated_flg = true;
-            }
 
-            if ($duplicated_flg) {
-                break;
-            }
+                if ($duplicated_flg) {
+                    break;
+                }
 
-            // セーフティブレーク
-            if (++$n_loop > 20) {
-                break;
+                // セーフティブレーク
+                if (++$n_loop > 20) {
+                    break;
+                }
             }
+        } else {
+            return $this->redirect(['action' => 'selectBattleMode']);
         }
     }
 
@@ -209,7 +215,9 @@ class CoordinatesController extends AppController
     }
 
     /**
-     * ajax用関数(echo を利用しているので他では使わない)
+     * ajax用関数(echo を利用しているので他では使わないこと)
+     * ここでレンダリングされたビュー(favorite.ctp)は利用しないので，
+     * ajax から POST メソッドでデータが送られてきた場合のみ利用可能
      */
     public function favorite()
     {
@@ -237,6 +245,8 @@ class CoordinatesController extends AppController
                 $favorites_table->save($favorite);
                 echo "saved";
             }
+        } else {
+            return $this->redirect(['action' => 'selectBattleMode']);
         }
     }
 
@@ -246,46 +256,51 @@ class CoordinatesController extends AppController
     }
 
     /**
-     * ajax用関数(echo を利用しているので他では使わない)
+     * ajax用関数(echo を利用しているので他では使わないこと)
+     * ここでレンダリングされたビュー(get_score.ctp)は利用しないので，
+     * ajax から POST メソッドでデータが送られてきた場合のみ利用可能
      */
-    public function score()
+    public function getScore()
     {
         if ($this->request->is('post')) {
-            $A_side_coordinate_id = $this->request->data('a_side_id');
-            $B_side_coordinate_id = $this->request->data('b_side_id');
-            $A_side_point = 0;
-            $B_side_point = 0;
-            $like_coordinate_id = $this->request->data('like_id');
+            $a_side_coordinate_id = $this->request->data('a_side_coordinate_id');
+            $b_side_coordinate_id = $this->request->data('b_side_coordinate_id');
+            $like_coordinate_id = $this->request->data('liked_coordinate_id');
 
-            $A_side_coordinates = $this->Coordinates->find()->where(
+            $a_side_coordinate = $this->Coordinates->find()->where(
                 [
-                    'Coordinates.id' => $A_side_coordinate_id,
+                    'Coordinates.id' => $a_side_coordinate_id,
                 ]
-            );
-            $B_side_coordinates = $this->Coordinates->find()->where(
+            )->first();
+            $b_side_coordinate = $this->Coordinates->find()->where(
                 [
-                    'Coordinates.id' => $B_side_coordinate_id,
+                    'Coordinates.id' => $b_side_coordinate_id,
                 ]
-            );
+            )->first();
 
             // TODO: 引き分けの場合．コーデの得票数が少ない場合
-            foreach($A_side_coordinates as $A_side_coordinate) {
-                $A_side_point = $A_side_coordinate->n_like;
-            }
-            foreach($B_side_coordinates as $B_side_coordinate) {
-                $B_side_point = $B_side_coordinate->n_like;
-            }
-            $winner = $A_side_point > $B_side_point ? $A_side_coordinate_id : $B_side_coordinate_id;
-            $selected_winner = $winner == $like_coordinate_id ? true : false;
-            $score  = $selected_winner ? 100 : 0;
+            $a_side_point = $a_side_coordinate->n_like;
+            $b_side_point = $b_side_coordinate->n_like;
+            $winner = $a_side_point > $b_side_point ? $a_side_coordinate_id : $b_side_coordinate_id;
+            $score  = $winner === $like_coordinate_id ? 100 : 0;
 
             echo
-                '{"a_side_point":' . $A_side_point . ',' .
-                ' "b_side_point":' . $B_side_point . ',' .
+                '{"a_side_point":' . $a_side_point . ',' .
+                ' "b_side_point":' . $b_side_point . ',' .
                 ' "score":' . $score . '}';
+        } else {
+            return $this->redirect(['action' => 'selectBattleMode']);
         }
     }
 
+    /**
+     * JavaScript から呼ばれる関数
+     * POST メソッドで画面遷移してきた場合にのみ利用可能
+     * JS 側のデータを受け渡すために，現在は JS 上で form タグを動的に生成し，それを実行することで result 画面に遷移させている
+     * バトルの結果を取得し，結果画面をレンダリングする
+     *
+     * @return \Cake\Network\Response|void
+     */
     public function result()
     {
         if ($this->request->is('post')) {
