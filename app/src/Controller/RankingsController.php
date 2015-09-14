@@ -1,7 +1,9 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
+use App\Model\Entity\Coordinate;
+use App\Model\Entity\Item;
+use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -12,9 +14,16 @@ use Cake\ORM\TableRegistry;
 class RankingsController extends AppController
 {
     const RANKING_SHOW_LIMIT = 9;
-
     const RANKING_TYPE_LIKE = 'like';
     const RANKING_TYPE_UNLIKE = 'unlike';
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(
+            ['view']
+        );
+    }
 
     /**
      * View method
@@ -48,7 +57,18 @@ class RankingsController extends AppController
                 );
         }
 
-        $this->set('ranking', $ranking);
+        /** @var Coordinate $coordinate */
+        $ranking_array = $ranking->toArray();
+        foreach ($ranking_array as $key => $coordinate) {
+            $total_price = 0;
+            /** @var Item $item */
+            foreach ($coordinate->items as $item) {
+                $total_price += $item->price;
+            }
+            $ranking_array[$key]->set('total_price', $total_price);
+        }
+
+        $this->set('ranking', $ranking_array);
         $this->set('_serialize', ['ranking']);
     }
 }

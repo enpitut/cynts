@@ -22,33 +22,47 @@
 
     <div class="span3">
         <div class="rank">
-            <?= $loop + 1 ?>
+            <?= $this->element('rank', ['rank' => $loop + 1]) ?>
         </div>
         <div class="photo">
-            <a href="/coordinates/view/<?= $coordinate->id ?>">
-                <?= $this->Html->image(
-                    $coordinate->photo_path,
-                    [
-                        'class' => 'coordinate_image',
-                    ]
-                );
-                ?>
-            </a>
+            <?= $this->Html->image(
+                $coordinate->photo_path,
+                [
+                    'class' => 'coordinate_image',
+                    'url' => [
+                        'controller' => 'Coordinates',
+                        'action' => 'view',
+                        $coordinate->id,
+                    ],
+                ]
+            ) ?>
         </div>
         <div class="information">
-            <span class="point">
-                <span class="point_number"><?= $coordinate->n_like * 1000 ?></span> Points
-            </span>
-            <span class="user">
-                <?php if (isset($coordinate->user->name)) { ?>
-                    Posted by
-                    <span class="user_name">
-                    <a href="/users/view/<?= $coordinate->user->id ?>">
-                        <?= $coordinate->user->name ?>
-                    </a>
-                </span>
-                <?php } ?>
-            </span>
+            <div class="information_left">
+                <div class="point">
+                    <span class="point_number"><?= $coordinate->n_like * 1000 ?></span> Points
+                </div>
+                <div class="total_price">
+                    ¥<span class="price_number"><?= $coordinate->total_price ?></span>
+                </div>
+            </div>
+            <div class="information_right">
+                <div class="user">
+                    <?php if (isset($coordinate->user->name)) { ?>
+                        Posted by
+                        <span class="user_name">
+                            <?= $this->Html->link(
+                                $coordinate->user->name,
+                                [
+                                    'controller' => 'Users',
+                                    'action' => 'view',
+                                    $coordinate->user->id,
+                                ]
+                            ) ?>
+                        </span>
+                    <?php } ?>
+                </div>
+            </div>
         </div>
 
     </div>
