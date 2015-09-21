@@ -255,6 +255,9 @@ class CoordinatesController extends AppController
         // dummy
     }
 
+    const SCORE_WIN = 100;
+    const SCORE_LOOSE = 0;
+    const SCORE_DRAW = 50;
     /**
      * ajax用関数(echo を利用しているので他では使わないこと)
      * ここでレンダリングされたビュー(get_score.ctp)は利用しないので，
@@ -278,16 +281,29 @@ class CoordinatesController extends AppController
                 ]
             )->first();
 
-            // TODO: 引き分けの場合．コーデの得票数が少ない場合
+            // TODO: コーデの得票数が明らかに少ない場合には，無視した方が良い？
             $a_side_point = $a_side_coordinate->n_like;
             $b_side_point = $b_side_coordinate->n_like;
-            $winner = $a_side_point > $b_side_point ? $a_side_coordinate_id : $b_side_coordinate_id;
-            $score  = $winner === $like_coordinate_id ? 100 : 0;
+            // ユーザが良いコーデを選択したか，悪いコーデを選択したかをここで保持しておく
+            // 1: 良いコーデを選択した
+            // 0: 悪いコーデを選択した
+            // -1: 引き分け
+            if ($a_side_point === $b_side_point) {
+                $result = -1;
+                $score = self::SCORE_DRAW;
+            } else {
+                $winner = $a_side_point > $b_side_point ? $a_side_coordinate_id : $b_side_coordinate_id;
+                $result = $winner === $like_coordinate_id ? 1 : 0;
+                $score = $result === 1 ? self::SCORE_WIN : self::SCORE_LOOSE;
+            }
 
             echo
                 '{"a_side_point":' . $a_side_point . ',' .
                 ' "b_side_point":' . $b_side_point . ',' .
-                ' "score":' . $score . '}';
+                ' "a_side_photo_path":"' . $a_side_coordinate->photo_path . '",' .
+                ' "b_side_photo_path":"' . $b_side_coordinate->photo_path . '",' .
+                ' "score":' . $score . ',' .
+                ' "result":' . $result . '}';
         } else {
             return $this->redirect(['action' => 'selectBattleMode']);
         }
@@ -309,7 +325,9 @@ class CoordinatesController extends AppController
             $max_n_battle = $json_data->{"max_n_battle"};
             $battle_history = $json_data->{"battle_history"};
 
-            $this->set(compact('score', 'max_n_battle', 'battle_history'));
+            $score_win = self::SCORE_WIN;
+
+            $this->set(compact('score', 'max_n_battle', 'battle_history', 'score_win'));
         } else {
             return $this->redirect(['action' => 'selectBattleMode']);
         }

@@ -49,9 +49,12 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
                     '{' +
                     '"a_side_coordinate_id":' + coordinate_id0 + ',' +
                     '"a_side_coordinate_point":' + result_data["a_side_point"] + ',' +
+                    '"a_side_coordinate_photo_path":"' + result_data["a_side_photo_path"] + '",' +
                     '"b_side_coordinate_id":' + coordinate_id1 + ',' +
                     '"b_side_coordinate_point":' + result_data["b_side_point"] + ',' +
-                    '"selected_side":' + like_coordinate_id +
+                    '"b_side_coordinate_photo_path":"' + result_data["b_side_photo_path"] + '",' +
+                    '"selected_side":"' + (like_coordinate_id === coordinate_id0 ? "a" : "b") + '",' +
+                    '"result":' + result_data["result"] +
                     '}';
 
                 // スコアを保持する

@@ -131,3 +131,61 @@ select {
 #centerposition {
     text-align: center;
 }
+
+.result_score {
+    font-size: xx-large;
+    padding: 0;
+    margin: 0;
+}
+
+.max_score {
+    font-size: small;
+    padding: 0;
+    margin: 0;
+}
+
+.battle_result {
+    margin: 50px 0 0 0;
+    padding: 0;
+    text-align: center;
+    font-size: 0;
+}
+
+.battle_result > li {
+    margin: 0 10px 30px 10px;
+    background-color: #222222;
+    display: inline-block;
+    font-size: large;
+    width: 206px;
+}
+
+p.each_actual_point {
+    margin: 5px;
+    vertical-align: middle;
+}
+
+p.win_coordinate_string {
+    color: #cd2c24;
+}
+
+p.loose_coordinate_string {
+    color: #005580;
+}
+
+p.draw_coordinate_string {
+    color: yellow;
+}
+
+img.result_coordinate_photo {
+    width: 200px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: transparent;
+}
+
+img.selected_coordinate_photo {
+    width: 200px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: red;
+}
