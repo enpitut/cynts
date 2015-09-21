@@ -8,6 +8,11 @@
 
 <?= $this->element('eachpage_header') ?>
 
+<div id="centermessage">
+    <p>How many times do you play?</p>
+</div>
+
+<div class="select_box">
 <?php
 use App\Model\Entity\Coordinate;
 $coordinate = new Coordinate();
@@ -20,8 +25,10 @@ echo $this->Form->select(
         50 => 50,
     ]
 );
-echo $this->Form->button('Play!!');
+echo "<br>";
+echo $this->Form->button('Play!!', ['class' => 'play_btn']);
 ?>
+</div>
 
 <?= $this->element('footer') ?>
 

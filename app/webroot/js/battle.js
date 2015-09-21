@@ -42,7 +42,7 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
                 var result_data = JSON.parse(result);
 
                 // コーデバトルの履歴を保持する
-                if (n_battle != 2) {
+                if (n_battle != 1) {
                     battle_history += ',';
                 }
                 battle_history +=
@@ -56,6 +56,21 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
 
                 // スコアを保持する
                 usr_score += parseFloat(result_data["score"]);
+
+                // バトル終了判定 & redirect
+                if (++n_battle > max_n_battle) {
+                    battle_history +=
+                        '],' +
+                        '"score":' + usr_score +
+                        '}';
+
+                    var html =
+                        "<form method='post' action='result' id='refresh' style='display: none;'>" +
+                        "<input type='hidden' name='battle_history' value='" + battle_history  + "' >" +
+                        "</form>";
+                    $("body").append(html);
+                    $("#refresh").submit();
+                }
             }
         );
 
@@ -101,22 +116,6 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
             n_continuously_like = 1;
         }
         last_time_coordinate_id = like_coordinate_id;
-
-        // バトル終了判定 & redirect
-        if (++n_battle > max_n_battle) {
-            battle_history +=
-                '],' +
-                '"score":"' + usr_score + '"' +
-                '}';
-            alert(battle_history);
-
-            var html =
-                "<form method='post' action='result' id='refresh' style='display: none;'>" +
-                "<input type='hidden' name='battle_history' value='" + battle_history  + "' >" +
-                "</form>";
-            $("body").append(html);
-            $("#refresh").submit();
-        }
 
     } catch (exception) {
         alert(exception);
