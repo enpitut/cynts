@@ -40,6 +40,9 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
         ).done(
             function(result) {
                 var result_data = JSON.parse(result);
+                if (!result_data["hasSucceeded"]) {
+                    throw new Error("Illegal post value");
+                }
 
                 // コーデバトルの履歴を保持する
                 if (n_battle != 1) {
@@ -86,6 +89,9 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
         ).done(
             function(coordinate_data) {
                 dislike_side_new_coordinate = JSON.parse(coordinate_data);
+                if (!dislike_side_new_coordinate["hasSucceeded"]) {
+                    throw new Error("Illegal post value");
+                }
 
                 animateCoordinateImage(
                     dislike_side_obj_id,
@@ -97,13 +103,29 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
         // お気に入りの判定 & 処理
         if (like_coordinate_id == last_time_coordinate_id) {
             if (++n_continuously_like >= NUM_FOR_FAV) {
-                alert(NUM_FOR_FAV + "回連続で同じコーデを選んだので, お気に入りに登録しました!");
-
                 sendPost("favorite", {favorite_id: like_coordinate_id}).done(function (result) {
-                    if (result == "saved") {
-                        getNewCoordinateImage(like_coordinate_id, dislike_side_new_coordinate.id).done(
+                    var register_favorite = JSON.parse(result);
+                    // hasSucceeded : POST したデータの validate 結果. やりとりしたデータの型が正しいかどうか
+                    // hasRegistered : お気に入り登録したか(既に登録されていた場合には登録されない
+                    if (register_favorite["hasSucceeded"]) {
+                        if (register_favorite["hasRegistered"]) {
+                            alert(NUM_FOR_FAV + "回連続で同じコーデを選んだので, お気に入りに登録しました!");
+                        }
+
+                        // 既にお気にいりだった場合でも，10回連続で同じコーデが選ばれたら切り替える
+                        // その方がゲームが面白いので(ランキング1位のものをずっと選んでいれば高得点が簡単に取れてしまう)
+                        sendPost(
+                            "getNewCoordinate",
+                            {
+                                liked_coordinate_id: like_coordinate_id,
+                                disliked_coordinate_id: dislike_side_new_coordinate.id
+                            }
+                        ).done(
                             function (coordinate_data) {
                                 like_side_new_coordinate = JSON.parse(coordinate_data);
+                                if (!like_side_new_coordinate["hasSucceeded"]) {
+                                    throw new Error("Illegal post value");
+                                }
 
                                 animateCoordinateImage(
                                     like_side_obj_id,
@@ -111,6 +133,8 @@ function updateCoordinateImage(obj, like_coordinate_id, dislike_coordinate_id, m
                                 )
                             }
                         );
+                    } else {
+                        throw new Error("Illegal post value");
                     }
                 });
                 n_continuously_like = 1;

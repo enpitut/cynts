@@ -164,12 +164,18 @@ class CoordinatesController extends AppController
     public function getNewCoordinate()
     {
         if ($this->request->is('post')) {
-            $pushed_coordinate_id = $this->request->data('liked_coordinate_id');
+            $pushed_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
+            $unpushed_coordinate_id = filter_input(INPUT_POST, 'disliked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
+            if (!($pushed_coordinate_id && $unpushed_coordinate_id)) {
+                error_log('Illegal value type');
+                echo '{"hasSucceeded": false}';
+                exit;
+            }
+
             $pushed_coordinate = $this->Coordinates->get($pushed_coordinate_id);
             $pushed_coordinate->n_like = $pushed_coordinate->n_like + 1;
             $this->Coordinates->save($pushed_coordinate);
 
-            $unpushed_coordinate_id = $this->request->data('disliked_coordinate_id');
             $unpushed_coordinate = $this->Coordinates->get($unpushed_coordinate_id);
             $unpushed_coordinate->n_unlike = $unpushed_coordinate->n_unlike + 1;
             $this->Coordinates->save($unpushed_coordinate);
@@ -191,7 +197,10 @@ class CoordinatesController extends AppController
                     ) {
                         continue;
                     }
-                    echo "{\"id\":\"" . $coordinate->id . "\", \"url\":\"" . $coordinate->photo_path . "\"}";
+                    echo
+                        '{"id":"' . $coordinate->id . '", ' .
+                        ' "url":"' . $coordinate->photo_path . '", ' .
+                        ' "hasSucceeded": true }';
                     $duplicated_flg = true;
                 }
 
@@ -222,7 +231,13 @@ class CoordinatesController extends AppController
     public function favorite()
     {
         if ($this->request->is('post')) {
-            $favorite_coordinate_id = $this->request->data('favorite_id');
+            $favorite_coordinate_id = filter_input(INPUT_POST, 'favorite_id', FILTER_SANITIZE_NUMBER_INT);;
+            if (!$favorite_coordinate_id) {
+                error_log('Illegal value type');
+                echo '{"hasSucceeded": false}';
+                exit;
+            }
+
             $uid = $this->Auth->user('id');
 
             $favorites_table = TableRegistry::get('Favorites');
@@ -243,8 +258,11 @@ class CoordinatesController extends AppController
                 );
                 $favorite->created_at = $now->format('Y-m-d H:i:s');
                 $favorites_table->save($favorite);
-                echo "saved";
+                echo '{"hasSucceeded": true, "hasRegistered": true}';
+                exit;
             }
+            echo '{"hasSucceeded": true, "hasRegistered": false }';
+            exit;
         } else {
             return $this->redirect(['action' => 'selectBattleMode']);
         }
@@ -266,9 +284,14 @@ class CoordinatesController extends AppController
     public function getScore()
     {
         if ($this->request->is('post')) {
-            $a_side_coordinate_id = $this->request->data('a_side_coordinate_id');
-            $b_side_coordinate_id = $this->request->data('b_side_coordinate_id');
-            $like_coordinate_id = $this->request->data('liked_coordinate_id');
+            $a_side_coordinate_id = filter_input(INPUT_POST, 'a_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
+            $b_side_coordinate_id = filter_input(INPUT_POST, 'b_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
+            $like_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
+            if (!($a_side_coordinate_id && $b_side_coordinate_id && $like_coordinate_id)) {
+                error_log('Illegal value type');
+                echo '{"hasSucceeded": false}';
+                exit;
+            }
 
             $a_side_coordinate = $this->Coordinates->find()->where(
                 [
@@ -303,7 +326,8 @@ class CoordinatesController extends AppController
                 ' "a_side_photo_path":"' . $a_side_coordinate->photo_path . '",' .
                 ' "b_side_photo_path":"' . $b_side_coordinate->photo_path . '",' .
                 ' "score":' . $score . ',' .
-                ' "result":' . $result . '}';
+                ' "result":' . $result .  ',' .
+                ' "hasSucceeded": true }';
         } else {
             return $this->redirect(['action' => 'selectBattleMode']);
         }
