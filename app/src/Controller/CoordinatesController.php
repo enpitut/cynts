@@ -130,7 +130,6 @@ class CoordinatesController extends AppController
      */
     public function battle()
     {
-        $max_n_battle = 0;
         if ($this->request->is('post')) {
             $max_n_battle = $this->request->data('max_n_battle');
         } else {
@@ -166,7 +165,8 @@ class CoordinatesController extends AppController
         if ($this->request->is('post')) {
             $pushed_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
             $unpushed_coordinate_id = filter_input(INPUT_POST, 'disliked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
-            if (!($pushed_coordinate_id && $unpushed_coordinate_id)) {
+            if ($pushed_coordinate_id === NULL || $pushed_coordinate_id === false
+                || $unpushed_coordinate_id === NULL || $unpushed_coordinate_id === false) {
                 error_log('Illegal value type');
                 echo '{"hasSucceeded": false}';
                 exit;
@@ -197,10 +197,11 @@ class CoordinatesController extends AppController
                     ) {
                         continue;
                     }
-                    echo
-                        '{"id":"' . $coordinate->id . '", ' .
-                        ' "url":"' . $coordinate->photo_path . '", ' .
-                        ' "hasSucceeded": true }';
+                    echo sprintf(
+                        '{"id":%d, "url":"%s", "hasSucceeded":true}',
+                        $coordinate->id,
+                        $coordinate->photo_path
+                    );
                     $duplicated_flg = true;
                 }
 
@@ -231,8 +232,8 @@ class CoordinatesController extends AppController
     public function favorite()
     {
         if ($this->request->is('post')) {
-            $favorite_coordinate_id = filter_input(INPUT_POST, 'favorite_id', FILTER_SANITIZE_NUMBER_INT);;
-            if (!$favorite_coordinate_id) {
+            $favorite_coordinate_id = filter_input(INPUT_POST, 'favorite_id', FILTER_SANITIZE_NUMBER_INT);
+            if ($favorite_coordinate_id === NULL || $favorite_coordinate_id === false) {
                 error_log('Illegal value type');
                 echo '{"hasSucceeded": false}';
                 exit;
@@ -287,7 +288,9 @@ class CoordinatesController extends AppController
             $a_side_coordinate_id = filter_input(INPUT_POST, 'a_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
             $b_side_coordinate_id = filter_input(INPUT_POST, 'b_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
             $like_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
-            if (!($a_side_coordinate_id && $b_side_coordinate_id && $like_coordinate_id)) {
+            if ($a_side_coordinate_id === NULL || $a_side_coordinate_id === false
+                || $b_side_coordinate_id === NULL || $b_side_coordinate_id === false
+                || $like_coordinate_id === NULL || $like_coordinate_id === false) {
                 error_log('Illegal value type');
                 echo '{"hasSucceeded": false}';
                 exit;
@@ -320,14 +323,17 @@ class CoordinatesController extends AppController
                 $score = $result === 1 ? self::SCORE_WIN : self::SCORE_LOOSE;
             }
 
-            echo
-                '{"a_side_point":' . $a_side_point . ',' .
-                ' "b_side_point":' . $b_side_point . ',' .
-                ' "a_side_photo_path":"' . $a_side_coordinate->photo_path . '",' .
-                ' "b_side_photo_path":"' . $b_side_coordinate->photo_path . '",' .
-                ' "score":' . $score . ',' .
-                ' "result":' . $result .  ',' .
-                ' "hasSucceeded": true }';
+            echo sprintf(
+                '{"a_side_point":%d, "b_side_point":%d,
+                  "a_side_photo_path":"%s", "b_side_photo_path":"%s",
+                  "score":%d, "result":%d, "hasSucceeded":true}',
+                $a_side_point,
+                $b_side_point,
+                $a_side_coordinate->photo_path,
+                $b_side_coordinate->photo_path,
+                $score,
+                $result
+            );
         } else {
             return $this->redirect(['action' => 'selectBattleMode']);
         }
@@ -344,7 +350,7 @@ class CoordinatesController extends AppController
     public function result()
     {
         if ($this->request->is('post')) {
-            $json_data = json_decode($this->request->data('battle_history'));
+            $json_data = json_decode($this->request->data('battle_info'));
             $score = $json_data->{"score"};
             $max_n_battle = $json_data->{"max_n_battle"};
             $battle_history = $json_data->{"battle_history"};
