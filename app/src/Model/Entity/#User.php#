@@ -34,7 +34,7 @@ class User extends Entity
     
         public $name = 'User';
     
-    //•Û‘¶‘O‚ÉƒpƒXƒ[ƒh‚ÌƒnƒbƒVƒ…‰»
+    //’ÊÝ’Â¸’Á°’¤Ë’¥Ñ’¥¹’¥ï’¡¼’¥É’¤Î’¥Ï’¥Ã’¥·’¥å’²½
     public function beforeSave($options = array()) {
         if(!$this->id){
             $passwordHasher = new SimplePasswordHasher();
@@ -43,32 +43,32 @@ class User extends Entity
         return true;
     }
     
-     //ƒoƒŠƒf[ƒVƒ‡ƒ“
+     //’¥Ð’¥ê’¥Ç’¡¼’¥·’¥ç’¥ó
     public $validate = array(
         'name' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
-                'message' => '•K{“ü—Í‚Å‚·',
+                'message' => '’É¬’¿Ü’Æþ’ÎÏ’¤Ç’¤¹',
                 'required' => true,
             ),
             'alphaNumeric' => array(
                 'rule' => array('alphaNumeric'),
-                'message' => '”¼Šp‰p”Žš‚Ì‚Ý“ü—Í‚µ‚Ä‚­‚¾‚³‚¢',
+                'message' => '’È¾’³Ñ’±Ñ’¿ô’»ú’¤Î’¤ß’Æþ’ÎÏ’¤·’¤Æ’¤¯’¤À’¤µ’¤¤',
             ),
             'isUnique' => array(
                 'rule' => array('isUnique'),
-                'message' => '‚±‚Ìƒ†[ƒU–¼‚ÍŠù‚É“o˜^‚³‚ê‚Ä‚¢‚Ü‚·'
+                'message' => '’¤³’¤Î’¥æ’¡¼’¥¶’Ì¾’¤Ï’´û’¤Ë’ÅÐ’Ï¿’¤µ’¤ì’¤Æ’¤¤’¤Þ’¤¹'
             ),
         ),
         'password' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
-                'message' => '•K{“ü—Í‚Å‚·',
+                'message' => '’É¬’¿Ü’Æþ’ÎÏ’¤Ç’¤¹',
                 'required' => true,
             ),
             'alphaNumeric' => array(
                 'rule' => array('alphaNumeric'),
-                'message' => '”¼Šp‰p”Žš‚Ì‚Ý“ü—Í‚µ‚Ä‚­‚¾‚³‚¢',
+                'message' => '’È¾’³Ñ’±Ñ’¿ô’»ú’¤Î’¤ß’Æþ’ÎÏ’¤·’¤Æ’¤¯’¤À’¤µ’¤¤',
             ),
         ),
     );
@@ -84,7 +84,7 @@ class User extends Entity
 class User_HushPass extends AppModel {
     public $name = 'User';
     
-    //•Û‘¶‘O‚ÉƒpƒXƒ[ƒh‚ÌƒnƒbƒVƒ…‰»
+    //’ÊÝ’Â¸’Á°’¤Ë’¥Ñ’¥¹’¥ï’¡¼’¥É’¤Î’¥Ï’¥Ã’¥·’¥å’²½
     public function beforeSave($options = array()) {
         if(!$this->id){
             $passwordHasher = new SimplePasswordHasher();

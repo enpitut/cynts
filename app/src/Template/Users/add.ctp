@@ -16,6 +16,7 @@
             echo $this->Form->input('name');
             echo $this->Form->input('mail');
             echo $this->Form->input('password');
+            echo $this->Form->input('sex');
             echo $this->Form->input('created_at');
             echo $this->Form->input('updated_at');
         ?>

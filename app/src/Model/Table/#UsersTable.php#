@@ -1,17 +1,17 @@
 <?php
-namespace App짜Model짜Table;
+namespace App겈Model겈Table;
 
-use App짜Model짜Entity짜User;
-use Cake짜ORM짜Query;
-use Cake짜ORM짜RulesChecker;
-use Cake짜ORM짜Table;
-use Cake짜Validation짜Validator;
+use App겈Model겈Entity겈User;
+use Cake겈ORM겈Query;
+use Cake겈ORM겈RulesChecker;
+use Cake겈ORM겈Table;
+use Cake겈Validation겈Validator;
 
 /**
  * Users Model
  *
- * @property 짜Cake짜ORM짜Association짜HasMany $Coordinates
- * @property 짜Cake짜ORM짜Association짜HasMany $Favorites
+ * @property 겈Cake겈ORM겈Association겈HasMany $Coordinates
+ * @property 겈Cake겈ORM겈Association겈HasMany $Favorites
  */
 class UsersTable /*extends Table*/
 {
@@ -41,8 +41,8 @@ class UsersTable /*extends Table*/
     /**
      * Default validation rules.
      *
-     * @param 짜Cake짜Validation짜Validator $validator Validator instance.
-     * @return 짜Cake짜Validation짜Validator
+     * @param 겈Cake겈Validation겈Validator $validator Validator instance.
+     * @return 겈Cake겈Validation겈Validator
      */
     public function validationDefault(Validator $validator)
     {
@@ -51,7 +51,7 @@ class UsersTable /*extends Table*/
             ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('name', 'create')
+	    ->requirePresence('name', 'create')
             ->notEmpty('name');
             
 
