@@ -18,20 +18,20 @@
 <div id="battlecolumn">
 <ul>
 <?php
-$photo_id = 0;
+$side_id = 0;
 foreach ($coordinates as $coordinate) {
     // @see webroot/js/battle.js
-    echo '<script>coordinate_id' . $photo_id . ' = ' . $coordinate->id . '</script>' . PHP_EOL;
+    echo sprintf('<script>coordinate_id%d = %d</script>', $side_id, $coordinate->id);
     echo '<li>' . PHP_EOL;
 
     echo '<div class="phototags">';
     echo $this->Html->image(
-        '/img/view/battle_' . $photo_id . '.png',
+        '/img/view/battle_' . $side_id . '.png',
         [
-            'id' => 'phototag' . $photo_id,
+            'id' => 'phototag' . $side_id,
             'onClick' => sprintf(
                 'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d, %d)',
-                $photo_id, $photo_id, (($photo_id + 1) % 2), $max_n_battle
+                $side_id, $side_id, (($side_id + 1) % 2), $max_n_battle
             ),
         ]);
     echo '</div>';
@@ -41,14 +41,14 @@ foreach ($coordinates as $coordinate) {
         [
             'onClick' => sprintf(
                 'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d, %d)',
-                $photo_id, $photo_id, (($photo_id + 1) % 2), $max_n_battle
+                $side_id, $side_id, (($side_id + 1) % 2), $max_n_battle
             ),
-            'id' => "photo" . $photo_id,
+            'id' => "photo" . $side_id,
             'class' => "battlephoto",
         ]) . PHP_EOL;
     echo $this->Html->image($coordinate->photo_path,
         [
-            'id' => "fadephoto" . $photo_id,
+            'id' => "fadephoto" . $side_id,
             'class' => "fadephoto",
         ]
     );
@@ -56,11 +56,11 @@ foreach ($coordinates as $coordinate) {
 
     echo '</li>' . PHP_EOL;
 
-    $photo_id++;
+    $side_id++;
 }
 echo '<script>var image_obj0 = document.getElementById("photo0");</script>';
 echo '<script>var image_obj1 = document.getElementById("photo1");</script>';
-$photo_id = 0;
+$side_id = 0;
 ?>
 </ul>
 </div>

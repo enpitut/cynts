@@ -163,22 +163,22 @@ class CoordinatesController extends AppController
     public function getNewCoordinate()
     {
         if ($this->request->is('post')) {
-            $pushed_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
-            $unpushed_coordinate_id = filter_input(INPUT_POST, 'disliked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
-            if ($pushed_coordinate_id === NULL || $pushed_coordinate_id === false
-                || $unpushed_coordinate_id === NULL || $unpushed_coordinate_id === false) {
+            $like_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
+            $dislike_coordinate_id = filter_input(INPUT_POST, 'disliked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
+            if ($like_coordinate_id === NULL || $like_coordinate_id === false
+                || $dislike_coordinate_id === NULL || $dislike_coordinate_id === false) {
                 error_log('Illegal value type');
                 echo '{"hasSucceeded": false}';
                 exit;
             }
 
-            $pushed_coordinate = $this->Coordinates->get($pushed_coordinate_id);
-            $pushed_coordinate->n_like = $pushed_coordinate->n_like + 1;
-            $this->Coordinates->save($pushed_coordinate);
+            $like_coordinate = $this->Coordinates->get($like_coordinate_id);
+            $like_coordinate->n_like = $like_coordinate->n_like + 1;
+            $this->Coordinates->save($like_coordinate);
 
-            $unpushed_coordinate = $this->Coordinates->get($unpushed_coordinate_id);
-            $unpushed_coordinate->n_unlike = $unpushed_coordinate->n_unlike + 1;
-            $this->Coordinates->save($unpushed_coordinate);
+            $dislike_coordinate = $this->Coordinates->get($dislike_coordinate_id);
+            $dislike_coordinate->n_unlike = $dislike_coordinate->n_unlike + 1;
+            $this->Coordinates->save($dislike_coordinate);
 
             $duplicated_flg = false;
             $n_loop = 0;
@@ -192,8 +192,8 @@ class CoordinatesController extends AppController
                 );
 
                 foreach ($coordinates as $coordinate) {
-                    if ($pushed_coordinate_id == $coordinate->id ||
-                        $unpushed_coordinate_id == $coordinate->id
+                    if ($like_coordinate_id == $coordinate->id ||
+                        $dislike_coordinate_id == $coordinate->id
                     ) {
                         continue;
                     }
@@ -240,7 +240,6 @@ class CoordinatesController extends AppController
             }
 
             $uid = $this->Auth->user('id');
-
             $favorites_table = TableRegistry::get('Favorites');
 
             $exist_check = $favorites_table->find()->where(

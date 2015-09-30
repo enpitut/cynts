@@ -3,10 +3,10 @@
  * 他の場所では使用しないでください
  */
 
-var coordinate_id0;
-var coordinate_id1;
+var coordinate_id0; // mean side_a
+var coordinate_id1; // mean side_b
 var push_enable = true;
-var last_time_coordinate_id = -1;
+var previous_like_coordinate_id = -1;
 var n_continuously_like = 1;
 var n_battle = 1;
 var usr_score = 0;
@@ -43,16 +43,18 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
         ).then(function() {
                 return getNewCoordinate(like_coordinate_id, dislike_coordinate_id);
             }
-        ).then(function(arg) {
-                return animateCoordinateImage(arg, dislike_side_id);
+        ).then(function(new_coordinate_data) {
+                return animateCoordinateImage(new_coordinate_data, dislike_side_id);
             }
         );
 
         // 10回連続でコーデが押下された際の処理(お気に入りの判定・登録)
-        if (like_coordinate_id == last_time_coordinate_id) {
+        if (like_coordinate_id == previous_like_coordinate_id) {
             if (++n_continuously_like >= NUM_FOR_FAV) {
-                dfd = dfd.then(function(arg) {
-                        return favoriteCoordinate(arg, like_coordinate_id, like_side_id);
+                // getNewCoordinate で取得した新たなコーデのデータを受け取る必用がある
+                // 現状は，animateCoordinateImage を介して受け取っている
+                dfd = dfd.then(function(new_coordinate_data) {
+                        return favoriteCoordinate(new_coordinate_data["id"], like_coordinate_id, like_side_id);
                     }
                 );
                 n_continuously_like = 1;
@@ -60,7 +62,7 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
         } else {
             n_continuously_like = 1;
         }
-        last_time_coordinate_id = like_coordinate_id;
+        previous_like_coordinate_id = like_coordinate_id;
 
         dfd.done(function() {
             // バトル終了判定
@@ -102,17 +104,17 @@ function sendPost(action, send_data, args) {
 
 /**
  * 選択されたコーデからスコアを取得する
- * @param selected_coordinate_id 選択されたコーデのコーデID
+ * @param like_coordinate_id 選択されたコーデのコーデID
  * @returns {*}
  */
-function getScore(selected_coordinate_id) {
+function getScore(like_coordinate_id) {
     var dfd = $.Deferred();
 
     sendPost("getScore",
         {
             a_side_coordinate_id: coordinate_id0,
             b_side_coordinate_id: coordinate_id1,
-            liked_coordinate_id: selected_coordinate_id
+            liked_coordinate_id: like_coordinate_id
         },
         null
     ).done(function(result) {
@@ -129,7 +131,7 @@ function getScore(selected_coordinate_id) {
                 b_side_coordinate_id: coordinate_id1,
                 b_side_coordinate_point: result_data["b_side_point"],
                 b_side_coordinate_photo_path: result_data["b_side_photo_path"],
-                selected_side: selected_coordinate_id === coordinate_id0 ? "a" : "b",
+                selected_side: like_coordinate_id === coordinate_id0 ? "a" : "b",
                 result: result_data["result"]
             });
 
@@ -178,12 +180,12 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
 
 /**
  * コーデをお気に入り登録し, 画像を切り替える
- * @param dislike_side_new_coordinate
+ * @param dislike_coordinate_id
  * @param like_coordinate_id
  * @param like_side_obj_id
  * @returns {*}
  */
-function favoriteCoordinate(dislike_side_new_coordinate, like_coordinate_id, like_side_obj_id) {
+function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side_obj_id) {
     var dfd = $.Deferred();
 
     sendPost("favorite",
@@ -191,9 +193,9 @@ function favoriteCoordinate(dislike_side_new_coordinate, like_coordinate_id, lik
             favorite_id: like_coordinate_id
         },
         {
-            dislike_side_coordinate_id: dislike_side_new_coordinate["id"],
-            like_side_coordinate_id: like_coordinate_id,
-            like_side_obj_id: like_side_obj_id
+            dislike_coordinate_id: dislike_coordinate_id,
+            like_coordinate_id: like_coordinate_id,
+            like_side_id: like_side_obj_id
         }
     ).done(function (result) {
             var register_favorite = JSON.parse(result);
@@ -205,15 +207,15 @@ function favoriteCoordinate(dislike_side_new_coordinate, like_coordinate_id, lik
                 }
 
                 // スコープ的に, ここで宣言しなおさないと then ブロック内で利用できない?
-                var side_id = this.like_side_obj_id;
-                var like_side_coordinate_id = this.like_side_coordinate_id;
-                var dislike_side_coordinate_id = this.dislike_side_coordinate_id;
+                var side_id = this.like_side_id;
+                var like_coordinate_id = this.like_coordinate_id;
+                var dislike_coordinate_id = this.dislike_coordinate_id;
                 // 既にお気にいりだった場合でも，10回連続で同じコーデが選ばれたら切り替える
                 // その方がゲームが面白いので(ランキング1位のものをずっと選んでいれば高得点が簡単に取れてしまう)
                 $.Deferred().resolve().promise().then(function() {
                     return getNewCoordinate(
-                        like_side_coordinate_id,
-                        dislike_side_coordinate_id
+                        like_coordinate_id,
+                        dislike_coordinate_id
                     );
                 }).then(function(new_coordinate_data) {
                     return animateCoordinateImage(
