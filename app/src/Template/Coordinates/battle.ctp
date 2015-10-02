@@ -18,40 +18,37 @@
 <div id="battlecolumn">
 <ul>
 <?php
-$photo_id = 0;
+$side_id = 0;
 foreach ($coordinates as $coordinate) {
     // @see webroot/js/battle.js
-    echo '<script>coordinate_id' . $photo_id . ' = ' . $coordinate->id . '</script>' . PHP_EOL;
+    echo sprintf('<script>coordinate_id%d = %d</script>', $side_id, $coordinate->id);
     echo '<li>' . PHP_EOL;
 
     echo '<div class="phototags">';
-    if ($photo_id == 0) {
-        echo $this->Html->image(
-            '/img/view/battle_A.png',
-            [
-                'id' => 'phototag' . $photo_id,
-                'onClick' => 'updateCoordinateImage(image_obj0, coordinate_id0, coordinate_id1)',
-            ]);
-    } else {
-        echo $this->Html->image(
-            '/img/view/battle_B.png',
-            [
-                'id' => 'phototag' . $photo_id,
-                'onClick' => 'updateCoordinateImage(image_obj1, coordinate_id1, coordinate_id0)',
-            ]);
-    }
+    echo $this->Html->image(
+        '/img/view/battle_' . $side_id . '.png',
+        [
+            'id' => 'phototag' . $side_id,
+            'onClick' => sprintf(
+                'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d, %d)',
+                $side_id, $side_id, (($side_id + 1) % 2), $max_n_battle
+            ),
+        ]);
     echo '</div>';
 
     echo '<div class="photo">' . PHP_EOL;
     echo $this->Html->image($coordinate->photo_path,
         [
-            'onClick' => 'updateCoordinateImage(this, coordinate_id' . $photo_id . ', coordinate_id' . (($photo_id + 1) % 2) . ')',
-            'id' => "photo" . $photo_id,
+            'onClick' => sprintf(
+                'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d, %d)',
+                $side_id, $side_id, (($side_id + 1) % 2), $max_n_battle
+            ),
+            'id' => "photo" . $side_id,
             'class' => "battlephoto",
         ]) . PHP_EOL;
     echo $this->Html->image($coordinate->photo_path,
         [
-            'id' => "fadephoto" . $photo_id,
+            'id' => "fadephoto" . $side_id,
             'class' => "fadephoto",
         ]
     );
@@ -59,11 +56,11 @@ foreach ($coordinates as $coordinate) {
 
     echo '</li>' . PHP_EOL;
 
-    $photo_id++;
+    $side_id++;
 }
 echo '<script>var image_obj0 = document.getElementById("photo0");</script>';
 echo '<script>var image_obj1 = document.getElementById("photo1");</script>';
-$photo_id = 0;
+$side_id = 0;
 ?>
 </ul>
 </div>
