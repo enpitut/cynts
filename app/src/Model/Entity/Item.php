@@ -64,10 +64,11 @@ class Item extends Entity
     public static function getCategories()
     {
         return [
-            1 => 'インナー',
-            2 => 'ジャケット',
-            3 => 'パンツ',
-            4 => 'アクセサリー',
+            1 => 'T-shirt',
+            2 => 'Shirt',
+            3 => 'Pants',
+            4 => 'Jacket',
+            5 => 'Shoes',
         ];
     }
 
