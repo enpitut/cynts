@@ -1,0 +1,30 @@
+.search_area {
+    margin: auto;
+}
+
+.search_label {
+    text-align: right;
+}
+
+.search_value {
+    text-align: left;
+}
+
+.search_button {
+    text-align: center;
+}
+
+.row {
+    margin: 15px auto;
+    width: 900px;
+}
+
+.span3 {
+    width: 280px;
+    margin: 10px 10px;
+    float: left;
+}
+
+.clear {
+    clear: both;
+}

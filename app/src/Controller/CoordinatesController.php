@@ -112,6 +112,15 @@ class CoordinatesController extends AppController
                 $criteria['color'] = Item::getColors()[$request_data['color']];
             }
         }
+
+        if (!empty($request_data['price'])) {
+            $price_limit = explode(',', $request_data['price']);
+            if (count($price_limit) === 2) {
+                $criteria['price >='] = (int)$price_limit[0];
+                $criteria['price <='] = (int)$price_limit[1];
+            }
+        }
+
         return $criteria;
     }
 
