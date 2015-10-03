@@ -22,7 +22,7 @@ $(document).ready(function () {
         );
     }
 
-    const STORAGE_KEY = 'item_ids';
+    const STORAGE_KEY = 'items';
     const ITEM_KEY_PREFIX = 'item_';
 
     function addItemIdToSessionStorage(itemId, photoPath, price) {
