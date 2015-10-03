@@ -23,6 +23,7 @@ $(document).ready(function () {
     }
 
     const STORAGE_KEY = 'item_ids';
+    const ITEM_KEY_PREFIX = 'item_';
 
     function addItemIdToSessionStorage(itemId, photoPath, price) {
         var storage = localStorage;
@@ -32,8 +33,8 @@ $(document).ready(function () {
         if (items == null) {
             items = {};
         }
-        if (items[itemId] == undefined) {
-            items[itemId] = {
+        if (items[ITEM_KEY_PREFIX + itemId] == undefined) {
+            items[ITEM_KEY_PREFIX + itemId] = {
                 'itemId': itemId,
                 'photoPath': photoPath,
                 'price': price
@@ -52,8 +53,8 @@ $(document).ready(function () {
         if (items == null) {
             items = {};
         }
-        if (items[itemId] != undefined) {
-            delete items[itemId];
+        if (items[ITEM_KEY_PREFIX + itemId] != undefined) {
+            delete items[ITEM_KEY_PREFIX + itemId];
             storage.setItem(STORAGE_KEY, JSON.stringify(items));
             return true;
         }
