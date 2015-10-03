@@ -76,7 +76,7 @@ $(document).ready(function () {
     $(document).on('click', '.delete_picked_button', function () {
         var itemId = $(this).data('item-id');
         deleteItemIdFromSessionStorage(itemId);
-        $('.picked_items [data-item-id=' + itemId + ']').remove();
+        $('.picked_items [data-item-id=' + itemId + ']').fadeOut('fast');
     });
 
     $('.pick_button').click(function () {
