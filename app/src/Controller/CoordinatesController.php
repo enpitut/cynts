@@ -89,6 +89,54 @@ class CoordinatesController extends AppController
     }
 
     /**
+     * コーディネートを作成し投稿を行う
+     *
+     * @return \Cake\Network\Response|void
+     */
+    public function post()
+    {
+        /* nothing to do */
+    }
+
+
+    /**
+     *
+     * Ajax用関数
+     * コーディネート画像を受け取り投稿処理を行う 
+     *
+     */
+    public function postCoordinate() {
+        $this->autoRender = FALSE;
+        if ($this->request->is('post')) {
+            
+            $now = new \DateTime();
+            $coordinatesTable = TableRegistry::get('Coordinates');
+            $coordinate = $coordinatesTable->newEntity();
+
+            $coordinate->like = 0;
+            $coordinate->unlike = 0;
+            $coordinate->created_at = $now->format('Y-m-d H:i:s');
+            if ($coordinatesTable->save($coordinate)) {
+                // The $article entity contains the id now
+                $id = $coordinate->id;
+                $img = $this->request->data('img');
+                $img = preg_replace("/data:[^,]+,/i", "" ,$img);
+                $img = base64_decode($img);
+                $img = imagecreatefromstring($img);
+                imagesavealpha($img, TRUE);
+                imagepng($img , './app/webroot/img/coordinates/' . $id . '.png');
+                $coordinate->photo = $id . '.png';
+                $this->Coordinates->save($coordinate);
+                echo '{"hasSucceeded": true, "id": ' . $id . '}';
+            } else {
+                error_log('Illegal value type');
+                echo '{"hasSucceeded": false}';
+                exit;
+            }
+        }
+    }
+
+    /**
      * @param array $request_data
      * @return array
      */
