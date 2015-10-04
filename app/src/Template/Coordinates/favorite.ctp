@@ -1,0 +1,1 @@
+<?php /* @see CoordinatesController.php */

@@ -57,7 +57,6 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             $user->set('password', User::hashPassword($user->get('password')));
-            // $user = $this->Users->patchEntity($sex, $this->request->data);
             $user->set('created_at', time());
             $user->set('updated_at', time());
             if ($this->Users->save($user)) {
@@ -134,7 +133,7 @@ class UsersController extends AppController
         }else{
         }
         $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
+        $this->set('_serialize', ['user']);        
     }
 
     public function login()

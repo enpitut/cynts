@@ -3,7 +3,7 @@ CREATE TABLE users (
     name       VARCHAR(100) NOT NULL,
     mail       VARCHAR(300) NOT NULL,
     password   VARCHAR(300) NOT NULL,
-    sex         INT          NOT NULL
+    sex        /* INT          NOT NULL */
     created_at DATETIME,
     updated_at TIMESTAMP             DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)

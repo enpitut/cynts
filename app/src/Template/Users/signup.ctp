@@ -9,9 +9,11 @@
 </head>
 
 <body>
+
+
 <script type="text/javascript">
 
-function entryChange1(){     document.write("entryChange1してるよ");
+function hide_display(){     document.write("hide_displayしてるよ");
     check_result = document.getElementsByName('attention_name').id; 
     if(check_result == false) {
     //フォーム表示
@@ -25,23 +27,12 @@ function entryChange1(){     document.write("entryChange1してるよ");
 //window.onload = entryChange1;
 
 
-</script>
+</script> 
 
-
-<script>
-function submitChk () {
-        /* 確認ダイアログ表示 */
-        var flag = confirm ( "送信してもよろしいですか？\n\n送信したくない場合は[キャンセル]ボタンを押して下さい");
-        /* send_flg が TRUEなら送信、FALSEなら送信しない */
-        return flag;
-    }
-
-</script>
 
 
 <div class="big"> Welcome to Unichronicle! </div>
 <p> Please enter your information. <p>
-
 
 <?= $this->Form->create() ?>
 
@@ -67,14 +58,12 @@ password:
 ) ?>
 
 retype password:
-
 <?= $this->Form->input('password_re',
     array('label' => false,
     )
 ) ?>
 
 sex:<br />
-<!--
 <?= $this->Form->select('sex',
         array('0' => 'male',
             '1' => 'female',
@@ -82,15 +71,18 @@ sex:<br />
         array('empty' => 'select')
     )
 ?>
--->
+
 </td>
 </table>
 
-<!--
-/Users/suzukichie/enpit/cynts/app/src/Template/Users
--->
+<p><?php 
 
-<p><?= $this->Form->button('Sign up', array('type'=>'submit')) ?></p>
+    echo $this->Form->button('Sign up',
+    [
+        'type'=>'submit',
+    ]);
+
+?></p>
 
 
 
@@ -104,7 +96,6 @@ If you have a Unichronicle account,
 <a href="/users/login">
     click here
 </a>.
-
 
 </body>
 </html>

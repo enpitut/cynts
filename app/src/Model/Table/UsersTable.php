@@ -1,19 +1,19 @@
 <?php
-namespace App¥Model¥Table;
+namespace App\Model\Table;
 
-use App¥Model¥Entity¥User;
-use Cake¥ORM¥Query;
-use Cake¥ORM¥RulesChecker;
-use Cake¥ORM¥Table;
-use Cake¥Validation¥Validator;
+use App\Model\Entity\User;
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\ORM\Table;
+use Cake\Validation\Validator;
 
 /**
  * Users Model
  *
- * @property ¥Cake¥ORM¥Association¥HasMany $Coordinates
- * @property ¥Cake¥ORM¥Association¥HasMany $Favorites
+ * @property \Cake\ORM\Association\HasMany $Coordinates
+ * @property \Cake\ORM\Association\HasMany $Favorites
  */
-class UsersTable /*extends Table*/
+class UsersTable extends Table
 {
 
     /**
@@ -41,8 +41,8 @@ class UsersTable /*extends Table*/
     /**
      * Default validation rules.
      *
-     * @param ¥Cake¥Validation¥Validator $validator Validator instance.
-     * @return ¥Cake¥Validation¥Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator)
     {
@@ -53,7 +53,6 @@ class UsersTable /*extends Table*/
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
-            
 
         $validator
             ->requirePresence('mail', 'create')
@@ -62,7 +61,6 @@ class UsersTable /*extends Table*/
         $validator
             ->requirePresence('password', 'create')
             ->notEmpty('password');
-         
 
         $validator
             ->add('created_at', 'valid', ['rule' => 'datetime'])
