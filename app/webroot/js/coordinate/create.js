@@ -12,6 +12,15 @@ $(document).ready(function () {
         }
     );
 
+    $('.link_to_post').click(function (e) {
+        e.preventDefault();
+        if ($(this).hasClass('disabled')) {
+            return false;
+        } else {
+            window.location.href = $(this).attr('href');
+        }
+    });
+
     function drawItemInPickedItemsArea(itemId, photoPath, price) {
         $('.picked_items').append(
             "<div class='picked_item' data-item-id='" + itemId + "'>" +
@@ -56,6 +65,10 @@ $(document).ready(function () {
         if (items[ITEM_KEY_PREFIX + itemId] != undefined) {
             delete items[ITEM_KEY_PREFIX + itemId];
             storage.setItem(STORAGE_KEY, JSON.stringify(items));
+
+            if (Object.keys(items).length == 0) {
+                $('.link_to_post').addClass('disabled');
+            }
             return true;
         }
         return false;
@@ -72,6 +85,9 @@ $(document).ready(function () {
         for (var key in items) {
             drawItemInPickedItemsArea(items[key]['itemId'], items[key]['photoPath'], items[key]['price']);
         }
+        if (Object.keys(items).length == 0) {
+            $('.link_to_post').addClass('disabled');
+        }
     }
 
     $(document).on('click', '.delete_picked_button', function () {
@@ -87,6 +103,10 @@ $(document).ready(function () {
         var result = addItemIdToSessionStorage(itemId, photoPath, price);
         if (result) {
             drawItemInPickedItemsArea(itemId, photoPath, price);
+        }
+        var linkToPost = $('.link_to_post');
+        if (linkToPost.hasClass('disabled')) {
+            linkToPost.removeClass('disabled');
         }
     });
 
