@@ -73,7 +73,7 @@ function addCanvas(img, name) {
   if (!canvas || !canvas.getContext) {
     return null;
   }
-  
+
   return canvas;
 }
 
@@ -106,11 +106,11 @@ function sendPost(action, send_data, args) {
 
 function screenshot(selector) {
   var dfd = $.Deferred();
-  
+
   var element = $(selector)[0];
   html2canvas(element, { onrendered: function(canvas) {
   var imgData = canvas.toDataURL();
-  sendPost("postCoordinate", {img: imgData}, null).done(function(result) {
+  sendPost("ajaxPostCoordinate", {img: imgData}, null).done(function(result) {
       var result_data = JSON.parse(result);
       if (!result_data["hasSucceeded"]) {
         throw new Error("Illegal post value");
@@ -122,7 +122,7 @@ function screenshot(selector) {
 
   return dfd.promise();
 }
-  
+
 var items = JSON.parse(localStorage.getItem('items'));
 Object.keys(items).forEach(function (key) {
   addRect("../img/" + items[key]["photoPath"], items[key]["name"]);

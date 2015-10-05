@@ -49,6 +49,7 @@ class CoordinatesController extends AppController
         $coordinate = $this->Coordinates->get($id, [
             'contain' => ['Users', 'Items', 'Favorites']
         ]);
+
         $total_price = 0;
         foreach ($coordinate->items as $item) {
             $total_price += $item->price;
@@ -100,39 +101,69 @@ class CoordinatesController extends AppController
 
 
     /**
-     *
-     * Ajax用関数
-     * コーディネート画像を受け取り投稿処理を行う 
-     *
+     * @param string $string_img
+     * @return int
+     * @throws \Exception
      */
-    public function postCoordinate() {
+    protected function postCoordinate($string_img)
+    {
+        $now = new \DateTime();
+        /** @var /App/Model/Entity/Coordinate $coordinate */
+        $coordinate = $this->Coordinates->newEntity();
+
+        $coordinate->like = 0;
+        $coordinate->unlike = 0;
+        $coordinate->created_at = $now->format('Y-m-d H:i:s');
+
+        if ($this->Coordinates->save($coordinate)) {
+            $string_img = preg_replace("/data:[^,]+,/i", "", $string_img);
+            $base64_img = base64_decode($string_img);
+            if ($base64_img === false) {
+                throw new \Exception('Failed to decode to base64.');
+            }
+
+            $img_resource = imagecreatefromstring($base64_img);
+            if ($img_resource === false) {
+                throw new \Exception(
+                    'Failed to create image from string. The image type is unsupported, the data is not in a recognised format, or the image is corrupt and cannot be loaded.'
+                );
+            }
+
+            imagesavealpha($img_resource, true);
+            $result = imagepng($img_resource, WWW_ROOT . '/img/coordinates/' . $coordinate->id . '.png');
+            if ($result === false) {
+                throw new \Exception('Failed to save image.');
+            }
+
+            $coordinate->photo = $coordinate->id . '.png';
+            $this->Coordinates->save($coordinate);
+
+            return $coordinate->id;
+        } else {
+            throw new \Exception('Failed to save entity.');
+        }
+    }
+
+    /**
+     * Ajax用関数
+     * コーディネート画像を受け取り投稿処理を行う
+     *
+     * @throws \Exception
+     */
+    public function ajaxPostCoordinate()
+    {
         $this->autoRender = FALSE;
         if ($this->request->is('post')) {
-            
-            $now = new \DateTime();
-            $coordinatesTable = TableRegistry::get('Coordinates');
-            $coordinate = $coordinatesTable->newEntity();
-
-            $coordinate->like = 0;
-            $coordinate->unlike = 0;
-            $coordinate->created_at = $now->format('Y-m-d H:i:s');
-            if ($coordinatesTable->save($coordinate)) {
-                // The $article entity contains the id now
-                $id = $coordinate->id;
-                $img = $this->request->data('img');
-                $img = preg_replace("/data:[^,]+,/i", "" ,$img);
-                $img = base64_decode($img);
-                $img = imagecreatefromstring($img);
-                imagesavealpha($img, TRUE);
-                imagepng($img , './app/webroot/img/coordinates/' . $id . '.png');
-                $coordinate->photo = $id . '.png';
-                $this->Coordinates->save($coordinate);
-                echo '{"hasSucceeded": true, "id": ' . $id . '}';
-            } else {
-                error_log('Illegal value type');
+            $result = null;
+            try {
+                $result = $this->postCoordinate($this->request->data('img'));
+            } catch (\Exception $e) {
+                error_log($e->getMessage(), E_WARNING);
                 echo '{"hasSucceeded": false}';
                 exit;
             }
+            echo '{"hasSucceeded": true, "id": ' . $result . '}';
+            exit;
         }
     }
 
