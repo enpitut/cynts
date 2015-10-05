@@ -1,0 +1,108 @@
+.search_area {
+    margin: auto;
+}
+
+.search_label {
+    text-align: right;
+}
+
+.search_value {
+    text-align: left;
+}
+
+.search_button {
+    text-align: center;
+}
+
+.row {
+    margin: 15px auto;
+    width: 900px;
+}
+
+.span3 {
+    width: 280px;
+    margin: 10px 10px;
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
+
+.item_list {
+    margin-bottom: 220px;
+}
+
+.info {
+    padding: 0 30px;
+}
+
+.photo {
+    text-align: center;
+    position: relative;
+}
+
+.item_image {
+    display: none;
+    float: left;
+}
+
+.pick_button {
+    display: none;
+    position: absolute;
+    left: 110px;
+    top: 140px;
+    font-size: 22px;
+}
+
+.price {
+    font-size: 15px;
+    text-align: right;
+    color: yellow;
+}
+
+.picked_items_area {
+    height: 170px;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    background: black;
+    border-top: 2px solid;
+    border-color: gray;
+}
+
+.picked_items_message {
+    font-size: 16px;
+}
+
+.picked_item {
+    float: left;
+    text-align: center;
+}
+
+.picked_item_img {
+    height: 120px;
+}
+
+.picked_item_price {
+    font-size: 14px;
+}
+
+.delete_picked_button {
+    position: relative;
+    top: -90px;
+    left: -20px;
+    width: 20px;
+}
+
+.link_to_post {
+    float: right;
+    margin: 0 10px 0 0;
+    font-size: 20px;
+    color: darkorange;
+}
+
+.disabled {
+    color: gray;
+    pointer-events: none;
+}
