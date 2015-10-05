@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
-use Cake\I18n\Time;
 use Cake\Event\Event;
 
 /**
@@ -18,20 +17,6 @@ class CoordinatesController extends AppController
         $this->Auth->allow(
             ['view']
         );
-    }
-
-    /**
-     * Index method
-     *
-     * @return void
-     */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Users']
-        ];
-        $this->set('coordinates', $this->paginate($this->Coordinates));
-        $this->set('_serialize', ['coordinates']);
     }
 
     /**
@@ -54,75 +39,6 @@ class CoordinatesController extends AppController
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
-    }
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Network\Response|void
-     */
-    public function add()
-    {
-        $coordinate = $this->Coordinates->newEntity();
-        if ($this->request->is('post')) {
-            $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
-            if ($this->Coordinates->save($coordinate)) {
-                $this->Flash->success(__('The coordinate has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The coordinate could not be saved. Please, try again.'));
-            }
-        }
-        $users = $this->Coordinates->Users->find('list', ['limit' => 200]);
-        $items = $this->Coordinates->Items->find('list', ['limit' => 200]);
-        $this->set(compact('coordinate', 'users', 'items'));
-        $this->set('_serialize', ['coordinate']);
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Coordinate id.
-     * @return \Cake\Network\Response|void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $coordinate = $this->Coordinates->get($id, [
-            'contain' => ['Items']
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
-            if ($this->Coordinates->save($coordinate)) {
-                $this->Flash->success(__('The coordinate has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The coordinate could not be saved. Please, try again.'));
-            }
-        }
-        $users = $this->Coordinates->Users->find('list', ['limit' => 200]);
-        $items = $this->Coordinates->Items->find('list', ['limit' => 200]);
-        $this->set(compact('coordinate', 'users', 'items'));
-        $this->set('_serialize', ['coordinate']);
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Coordinate id.
-     * @return \Cake\Network\Response|void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $coordinate = $this->Coordinates->get($id);
-        if ($this->Coordinates->delete($coordinate)) {
-            $this->Flash->success(__('The coordinate has been deleted.'));
-        } else {
-            $this->Flash->error(__('The coordinate could not be deleted. Please, try again.'));
-        }
-        return $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -166,7 +82,8 @@ class CoordinatesController extends AppController
             $like_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
             $dislike_coordinate_id = filter_input(INPUT_POST, 'disliked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
             if ($like_coordinate_id === NULL || $like_coordinate_id === false
-                || $dislike_coordinate_id === NULL || $dislike_coordinate_id === false) {
+                || $dislike_coordinate_id === NULL || $dislike_coordinate_id === false
+            ) {
                 error_log('Illegal value type');
                 echo '{"hasSucceeded": false}';
                 exit;
@@ -276,6 +193,7 @@ class CoordinatesController extends AppController
     const SCORE_WIN = 100;
     const SCORE_LOOSE = 0;
     const SCORE_DRAW = 50;
+
     /**
      * ajax用関数(echo を利用しているので他では使わないこと)
      * ここでレンダリングされたビュー(get_score.ctp)は利用しないので，
@@ -289,7 +207,8 @@ class CoordinatesController extends AppController
             $like_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
             if ($a_side_coordinate_id === NULL || $a_side_coordinate_id === false
                 || $b_side_coordinate_id === NULL || $b_side_coordinate_id === false
-                || $like_coordinate_id === NULL || $like_coordinate_id === false) {
+                || $like_coordinate_id === NULL || $like_coordinate_id === false
+            ) {
                 error_log('Illegal value type');
                 echo '{"hasSucceeded": false}';
                 exit;
