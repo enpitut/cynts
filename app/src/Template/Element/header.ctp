@@ -9,7 +9,7 @@
                 </li>
             <?php endif; ?>
             <li>
-                <a href="/coordinates/battle">
+                <a href="/coordinatesbattle/battle">
                     Play
                 </a>
             </li>
