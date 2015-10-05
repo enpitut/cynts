@@ -15,10 +15,15 @@ class CoordinatesBattleController extends AppController
     /** @var \App\Controller\CoordinatesController $CoordinatesController */
     protected $CoordinatesController;
 
-    public function beforeFilter(Event $event)
+    public function initialize()
     {
+        parent::initialize();
         $this->Coordinates = TableRegistry::get('Coordinates');
         $this->CoordinatesController = new CoordinatesController();
+    }
+
+    public function beforeFilter(Event $event)
+    {
         parent::beforeFilter($event);
         $this->Auth->allow(
             ['view']
