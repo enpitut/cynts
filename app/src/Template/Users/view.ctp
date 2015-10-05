@@ -37,7 +37,7 @@
                     $i += $coordinates_table_row
                 ) {
                     $array = [];
-                    for ($j = $i; $j < $i+$coordinates_table_row; $j++) {
+                    for ($j = $i; $j < $i + $coordinates_table_row; $j++) {
                         array_push(
                             $array,
                             array_key_exists($j, $user->coordinates)
@@ -51,7 +51,7 @@
                                         $user->coordinates[$j]->id,
                                     ],
                                 ]
-                            ) : 'No image'
+                            ) : ''
                         );
                     }
 
@@ -64,7 +64,12 @@
                 ?>
             </table>
         <?php else: ?>
-            No image
+            <?php if ($is_self_page): ?>
+                You
+            <?php else: ?>
+                This user
+            <?php endif; ?>
+            has not yet posted coordinates.
         <?php endif; ?>
     </div>
 </div>
