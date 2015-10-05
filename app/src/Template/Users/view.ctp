@@ -64,11 +64,11 @@
             </table>
         <?php else: ?>
             <?php if ($is_self_page): ?>
-                You
+                You have
             <?php else: ?>
-                This user
+                This user has
             <?php endif; ?>
-            has not yet posted coordinates.
+            not yet posted coordinates.
         <?php endif; ?>
     </div>
 </div>
