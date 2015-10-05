@@ -1,6 +1,9 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Entity\Item;
+use App\Model\Table\ItemsTable;
+use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 
 /**
@@ -40,5 +43,84 @@ class CoordinatesController extends AppController
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
+    }
+
+    /**
+     * コーディネート投稿画面を表示するための情報を取得する
+     * 投稿画面ではコーディネートに利用するアイテムを一覧で表示，条件で絞込表示をする
+     *
+     * @return \Cake\Network\Response|void
+     */
+    public function create()
+    {
+        $coordinate = $this->Coordinates->newEntity();
+        if ($this->request->is('post')) {
+            $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
+            if ($this->Coordinates->save($coordinate)) {
+                $this->Flash->success(__('The coordinate has been saved.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The coordinate could not be saved. Please, try again.'));
+            }
+        }
+
+        $criteria = self::validateCriteria($this->request->data);
+        $items = $this->findItemList($criteria);
+
+        $this->set('items', $items->toArray());
+        $this->set('sex_list', Item::getSexes());
+        $this->set('category_list', Item::getCategories());
+        $this->set('color_list', Item::getColors());
+        $this->set('criteria', $criteria);
+    }
+
+    /**
+     * @param array $request_data
+     * @return array
+     */
+    protected static function validateCriteria(array $request_data)
+    {
+        $criteria = [];
+        if (!empty($request_data['sex'])) {
+            if (array_key_exists($request_data['sex'], Item::getSexes())) {
+                $criteria['sex'] = (int)$request_data['sex'];
+            }
+        }
+
+        if (!empty($request_data['category'])) {
+            if (array_key_exists($request_data['category'], Item::getCategories())) {
+                $criteria['category'] = Item::getCategories()[$request_data['category']];
+            }
+        }
+
+        if (!empty($request_data['color'])) {
+            if (array_key_exists($request_data['color'], Item::getColors())) {
+                $criteria['color'] = Item::getColors()[$request_data['color']];
+            }
+        }
+
+        if (!empty($request_data['price'])) {
+            $price_limit = explode(',', $request_data['price']);
+            if (count($price_limit) === 2) {
+                $criteria['price >='] = (int)$price_limit[0];
+                $criteria['price <='] = (int)$price_limit[1];
+            }
+        }
+
+        return $criteria;
+    }
+
+    /**
+     * @param array $criteria
+     * @return \Cake\ORM\Query
+     */
+    protected function findItemList(array $criteria)
+    {
+        /** @var ItemsTable $items_repository */
+        $items_repository = TableRegistry::get('Items');
+        $items = $items_repository->find()
+            ->where($criteria)
+            ->limit(self::N_ITEM_LIST_SHOW);
+        return $items;
     }
 }
