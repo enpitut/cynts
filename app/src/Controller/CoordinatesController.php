@@ -10,6 +10,8 @@ use Cake\Event\Event;
  */
 class CoordinatesController extends AppController
 {
+    const N_ITEM_LIST_SHOW = 100;
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);

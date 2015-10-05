@@ -33,6 +33,12 @@ class UsersController extends AppController
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
+
+        if ((int)$this->Auth->user('id') === (int)$id) {
+            $this->set('is_self_page', true);
+        } else {
+            $this->set('is_self_page', false);
+        }
     }
 
     /**
