@@ -12,10 +12,13 @@ class CoordinatesBattleController extends AppController
 {
     /** @var \App\Model\Table\CoordinatesTable $Coordinates */
     protected $Coordinates;
+    /** @var \App\Controller\CoordinatesController $CoordinatesController */
+    protected $CoordinatesController;
 
     public function beforeFilter(Event $event)
     {
         $this->Coordinates = TableRegistry::get('Coordinates');
+        $this->CoordinatesController = new CoordinatesController();
         parent::beforeFilter($event);
         $this->Auth->allow(
             ['view']
@@ -127,40 +130,29 @@ class CoordinatesBattleController extends AppController
      * ここでレンダリングされたビュー(favorite.ctp)は利用しないので，
      * ajax から POST メソッドでデータが送られてきた場合のみ利用可能
      */
-    public function favorite()
+    public function ajaxPostFavorite()
     {
         if ($this->request->is('post')) {
-            $favorite_coordinate_id = filter_input(INPUT_POST, 'favorite_id', FILTER_SANITIZE_NUMBER_INT);
-            if ($favorite_coordinate_id === NULL || $favorite_coordinate_id === false) {
-                error_log('Illegal value type');
+            $favorite_coordinate_id = $this->request->data('favorite_id');
+            $uid = $this->Auth->user('id');
+
+            try {
+                if ($this->CoordinatesController->postFavorite(
+                    $uid,
+                    $favorite_coordinate_id
+                )
+                ) {
+                    echo '{"hasSucceeded": true, "hasRegistered": true}';
+                    exit;
+                } else {
+                    echo '{"hasSucceeded": true, "hasRegistered": false }';
+                    exit;
+                }
+            } catch (\Exception $e) {
+                error_log($e->getMessage(), E_WARNING);
                 echo '{"hasSucceeded": false}';
                 exit;
             }
-
-            $uid = $this->Auth->user('id');
-            $favorites_table = TableRegistry::get('Favorites');
-
-            $exist_check = $favorites_table->find()->where(
-                [
-                    'Favorites.user_id' => $uid,
-                    'Favorites.coordinate_id' => $favorite_coordinate_id,
-                ]
-            );
-            if (empty(count($exist_check->toArray()))) {
-                $now = new \DateTime();
-                $favorite = $favorites_table->newEntity(
-                    [
-                        'user_id' => $uid,
-                        'coordinate_id' => $favorite_coordinate_id,
-                    ]
-                );
-                $favorite->created_at = $now->format('Y-m-d H:i:s');
-                $favorites_table->save($favorite);
-                echo '{"hasSucceeded": true, "hasRegistered": true}';
-                exit;
-            }
-            echo '{"hasSucceeded": true, "hasRegistered": false }';
-            exit;
         } else {
             return $this->redirect(['action' => 'selectBattleMode']);
         }

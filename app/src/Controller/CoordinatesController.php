@@ -123,4 +123,46 @@ class CoordinatesController extends AppController
             ->limit(self::N_ITEM_LIST_SHOW);
         return $items;
     }
+
+    /**
+     * お気に入りを追加する
+     *
+     * @param $uid
+     * @param $coordinate_id
+     *
+     * @return bool 登録できたなら true, 重複により登録できなかったなら false
+     * @throws \Exception
+     */
+    public function postFavorite($uid, $coordinate_id)
+    {
+        if (is_numeric($coordinate_id) == false
+            || is_numeric($uid) == false
+        ) {
+            throw new \Exception(
+                'Failed to save entity. Illegal value type.'
+            );
+        }
+
+        $favorites_table = TableRegistry::get('Favorites');
+        $exist_check = $favorites_table->find()->where(
+            [
+                'Favorites.user_id' => $uid,
+                'Favorites.coordinate_id' => $coordinate_id,
+            ]
+        );
+        if (empty(count($exist_check->toArray()))) {
+            $now = new \DateTime();
+            $favorite = $favorites_table->newEntity(
+                [
+                    'user_id' => $uid,
+                    'coordinate_id' => $coordinate_id,
+                ]
+            );
+            $favorite->created_at = $now->format('Y-m-d H:i:s');
+            $favorites_table->save($favorite);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
