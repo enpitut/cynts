@@ -2,7 +2,7 @@
     <div id="header">
         <ul>
             <li>
-                <a href="/coordinates/battle">
+                <a href="/coordinatesbattle/battle">
                     Play
                 </a>
             </li>

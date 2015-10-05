@@ -15,7 +15,7 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
 <title>
 <?= $cakeDescription ?>
 </title>
-<?= $this->Html->css('base.css') ?>  
+<?= $this->Html->css('base.css') ?>
 </head>
 
 <body class="home">
@@ -59,7 +59,7 @@ Unichronicle
         'view/menu1.png',
         array(
             'height' => '160px',
-            'url' => array('controller'=>'coordinates','action'=>'battle')
+            'url' => array('controller'=>'coordinatesbattle','action'=>'battle')
         )) ?><br />
     好きなコーディネートを選ぶ
   </li>
