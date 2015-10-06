@@ -7,15 +7,23 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
 /**
- * Rankings Controller
- *
- * @property \App\Model\Table\CoordinatesTable $Coordinates
+ * Class RankingsController
+ * @package App\Controller
  */
 class RankingsController extends AppController
 {
     const RANKING_SHOW_LIMIT = 9;
     const RANKING_TYPE_LIKE = 'like';
     const RANKING_TYPE_UNLIKE = 'unlike';
+
+    /** @var \App\Model\Table\CoordinatesTable $Coordinates */
+    protected $Coordinates;
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Coordinates = TableRegistry::get('Coordinates');
+    }
 
     public function beforeFilter(Event $event)
     {
@@ -34,12 +42,9 @@ class RankingsController extends AppController
      */
     public function view($type = null)
     {
-        /** @var \App\Model\Table\CoordinatesTable $coordinates */
-        $coordinates = TableRegistry::get('Coordinates');
-
         switch ($type) {
             case self::RANKING_TYPE_UNLIKE:
-                $ranking = $coordinates->find('all',
+                $ranking = $this->Coordinates->find('all',
                     [
                         'order' => ['Coordinates.n_unlike' => 'DESC'],
                         'contain' => ['Users', 'Items', 'Favorites'],
@@ -48,7 +53,7 @@ class RankingsController extends AppController
                 );
                 break;
             default:
-                $ranking = $coordinates->find('all',
+                $ranking = $this->Coordinates->find('all',
                     [
                         'order' => ['Coordinates.n_like' => 'DESC'],
                         'contain' => ['Users', 'Items', 'Favorites'],

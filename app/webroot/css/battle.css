@@ -93,3 +93,99 @@ div.phototags img {
 img#phototag0 {
     right: 20px; /* photo0 の padding-right */
 }
+
+select {
+    width: 100px;
+    height: 33px;
+    text-align: -webkit-center;
+    background: #eaeaea url('../img/view/select_arrow.jpg') no-repeat right;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    border: 0;
+    margin: 0;
+    padding: 0 33px 0 0;
+    vertical-align: middle;
+    font-size: inherit;
+    color: #000;
+    box-sizing: content-box;
+}
+
+.select_box {
+    text-align: center;
+    padding: 30px;
+}
+
+.play_btn {
+    font-size: large;
+    text-align: center;
+    background: #EEE;
+    border: 3px solid #DDD;
+    color: #111;
+    width: 80px;
+    padding: 5px 0;
+    margin: 20px;
+}
+
+#centerposition {
+    text-align: center;
+}
+
+.result_score {
+    font-size: xx-large;
+    padding: 0;
+    margin: 0;
+}
+
+.max_score {
+    font-size: small;
+    padding: 0;
+    margin: 0;
+}
+
+.battle_result {
+    margin: 50px 0 0 0;
+    padding: 0;
+    text-align: center;
+    font-size: 0;
+}
+
+.battle_result > li {
+    margin: 0 10px 30px 10px;
+    background-color: #222222;
+    display: inline-block;
+    font-size: large;
+    width: 206px;
+}
+
+p.each_actual_point {
+    margin: 5px;
+    vertical-align: middle;
+}
+
+p.win_coordinate_string {
+    color: #cd2c24;
+}
+
+p.loose_coordinate_string {
+    color: #005580;
+}
+
+p.draw_coordinate_string {
+    color: yellow;
+}
+
+img.result_coordinate_photo {
+    width: 200px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: transparent;
+}
+
+img.selected_coordinate_photo {
+    width: 200px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: red;
+}

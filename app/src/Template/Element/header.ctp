@@ -1,8 +1,15 @@
 <header>
     <div id="header">
         <ul>
+            <?php if ($this->Session->read('Auth.User')): ?>
+                <li>
+                    <a href="/users/view/<?= $this->Session->read('Auth.User.id') ?>">
+                        User
+                    </a>
+                </li>
+            <?php endif; ?>
             <li>
-                <a href="/coordinates/battle">
+                <a href="/coordinatesbattle/battle">
                     Play
                 </a>
             </li>
@@ -12,7 +19,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/coordinates/create">
                     Post
                 </a>
             </li>
