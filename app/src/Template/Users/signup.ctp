@@ -4,7 +4,9 @@
 
 <?= $this->Html->css('sign.css') ?>
 <?= $this->element('eachpage_header') ?>
-
+<?php
+use \App\Model\Table\UsersTable
+?>
 
 </head>
 
@@ -34,6 +36,8 @@ function hide_display(){     document.write("hide_displayしてるよ");
 <div class="big"> Welcome to Unichronicle! </div>
 <p> Please enter your information. <p>
 
+
+
 <?= $this->Form->create() ?>
 
 <table border="0" align="center">
@@ -62,7 +66,7 @@ retype password:
     array('label' => false,
     )
 ) ?>
-
+<!--
 sex:<br />
 <?= $this->Form->select('sex',
         array('0' => 'male',
@@ -71,7 +75,7 @@ sex:<br />
         array('empty' => 'select')
     )
 ?>
-
+-->
 </td>
 </table>
 

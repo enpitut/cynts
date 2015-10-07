@@ -52,16 +52,20 @@ class UsersTable extends Table
 
         $validator
             ->requirePresence('name', 'create')
-            ->notEmpty('name');
-
+            ->notEmpty('name', 'A username is required');
+            
         $validator
             ->requirePresence('mail', 'create')
-            ->notEmpty('mail');
-
+            ->notEmpty('mail', 'A mail is required')
+            ->add('mail', 'validFormat', [
+                'rule' => 'email',
+                'message' => 'E-mail must be valid'
+            ]);
+        
         $validator
             ->requirePresence('password', 'create')
-            ->notEmpty('password');
-
+            ->notEmpty('password', 'A password is required');
+            
         $validator
             ->add('created_at', 'valid', ['rule' => 'datetime'])
             ->allowEmpty('created_at');

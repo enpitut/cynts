@@ -135,6 +135,19 @@ class UsersController extends AppController
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);        
     }
+    
+    public function useradd(){
+        if($this->request->is('post')){
+            $this->User->create();
+            if($this->User->save($this->request->data)){
+                $this->Session->setFlash('ユーザを新規作成しました');
+                $this->redirect(array('action'=>'login'));
+            }else{
+                $this->Session->setFlash('ユーザを作成できませんでした');
+            }
+        }
+    }
+    
 
     public function login()
     {
