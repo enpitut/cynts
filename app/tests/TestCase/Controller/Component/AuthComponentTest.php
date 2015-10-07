@@ -1,7 +1,7 @@
 <?php
 namespace App\Test\TestCase\Controller\Component;
 
-use App\Controller\Component\AuthComponent;
+use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\TestSuite\TestCase;
 
