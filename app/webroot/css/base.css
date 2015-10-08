@@ -29,6 +29,33 @@ header {
     text-align: right;
 }
 
+#headerLoginForm {
+    margin: 24px 15% auto;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 50px;
+    text-align: left;
+}
+
+.mailForm{
+    margin: 10px;
+    position: relative;
+    float: left;
+}
+
+.passwordForm{
+    margin: 10px;
+    position: relative;
+    float: left;
+}
+
+.loginButton{
+    margin: 10px;
+}
+
 #header_title {
     margin: 24px 15%;
     padding: 0;

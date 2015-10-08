@@ -1,4 +1,35 @@
 <header>
+    <div id="headerLoginForm">
+        <?php if ((($this->request->here === '/pages/home')
+            || ($this->request->here === '/')
+        )
+        ): ?>
+            <?php if (!($this->request->session()->read('Auth.User'))): ?>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Users', 'action' => 'login']]) ?>
+                <?= $this->Form->text(
+                    'mail', [
+                        'class' => 'mailForm', 'placeholder' => 'Mail',
+                    ]
+                ) ?>
+                <?= $this->Form->password(
+                    'password',
+                    [
+                        'class' => 'passwordForm', 'placeholder' => 'Password',
+                    ]
+                ) ?>
+                <?= $this->Form->submit(
+                    'Login', [
+                        'class' => 'loginButton',
+
+                    ]
+                ) ?>
+            <?php else: ?>
+                <?= $this->Form->create(null, ['url' => ['controller' => 'Users', 'action' => 'logout']]) ?>
+                <?= $this->Form->button('Logout' , ['class' => 'logoutButton']) ?>
+                <?= $this->Form->end() ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
     <div id="header">
         <ul>
             <?php if ($this->Session->read('Auth.User')): ?>
@@ -10,6 +41,20 @@
                             'controller' => 'Users',
                             'action' => 'view',
                             $this->Session->read('Auth.User.id')
+                        )
+                    );
+                    ?>
+                </li>
+            <?php elseif (($this->request->here !== '/pages/home')
+                && ($this->request->here !== '/')
+            ): ?>
+                <li>
+                    <?=
+                    $this->Html->link(
+                        'Login',
+                        array(
+                            'controller' => 'Users',
+                            'action' => 'login',
                         )
                     );
                     ?>
