@@ -42,7 +42,7 @@ class User extends Entity
         }
         return true;
     }
- 
+ /**
     //バリデーション
     public $validate = array(
         'mail' => array(
@@ -95,7 +95,7 @@ class User extends Entity
             ),
         ),
     );
-    
+**/
     //ユーザ名とパスワードが登録済みか確認
     public function check($data) {
         $n = $this->find('count', array(

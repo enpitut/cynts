@@ -65,7 +65,7 @@ class UsersTable extends Table
         $validator
             ->requirePresence('password', 'create')
             ->notEmpty('password', 'A password is required');
-            
+
         $validator
             ->add('created_at', 'valid', ['rule' => 'datetime'])
             ->allowEmpty('created_at');

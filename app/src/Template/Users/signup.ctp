@@ -60,12 +60,13 @@ password:
     array('label' => false,
     )
 ) ?>
-
+<!--
 retype password:
 <?= $this->Form->input('password_re',
     array('label' => false,
     )
 ) ?>
+-->
 <!--
 sex:<br />
 <?= $this->Form->select('sex',
