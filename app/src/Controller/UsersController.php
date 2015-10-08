@@ -83,25 +83,25 @@ class UsersController extends AppController
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
-        
-        }else{
+
+        } else {
         }
         $this->set(compact('user'));
-        $this->set('_serialize', ['user']);        
+        $this->set('_serialize', ['user']);
     }
-    
-    public function useradd(){
-        if($this->request->is('post')){
+
+    public function useradd()
+    {
+        if ($this->request->is('post')) {
             $this->User->create();
-            if($this->User->save($this->request->data)){
-                $this->Session->setFlash('ƒ†[ƒU‚ðV‹Kì¬‚µ‚Ü‚µ‚½');
-                $this->redirect(array('action'=>'login'));
-            }else{
-                $this->Session->setFlash('ƒ†[ƒU‚ðì¬‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½');
+            if ($this->User->save($this->request->data)) {
+                $this->Session->setFlash('ï¿½ï¿½ï¿½[ï¿½Uï¿½ï¿½Vï¿½Kï¿½ì¬ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½');
+                $this->redirect(array('action' => 'login'));
+            } else {
+                $this->Session->setFlash('ï¿½ï¿½ï¿½[ï¿½Uï¿½ï¿½ï¿½ì¬ï¿½Å‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½');
             }
         }
     }
-    
 
     public function login()
     {

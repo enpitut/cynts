@@ -1,9 +1,9 @@
 <?php
 namespace App\Controller;
 
-use Cake\ORM\TableRegistry;
 use App\Model\Entity\Item;
 use App\Model\Table\ItemsTable;
+use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 
 /**
