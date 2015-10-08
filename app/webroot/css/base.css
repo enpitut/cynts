@@ -93,10 +93,18 @@ header {
     height: 100%;
 }
 
-.homeCaption {
+.homeCaption{
+    list-style: none;
+}
+
+.homeCaptionTitle{
     font-size: 32px;
     margin: 1% auto;
-    list-style: none;
+}
+.homeCaptionDescription{
+    margin: 5%  20% auto;
+    width: 100%;
+    line-height: 120%;
 }
 
 .battleCaption {
@@ -104,6 +112,8 @@ header {
     list-style: none;
     display: none;
     vertical-align: middle;
+    margin: 0 5% auto;
+    line-height: 140%;
 }
 
 .rankingCaption {
@@ -111,12 +121,16 @@ header {
     height: 100%;
     list-style: none;
     display: none;
+    margin: 0 10% auto;
+    line-height: 140%;
 }
 
 .postCaption {
     width: 100%;
     list-style: none;
     display: none;
+    margin: 0 10% auto;
+    line-height: 140%;
 }
 
 #fader > * {

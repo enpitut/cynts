@@ -40,30 +40,37 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
     </div>
     <div id="fader">
         <li class="homeCaption">
-            もうダサいなんて言わせない
-            <br/>
+            <div class="homeCaptionTitle">
+                もうダサいなんて言わせない
+            </div>
+            <div class="homeCaptionDescription">
+                今の自分より少しだけおしゃれに。
+                <br>
+                ゲーム感覚でおしゃれを知ろう。
+            </div>
+            <br>
         </li>
         <li class="battleCaption">
             <img src="/img/view/description1.png" width="45%"
                  style="float:left; margin: 0 30px 0 0">
-            2択で自分の好きなコーディネートを選ぶだけ！
+            2択で自分の好きなコーディネートを選ぶだけ。
             <br>
-            ゲームをしながら色々なコーディネートが見れる！
+            ゲームをしながら色々なコーディネートが見れる。
         </li>
         <li class="rankingCaption">
             初めて来た人はまずコーディネートランキングへ。
             <br>
             ランキング1位はみんなが好きなコーディネート。
             <br>
-            服をあまり買ったことない人は、ランキング1位の服をまとめて買っちゃおう！
+            服をあまり買ったことない人は、ランキング1位の服をまとめ買い。
         </li>
         <li class="postCaption">
-            自分が組み合わせたコーディネートを勝ち抜きバトルにエントリー！
+            自分が組み合わせたコーディネートを勝ち抜きバトルにエントリー。
             <br>
             みんなが好きになるコーディネートを作ってみよう。
             <br>
             <br>
-            組み合わせは無限大！
+            組み合わせは無限大。
         </li>
     </div>
 </div>
@@ -74,10 +81,11 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
             <li>
                 <?= $this->Html->image(
                     'view/menu1.png', array(
-                    'height' => '160px', 'url' => array(
-                        'controller' => 'CoordinatesBattle', 'action' => 'battle'
+                        'height' => '160px', 'url' => array(
+                            'controller' => 'CoordinatesBattle',
+                            'action' => 'battle'
+                        )
                     )
-                )
                 ) ?>
                 <br>
                 好きなコーディネートを選ぶ
@@ -85,10 +93,10 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
             <li>
                 <?= $this->Html->image(
                     'view/menu2.png', array(
-                    'height' => '160px', 'url' => array(
-                        'controller' => 'Rankings', 'action' => 'view'
+                        'height' => '160px', 'url' => array(
+                            'controller' => 'Rankings', 'action' => 'view'
+                        )
                     )
-                )
                 ) ?>
                 <br>
                 コーディネートランキングを見る
@@ -96,10 +104,10 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
             <li>
                 <?= $this->Html->image(
                     'view/menu3.png', array(
-                    'height' => '160px', 'url' => array(
-                        'controller' => 'Coordinates', 'action' => 'create'
+                        'height' => '160px', 'url' => array(
+                            'controller' => 'Coordinates', 'action' => 'create'
+                        )
                     )
-                )
                 ) ?>
                 <br>
                 オリジナルコーディネートを投稿する
@@ -110,7 +118,7 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
     <?= $this->element('footer') ?>
 
     <script>
-        var fit_topColumn = function () {
+        var fitTopColumn = function () {
             var topColumn = $('#topColumn');
             var fader = $('#fader');
             topColumn.height(topColumn.width() / 1440.0 * 564);
@@ -124,11 +132,11 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
                 clearTimeout(timer);
             }
             timer = setTimeout(function () {
-                fit_topColumn();
+                fitTopColumn();
             }, 100);
         });
 
-        fit_topColumn();
+        fitTopColumn();
     </script>
 
 </body>
