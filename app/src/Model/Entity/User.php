@@ -41,57 +41,5 @@ class User extends Entity
             $this->data['User']['password'] = $passwordHasher->hash($this->data['User']['password']);
         }
         return true;
-    }
-    
-     //ƒoƒŠƒf[ƒVƒ‡ƒ“
-    public $validate = array(
-        'name' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-                'message' => '•K{“ü—Í‚Å‚·',
-                'required' => true,
-            ),
-            'alphaNumeric' => array(
-                'rule' => array('alphaNumeric'),
-                'message' => '”¼Šp‰p”š‚Ì‚İ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢',
-            ),
-            'isUnique' => array(
-                'rule' => array('isUnique'),
-                'message' => '‚±‚Ìƒ†[ƒU–¼‚ÍŠù‚É“o˜^‚³‚ê‚Ä‚¢‚Ü‚·'
-            ),
-        ),
-        'password' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
-                'message' => '•K{“ü—Í‚Å‚·',
-                'required' => true,
-            ),
-            'alphaNumeric' => array(
-                'rule' => array('alphaNumeric'),
-                'message' => '”¼Šp‰p”š‚Ì‚İ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢',
-            ),
-        ),
-    );
-    
+    }    
 }
-
-
-
-
-//App::uses('AppModel', 'Model');
-//App::uses('SimplePasswordHasher','Controller/Component/Auth');
-/*
-class User_HushPass extends AppModel {
-    public $name = 'User';
-    
-    //•Û‘¶‘O‚ÉƒpƒXƒ[ƒh‚ÌƒnƒbƒVƒ…‰»
-    public function beforeSave($options = array()) {
-        if(!$this->id){
-            $passwordHasher = new SimplePasswordHasher();
-            $this->data['User']['password'] = $passwordHasher->hash($this->data['User']['password']);
-        }
-        return true;
-    }
-
- }
- */
