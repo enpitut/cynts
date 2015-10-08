@@ -75,7 +75,7 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
                 <?= $this->Html->image(
                     'view/menu1.png', array(
                     'height' => '160px', 'url' => array(
-                        'controller' => 'coordinates', 'action' => 'battle'
+                        'controller' => 'CoordinatesBattle', 'action' => 'battle'
                     )
                 )
                 ) ?>
@@ -86,7 +86,7 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
                 <?= $this->Html->image(
                     'view/menu2.png', array(
                     'height' => '160px', 'url' => array(
-                        'controller' => 'rankings', 'action' => 'view'
+                        'controller' => 'Rankings', 'action' => 'view'
                     )
                 )
                 ) ?>
@@ -97,7 +97,7 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
                 <?= $this->Html->image(
                     'view/menu3.png', array(
                     'height' => '160px', 'url' => array(
-                        'controller' => 'coordinates', 'action' => 'create'
+                        'controller' => 'Coordinates', 'action' => 'create'
                     )
                 )
                 ) ?>
