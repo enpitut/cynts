@@ -36,8 +36,6 @@ function hide_display(){     document.write("hide_displayしてるよ");
 <div class="big"> Welcome to Unichronicle! </div>
 <p> Please enter your information. <p>
 
-
-
 <?= $this->Form->create() ?>
 
 <table border="0" align="center">
@@ -89,13 +87,9 @@ sex:<br />
 
 ?></p>
 
-
-
-
 <?= $this->Form->end() ?>
 </form>
 </table>
-
 
 If you have a Unichronicle account,
 <a href="/users/login">
