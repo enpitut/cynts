@@ -29,9 +29,9 @@ function hide_display(){     document.write("hide_displayしてるよ");
 //window.onload = entryChange1;
 
 
-</script> 
+</script>
 
-
+<?php echo $this->Form->error('name'); ?>
 
 <div class="big"> Welcome to Unichronicle! </div>
 <p> Please enter your information. <p>
@@ -41,30 +41,30 @@ function hide_display(){     document.write("hide_displayしてるよ");
 <table border="0" align="center">
 <tr><td>
 
-Username:
-<?= $this->Form->input('name',
+<tr><td>username:</td>
+<td><?= $this->Form->input('name',
     array('label' => false,
     )
-) ?>
+) ?></td></tr>
 
-Mail:
-<?= $this->Form->input('mail',
+<tr><td>mail:</td>
+<td><?= $this->Form->input('mail',
     array('label' => false,
     )
-) ?>
+) ?></td></tr>
 
-password:
-<?= $this->Form->input('password',
+<tr><td>password:</td>
+<td><?= $this->Form->input('password',
     array('label' => false,
     )
-) ?>
-<!--
-retype password:
-<?= $this->Form->input('password_re',
+) ?></td></tr>
+
+<tr><td>retype password:</td>
+<td><?= $this->Form->input('passwd',
     array('label' => false,
     )
-) ?>
--->
+) ?></td></tr>
+
 <!--
 sex:<br />
 <?= $this->Form->select('sex',

@@ -66,6 +66,15 @@ class UsersTable extends Table
             ->requirePresence('password', 'create')
             ->notEmpty('password', 'A password is required');
 
+    // パスワード（確認用）
+        $validator
+            ->add('passwd', 'compare', [
+                'rule' => ['compareWith', 'password'],
+                'message'=>'パスワードが一致しません'])
+        
+            ->requirePresence('passwd', 'create')
+            ->notEmpty('password', 'A retype password is required');
+
         $validator
             ->add('created_at', 'valid', ['rule' => 'datetime'])
             ->allowEmpty('created_at');
@@ -75,5 +84,11 @@ class UsersTable extends Table
             ->notEmpty('updated_at');
 
         return $validator;
+
+        $errors = $validator->errors($this->request->data());
+        if (!empty($errors)) {
+            echo $errors;
+        }
+        
     }
 }
