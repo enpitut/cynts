@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\Item;
+use App\Model\Table\CoordinatesItemsTable;
 use App\Model\Table\ItemsTable;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
@@ -14,6 +15,7 @@ use Cake\Event\Event;
 class CoordinatesController extends AppController
 {
     const N_ITEM_LIST_SHOW = 100;
+    const SESSION_KEY = 'items';
 
     public function beforeFilter(Event $event)
     {
@@ -102,12 +104,17 @@ class CoordinatesController extends AppController
 
     /**
      * @param string $string_img
+     * @param array $items
      * @return int
      * @throws \Exception
      */
-    protected function postCoordinate($string_img)
+    protected function postCoordinate($string_img, array $items)
     {
+        /** @var CoordinatesItemsTable $coordinates_items_repository */
+        $coordinates_items_repository = TableRegistry::get('CoordinatesItems');
+
         $now = new \DateTime();
+
         /** @var /App/Model/Entity/Coordinate $coordinate */
         $coordinate = $this->Coordinates->newEntity();
 
@@ -135,12 +142,23 @@ class CoordinatesController extends AppController
                 throw new \Exception('Failed to save image.');
             }
 
+            foreach ($items as $item) {
+                $coordinates_item = $coordinates_items_repository->newEntity();
+                $coordinates_item->coordinate_id = $coordinate->id;
+                $coordinates_item->item_id = $item['itemId'];
+                $coordinates_item->created_at = $now->format('Y-m-d H:i:s');
+
+                if (!$coordinates_items_repository->save($coordinates_item)) {
+                    throw new \Exception('Failed to save coordinates_item entity');
+                }
+            }
+
             $coordinate->photo = $coordinate->id . '.png';
             $this->Coordinates->save($coordinate);
 
             return $coordinate->id;
         } else {
-            throw new \Exception('Failed to save entity.');
+            throw new \Exception('Failed to save coordinate entity.');
         }
     }
 
@@ -156,9 +174,12 @@ class CoordinatesController extends AppController
         if ($this->request->is('post')) {
             $result = null;
             try {
-                $result = $this->postCoordinate($this->request->data('img'));
+                $result = $this->postCoordinate(
+                    $this->request->data('img'),
+                    json_decode($this->request->data(self::SESSION_KEY), true)
+                );
             } catch (\Exception $e) {
-                error_log($e->getMessage(), E_WARNING);
+                trigger_error($e->getMessage(), E_USER_WARNING);
                 echo '{"hasSucceeded": false}';
                 exit;
             }
