@@ -188,7 +188,7 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
 function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side_obj_id) {
     var dfd = $.Deferred();
 
-    sendPost("favorite",
+    sendPost("ajaxPostFavorite",
         {
             favorite_id: like_coordinate_id
         },

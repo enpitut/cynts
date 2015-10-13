@@ -101,3 +101,8 @@
     font-size: 20px;
     color: darkorange;
 }
+
+.disabled {
+    color: gray;
+    pointer-events: none;
+}

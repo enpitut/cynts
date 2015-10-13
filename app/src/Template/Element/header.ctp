@@ -1,20 +1,52 @@
 <header>
     <div id="header">
         <ul>
+            <?php if ($this->Session->read('Auth.User')): ?>
+                <li>
+                    <?=
+                    $this->Html->link(
+                        'User',
+                        array(
+                            'controller' => 'Users',
+                            'action' => 'view',
+                            $this->Session->read('Auth.User.id')
+                        )
+                    );
+                    ?>
+                </li>
+            <?php endif; ?>
             <li>
-                <a href="/coordinates/battle">
-                    Play
-                </a>
+                <?=
+                $this->Html->link(
+                    'Play',
+                    array(
+                        'controller' => 'CoordinatesBattle',
+                        'action' => 'battle',
+                    )
+                );
+                ?>
             </li>
             <li>
-                <a href="/rankings/view">
-                    Ranking
-                </a>
+                <?=
+                $this->Html->link(
+                    'Ranking',
+                    array(
+                        'controller' => 'Rankings',
+                        'action' => 'view',
+                    )
+                );
+                ?>
             </li>
             <li>
-                <a href="/coordinates/create">
-                    Post
-                </a>
+                <?=
+                $this->Html->link(
+                    'Post',
+                    array(
+                        'controller' => 'Coordinates',
+                        'action' => 'create',
+                    )
+                );
+                ?>
             </li>
         </ul>
     </div>
