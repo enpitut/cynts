@@ -104,6 +104,7 @@ class CoordinatesController extends AppController
         /** @var /App/Model/Entity/Coordinate $coordinate */
         $coordinate = $this->Coordinates->newEntity();
 
+        $coordinate->user_id = $this->Auth->user('id');
         $coordinate->like = 0;
         $coordinate->unlike = 0;
         $coordinate->created_at = $now->format('Y-m-d H:i:s');
