@@ -101,6 +101,7 @@
                     data-item-id="<?= $item->id ?>"
                     data-item-photo-path="<?= $item->photo_paths[0] ?>"
                     data-item-price="<?= $item->price ?>"
+                    data-item-name="<?= $item->name ?>"
                     >
                     Pick
                 </button>
