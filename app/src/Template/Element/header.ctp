@@ -5,27 +5,33 @@
         )
         ): ?>
             <?php if (!($this->request->session()->read('Auth.User'))): ?>
-                <?= $this->Form->create(null, ['url' => ['controller' => 'Users', 'action' => 'login']]) ?>
+                <?= $this->Form->create(
+                    null,
+                    ['url' => ['controller' => 'Users', 'action' => 'login']]
+                ) ?>
                 <?= $this->Form->text(
                     'mail', [
-                        'class' => 'mailForm', 'placeholder' => 'Mail',
+                        'class' => 'mailForm', 'placeholder' => 'メールアドレス',
                     ]
                 ) ?>
                 <?= $this->Form->password(
-                    'password',
-                    [
-                        'class' => 'passwordForm', 'placeholder' => 'Password',
+                    'password', [
+                        'class' => 'passwordForm', 'placeholder' => 'パスワード',
                     ]
                 ) ?>
                 <?= $this->Form->submit(
-                    'Login', [
+                    'ログイン', [
                         'class' => 'loginButton',
-
                     ]
                 ) ?>
             <?php else: ?>
-                <?= $this->Form->create(null, ['url' => ['controller' => 'Users', 'action' => 'logout']]) ?>
-                <?= $this->Form->button('Logout' , ['class' => 'logoutButton']) ?>
+                <?= $this->Form->create(
+                    null,
+                    ['url' => ['controller' => 'Users', 'action' => 'logout']]
+                ) ?>
+                <?= $this->Form->button(
+                    'ログアウト', ['class' => 'logoutButton']
+                ) ?>
                 <?= $this->Form->end() ?>
             <?php endif; ?>
         <?php endif; ?>
