@@ -1,7 +1,7 @@
 <header>
     <div id="header">
         <ul>
-            <?php if ($this->Session->read('Auth.User')): ?>
+            <?php if ($this->request->session()->read('Auth.User')): ?>
                 <li>
                     <?=
                     $this->Html->link(
@@ -9,7 +9,7 @@
                         array(
                             'controller' => 'Users',
                             'action' => 'view',
-                            $this->Session->read('Auth.User.id')
+                            $this->request->session()->read('Auth.User.id')
                         )
                     );
                     ?>
