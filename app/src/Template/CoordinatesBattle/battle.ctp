@@ -30,8 +30,8 @@ foreach ($coordinates as $coordinate) {
         [
             'id' => 'phototag' . $side_id,
             'onClick' => sprintf(
-                'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d, %d)',
-                $side_id, $side_id, (($side_id + 1) % 2), $max_n_battle
+                'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d)',
+                $side_id, $side_id, (($side_id + 1) % 2)
             ),
         ]);
     echo '</div>';
@@ -40,8 +40,8 @@ foreach ($coordinates as $coordinate) {
     echo $this->Html->image($coordinate->photo_path,
         [
             'onClick' => sprintf(
-                'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d, %d)',
-                $side_id, $side_id, (($side_id + 1) % 2), $max_n_battle
+                'updateCoordinateImage(image_obj%d, coordinate_id%d, coordinate_id%d)',
+                $side_id, $side_id, (($side_id + 1) % 2)
             ),
             'id' => "photo" . $side_id,
             'class' => "battlephoto",
@@ -64,6 +64,8 @@ $side_id = 0;
 ?>
 </ul>
 </div>
+<br>
+<div id="finish_button"></div>
 
 <?= $this->element('footer') ?>
 

@@ -189,3 +189,24 @@ img.selected_coordinate_photo {
     border-style: solid;
     border-color: red;
 }
+
+#finish_button {
+    width: 100px;
+    height: auto;
+    margin: 0 auto;
+}
+
+#finish_button button {
+    float: left;
+    cursor: pointer;
+    width: 100px;
+    margin: 0 auto;
+    padding: 5px 5px;
+    border-right: 1px solid #abb2b7;
+    background: #bdc3c7;
+    color: #444;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1;
+    transition: .2s;
+}
