@@ -45,6 +45,7 @@ class AppController extends Controller
                     'controller' => 'Pages',
                     'action' => 'home'
                 ],
+                'authError' => 'ログインしてください'
             ],
         ];
 

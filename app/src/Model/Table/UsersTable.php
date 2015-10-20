@@ -20,6 +20,7 @@ class UsersTable extends Table
      * Initialize method
      *
      * @param array $config The configuration for the Table.
+     *
      * @return void
      */
     public function initialize(array $config)
@@ -30,18 +31,23 @@ class UsersTable extends Table
         $this->displayField('name');
         $this->primaryKey('id');
 
-        $this->hasMany('Coordinates', [
-            'foreignKey' => 'user_id'
-        ]);
-        $this->hasMany('Favorites', [
-            'foreignKey' => 'user_id'
-        ]);
+        $this->hasMany(
+            'Coordinates', [
+                'foreignKey' => 'user_id'
+            ]
+        );
+        $this->hasMany(
+            'Favorites', [
+                'foreignKey' => 'user_id'
+            ]
+        );
     }
 
     /**
      * Default validation rules.
      *
      * @param \Cake\Validation\Validator $validator Validator instance.
+     *
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator)
@@ -69,6 +75,31 @@ class UsersTable extends Table
         $validator
             ->requirePresence('updated_at', 'create')
             ->notEmpty('updated_at');
+
+        return $validator;
+    }
+
+    public function validationSignup(validator $validator)
+    {
+        $validator
+            ->requirePresence('name')
+            ->add(
+                'name', 'length', [
+                    'rule' => ['maxLength', 10],
+                    'message' => '10文字以内で入力してください'
+                ]
+            )
+            ->notEmpty('name', 'ユーザ名を入力してください');
+
+        return $validator;
+    }
+
+
+    public function validationLogin(validator $validator)
+    {
+        $validator
+            ->requirePresence('mail', 'create')
+            ->notEmpty('mail', 'ユーザ名を入力してください');
 
         return $validator;
     }

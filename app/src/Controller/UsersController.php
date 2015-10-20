@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Model\Entity\User;
 use Cake\Event\Event;
+use Cake\Controller\Component\SecurityComponent;
 
 /**
  * Users Controller
@@ -46,7 +47,7 @@ class UsersController extends AppController
      *
      * @return \Cake\Network\Response|void
      */
-    public function add()
+    public function signup()
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
@@ -68,11 +69,6 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
-    public function signup()
-    {
-        $this->add();
-    }
-
     public function login()
     {
         if ($this->request->is('post')) {
@@ -82,11 +78,13 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(
-                __('Username or password is incorrect'),
+                __('ユーザ名かパスワードが間違っています'),
                 'default',
                 [],
                 'auth'
             );
+            $this->request->data['mail'] = '';
+            $this->request->data['password'] = '';
         }
     }
 

@@ -11,7 +11,14 @@
 
 <div class="align">
     <div class="siteContainer">
-
+        <?php if(!empty($this->request->session()->read('Flash'))): ?>
+        <div class="messageBox">
+            <label class="fontawesome-remove-sign" for="message error"><span
+                    class="hidden">times-circle</span></label>
+            <?= $this->Flash->render('flash') ?>
+            <?= $this->Flash->render('auth') ?>
+        </div>
+        <?php endif; ?>
         <div class="loginForm">
             <?= $this->Form->create(
                 null,
@@ -37,7 +44,11 @@
 
             </div>
             <?= $this->Form->submit(
-                'ログイン'
+                'ログイン', [
+                    'error' => [
+                        ''
+                    ]
+                ]
             ) ?>
             <?= $this->Form->end() ?>
 

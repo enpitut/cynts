@@ -107,7 +107,7 @@ header {
 
 #title {
     position: relative;
-    margin: 12% auto 2% auto;
+    margin: 12% auto 0;
     width: 850px;
     font-size: 64px;
 }
@@ -126,10 +126,10 @@ header {
 
 .homeCaptionTitle{
     font-size: 32px;
-    margin: 1% auto;
+    margin: 5% auto;
 }
 .homeCaptionDescription{
-    margin: 5%  20% auto;
+    margin: 0 auto;
     width: 100%;
     line-height: 120%;
 }
@@ -139,7 +139,7 @@ header {
     list-style: none;
     display: none;
     vertical-align: middle;
-    margin: 0 5% auto;
+    margin: 5% auto;
     line-height: 140%;
 }
 
@@ -148,7 +148,7 @@ header {
     height: 100%;
     list-style: none;
     display: none;
-    margin: 0 10% auto;
+    margin: 5% auto;
     line-height: 140%;
 }
 
@@ -156,7 +156,7 @@ header {
     width: 100%;
     list-style: none;
     display: none;
-    margin: 0 10% auto;
+    margin: 5% auto;
     line-height: 140%;
 }
 
