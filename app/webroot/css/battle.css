@@ -199,13 +199,13 @@ img.selected_coordinate_photo {
 #finish_button button {
     float: left;
     cursor: pointer;
-    width: 100px;
+    width: 110px;
     margin: 0 auto;
     padding: 5px 5px;
-    border-right: 1px solid #abb2b7;
-    background: #bdc3c7;
-    color: #444;
-    font-size: 18px;
+    border: 1px solid #611411;
+    background: #b71930;
+    color: #e3e3e3;
+    font-size: 20px;
     text-align: center;
     line-height: 1;
     transition: .2s;

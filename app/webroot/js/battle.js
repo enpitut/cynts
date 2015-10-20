@@ -11,7 +11,7 @@ var n_continuously_like = 1;
 var n_battle = 0;
 var usr_score = 0;
 var battle_info = {};
-const MAX_N_BATTLE = 3;
+const MAX_N_BATTLE = 30;
 const NUM_FOR_FAV = 10;
 
 /**
