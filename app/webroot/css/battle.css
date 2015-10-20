@@ -191,7 +191,7 @@ img.selected_coordinate_photo {
 }
 
 #finish_button {
-    width: 100px;
+    width: 150px;
     height: auto;
     margin: 0 auto;
 }
@@ -199,9 +199,9 @@ img.selected_coordinate_photo {
 #finish_button button {
     float: left;
     cursor: pointer;
-    width: 110px;
+    width: 150px;
     margin: 0 auto;
-    padding: 5px 5px;
+    padding: 5px;
     border: 1px solid #611411;
     background: #b71930;
     color: #e3e3e3;

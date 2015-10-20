@@ -73,7 +73,7 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
             if (n_battle == 1) {
                 var element = document.getElementById('finish_button');
                 var buttonElement = document.createElement('button');
-                buttonElement.innerHTML = 'FINISH!!';
+                buttonElement.innerHTML = 'ゲーム終了!!';
                 var action = "finishBattle();";
                 buttonElement.setAttribute('onclick', action);
                 element.appendChild(buttonElement);

@@ -12,7 +12,7 @@
 <?= $this->element('eachpage_header') ?>
 
 <div id="centermessage">
-  <p>Which do you like?</p>
+  <p>どっちが好き？</p>
 </div>
 
 <div id="battlecolumn">
