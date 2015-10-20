@@ -54,7 +54,7 @@ class AppController extends Controller
     {
         parent::initialize();
         $this->loadComponent('Flash');
-        $this->autoLayout = false;
+        $this->viewBuilder()->autoLayout(false);
     }
 
     public function isAuthorized($user = null)

@@ -127,16 +127,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.1.0",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "e430f46594877acf7f165464d097d2167e1ba166"
+                "reference": "9f90a045a5c5a974ac49e1732d21a1f6d95c87a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/e430f46594877acf7f165464d097d2167e1ba166",
-                "reference": "e430f46594877acf7f165464d097d2167e1ba166",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/9f90a045a5c5a974ac49e1732d21a1f6d95c87a9",
+                "reference": "9f90a045a5c5a974ac49e1732d21a1f6d95c87a9",
                 "shasum": ""
             },
             "require": {
@@ -167,11 +167,6 @@
                 "phpunit/phpunit": "*"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Cake\\": "src"
@@ -198,24 +193,24 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-09-20 02:14:20"
+            "time": "2015-10-19 01:06:57"
         },
         {
             "name": "cakephp/migrations",
-            "version": "1.3.1",
+            "version": "1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "6f9f3da1f872a739c7d9a1d43eeb01e258bdd2c1"
+                "reference": "8fd5d9fddde441a7324b5f5198172215f8e804fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/6f9f3da1f872a739c7d9a1d43eeb01e258bdd2c1",
-                "reference": "6f9f3da1f872a739c7d9a1d43eeb01e258bdd2c1",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/8fd5d9fddde441a7324b5f5198172215f8e804fc",
+                "reference": "8fd5d9fddde441a7324b5f5198172215f8e804fc",
                 "shasum": ""
             },
             "require": {
-                "cakephp/cakephp": "~3.0",
+                "cakephp/cakephp": "~3.1",
                 "php": ">=5.4",
                 "robmorgan/phinx": "dev-master"
             },
@@ -248,7 +243,7 @@
                 "cakephp",
                 "migrations"
             ],
-            "time": "2015-09-30 21:58:44"
+            "time": "2015-10-16 20:29:10"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -826,16 +821,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "63f39fe6edd5609f7ed7b570ebb6690f05ebfd72"
+                "reference": "638172845c65dc61ec6732eb680af434794f2623"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/63f39fe6edd5609f7ed7b570ebb6690f05ebfd72",
-                "reference": "63f39fe6edd5609f7ed7b570ebb6690f05ebfd72",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/638172845c65dc61ec6732eb680af434794f2623",
+                "reference": "638172845c65dc61ec6732eb680af434794f2623",
                 "shasum": ""
             },
             "require": {
@@ -878,7 +873,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2015-09-20 02:00:26"
+            "time": "2015-10-11 02:06:19"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1302,16 +1297,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "86e0dafb0e6c5165cce7b3b6892807d07504baa0"
+                "reference": "c84f05be256cd7c9d2340b26f7995b4afbf8787b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/86e0dafb0e6c5165cce7b3b6892807d07504baa0",
-                "reference": "86e0dafb0e6c5165cce7b3b6892807d07504baa0",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c84f05be256cd7c9d2340b26f7995b4afbf8787b",
+                "reference": "c84f05be256cd7c9d2340b26f7995b4afbf8787b",
                 "shasum": ""
             },
             "require": {
@@ -1360,7 +1355,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-01 06:48:20"
+            "time": "2015-10-06 15:51:05"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1542,16 +1537,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.0.3",
+            "version": "5.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "dfba490b017ca629940ed4301922ad8843f0abd0"
+                "reference": "d2656ec378c88e036b3fc14fb4262ee1a25498c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/dfba490b017ca629940ed4301922ad8843f0abd0",
-                "reference": "dfba490b017ca629940ed4301922ad8843f0abd0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d2656ec378c88e036b3fc14fb4262ee1a25498c9",
+                "reference": "d2656ec378c88e036b3fc14fb4262ee1a25498c9",
                 "shasum": ""
             },
             "require": {
@@ -1612,20 +1607,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-02 12:56:15"
+            "time": "2015-10-14 13:51:20"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "3.0.0",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "b66bfd55201aa33e8096d8c9bcb762361521c301"
+                "reference": "382c729a52b7ef682e94c73fd6868f5ee8116ba7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/b66bfd55201aa33e8096d8c9bcb762361521c301",
-                "reference": "b66bfd55201aa33e8096d8c9bcb762361521c301",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/382c729a52b7ef682e94c73fd6868f5ee8116ba7",
+                "reference": "382c729a52b7ef682e94c73fd6868f5ee8116ba7",
                 "shasum": ""
             },
             "require": {
@@ -1668,7 +1663,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-10-01 06:43:55"
+            "time": "2015-10-18 07:55:54"
         },
         {
             "name": "psy/psysh",
@@ -1976,16 +1971,16 @@
         },
         {
             "name": "sebastian/global-state",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/global-state.git",
-                "reference": "c7428acdb62ece0a45e6306f1ae85e1c05b09c01"
+                "reference": "bc37d50fea7d017d3d340f230811c9f1d7280af4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/c7428acdb62ece0a45e6306f1ae85e1c05b09c01",
-                "reference": "c7428acdb62ece0a45e6306f1ae85e1c05b09c01",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/bc37d50fea7d017d3d340f230811c9f1d7280af4",
+                "reference": "bc37d50fea7d017d3d340f230811c9f1d7280af4",
                 "shasum": ""
             },
             "require": {
@@ -2023,7 +2018,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2014-10-06 09:23:50"
+            "time": "2015-10-12 03:26:01"
         },
         {
             "name": "sebastian/recursion-context",
