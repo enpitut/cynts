@@ -6,3 +6,5 @@
 /webroot/img/coordinates/*
 /webroot/img/items/*
 /webroot/img/shops/*
+.DS_Store
+\#*\#
