@@ -14,7 +14,9 @@
     "require-dev": {
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "~3.0",
-        "cakephp/bake": "~1.0"
+        "cakephp/bake": "~1.0",
+        "phpunit/phpunit": "*",
+        "cakephp/cakephp-codesniffer": "*"
     },
     "suggest": {
         "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",
