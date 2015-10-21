@@ -24,11 +24,9 @@
     foreach ($battle_history as $battle_result) {
         $selected = $battle_result->{"selected_side"} === "a" ? "a" : "b";
         $unselected = $selected === "a" ? "b" : "a";
-
         $a_side_coordinate_class
             = $b_side_coordinate_class = "result_coordinate_photo";
         ${$selected . "_side_coordinate_class"} .= " selected_coordinate_photo";
-
         // 1: 良いコーデを選択した
         // 0: 悪いコーデを選択した
         // -1: 引き分け
@@ -43,12 +41,23 @@
                 $a_side_p_class = $b_side_p_class = "draw_coordinate_string";
             }
         }
-
         echo "<li>";
-        echo $this->Html->image(
+        $a_side_coordinate_image = $this->Html->image(
             $battle_result->{"a_side_coordinate_photo_path"},
             [
                 'class' => $a_side_coordinate_class
+            ]
+        );
+        echo $this->Html->link(
+            $a_side_coordinate_image,
+            [
+                'controller' => 'Coordinates',
+                'action' => 'view',
+                $battle_result->{"a_side_coordinate_id"}
+            ],
+            [
+                'target' => '_blank',
+                'escape' => false
             ]
         );
         echo sprintf(
@@ -56,12 +65,23 @@
             $a_side_p_class, $battle_result->{"a_side_coordinate_point"}
         );
         echo "</li>";
-
         echo "<li>";
-        echo $this->Html->image(
+        $b_side_coordinate_image = $this->Html->image(
             $battle_result->{"b_side_coordinate_photo_path"},
             [
-                'class' => $b_side_coordinate_class,
+                'class' => $b_side_coordinate_class
+            ]
+        );
+        echo $this->Html->link(
+            $b_side_coordinate_image,
+            [
+                'controller' => 'Coordinates',
+                'action' => 'view',
+                $battle_result->{"b_side_coordinate_id"}
+            ],
+            [
+                'target' => '_blank',
+                'escape' => false
             ]
         );
         echo sprintf(
@@ -69,7 +89,6 @@
             $b_side_p_class, $battle_result->{"b_side_coordinate_point"}
         );
         echo "</li>";
-
         echo "<br>";
     }
     ?>
