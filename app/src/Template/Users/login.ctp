@@ -4,6 +4,7 @@
     <?= $this->Html->charset() ?>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <?= $this->Html->css('base.css') ?>
+    <?= $this->Html->css('header.css') ?>
     <?= $this->Html->css('user/login.css') ?>
 </head>
 <body>
@@ -11,13 +12,13 @@
 
 <div class="align">
     <div class="siteContainer">
-        <?php if(!empty($this->request->session()->read('Flash'))): ?>
-        <div class="messageBox">
-            <label class="fontawesome-remove-sign" for="message error"><span
-                    class="hidden">times-circle</span></label>
-            <?= $this->Flash->render('flash') ?>
-            <?= $this->Flash->render('auth') ?>
-        </div>
+        <?php if (!empty($this->request->session()->read('Flash'))): ?>
+            <div class="messageBox">
+                <label class="fontawesome-remove-sign" for="message error"><span
+                        class="hidden">times-circle</span></label>
+                <?= $this->Flash->render('flash') ?>
+                <?= $this->Flash->render('auth') ?>
+            </div>
         <?php endif; ?>
         <div class="loginForm">
             <?= $this->Form->create(
@@ -43,13 +44,7 @@
                 ) ?>
 
             </div>
-            <?= $this->Form->submit(
-                'ログイン', [
-                    'error' => [
-                        ''
-                    ]
-                ]
-            ) ?>
+            <?= $this->Form->submit('ログイン') ?>
             <?= $this->Form->end() ?>
 
 

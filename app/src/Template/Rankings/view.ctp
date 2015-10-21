@@ -2,6 +2,7 @@
 <html>
 <head>
     <?= $this->Html->css('base.css') ?>
+    <?= $this->Html->css('header.css') ?>
     <?= $this->Html->css('ranking/base.css') ?>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript">

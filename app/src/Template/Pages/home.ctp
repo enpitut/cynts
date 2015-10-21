@@ -14,6 +14,7 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
     <?= $this->Html->charset() ?>
     <title><?= $cakeDescription ?></title>
     <?= $this->Html->css('base.css') ?>
+    <?= $this->Html->css('header.css') ?>
 </head>
 <body class="home">
 <script>
