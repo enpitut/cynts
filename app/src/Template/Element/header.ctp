@@ -1,34 +1,6 @@
 <header>
     <div id="header">
         <ul>
-            <?php if ($this->request->Session()->read('Auth.User')): ?>
-                <li>
-                    <?=
-                    $this->Html->link(
-                        'User',
-                        array(
-                            'controller' => 'Users',
-                            'action' => 'view',
-                            $this->request->Session()->read('Auth.User.id')
-                        )
-                    );
-                    ?>
-                </li>
-            <?php elseif (($this->request->here !== '/pages/home')
-                && ($this->request->here !== '/')
-            ): ?>
-                <li>
-                    <?=
-                    $this->Html->link(
-                        'Login',
-                        array(
-                            'controller' => 'Users',
-                            'action' => 'login',
-                        )
-                    );
-                    ?>
-                </li>
-            <?php endif; ?>
             <li>
                 <?=
                 $this->Html->link(
@@ -89,7 +61,7 @@
                         $this->request->Session()->read('Auth.User.id')
                     ]
                 ) ?>
-                |
+                さん |
                 <?= $this->Html->link(
                     'ログアウト', [
                         'controller' => 'Users',
