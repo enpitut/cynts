@@ -13,7 +13,7 @@ header {
     margin: 24px 15%;
     padding: 0;
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 170px;
@@ -52,7 +52,7 @@ header {
     margin: 35px 0;
     padding: 0;
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: 0;
     width: 100%;
