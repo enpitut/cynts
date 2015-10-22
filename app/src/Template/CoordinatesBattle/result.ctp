@@ -23,9 +23,11 @@
     foreach ($battle_history as $battle_result) {
         $selected = $battle_result->{"selected_side"} === "a" ? "a" : "b";
         $unselected = $selected === "a" ? "b" : "a";
+
         $a_side_coordinate_class
             = $b_side_coordinate_class = "result_coordinate_photo";
         ${$selected . "_side_coordinate_class"} .= " selected_coordinate_photo";
+
         // 1: 良いコーデを選択した
         // 0: 悪いコーデを選択した
         // -1: 引き分け
@@ -40,6 +42,7 @@
                 $a_side_p_class = $b_side_p_class = "draw_coordinate_string";
             }
         }
+
         echo "<li>";
         $a_side_coordinate_image = $this->Html->image(
             $battle_result->{"a_side_coordinate_photo_path"},
@@ -64,6 +67,7 @@
             $a_side_p_class, $battle_result->{"a_side_coordinate_point"}
         );
         echo "</li>";
+
         echo "<li>";
         $b_side_coordinate_image = $this->Html->image(
             $battle_result->{"b_side_coordinate_photo_path"},
@@ -88,6 +92,7 @@
             $b_side_p_class, $battle_result->{"b_side_coordinate_point"}
         );
         echo "</li>";
+
         echo "<br>";
     }
     ?>
