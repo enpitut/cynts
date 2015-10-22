@@ -27,6 +27,15 @@
   width: 100%;
 }
 
+#author {
+    width: 100%;
+    text-align: right;
+}
+
+#author a {
+    color: orange;
+}
+
 button.favoriteButton {
 	font-size: 14px;
 	padding: 5px 10px 5px 10px;
@@ -75,9 +84,6 @@ button.favoriteButton {
 	padding-left: 40px;
 }
 
-.sizeButtons input {
-	display: none;
-}
 .sizeButtons label {
 	display: block;
 	float: left;
@@ -85,38 +91,35 @@ button.favoriteButton {
 	width: 45px;
 	margin: 5px;
 	padding: 5px 5px;
-	border-right: 1px solid #abb2b7;
-	background: #bdc3c7;
+    background-color: #bdc3c7;
 	color: #444;
 	font-size: 14px;
 	text-align: center;
-	line-height: 1;
-	transition: .2s;
 }
-.sizeButtons input[type="radio"]:checked + label {
-	background-color: #ee4400;
+
+.sizeButtons input[type="radio"] {
+    display: none;
+}
+
+.sizeButtons label.selected {
+    background-color: darkorange;
 	color: #fff;
 }
 
 .itemPrice {
 	float: left;
 	width: 240px;
-	display: inline-block;
 	margin-left: 10px;
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .buyButton {
-	display: inline-block;
-}
-
-button.buyButton {
 	font-size: 14px;
-	margin-top: 20px;
 	padding: 5px 10px 5px 10px;
 	background-color: #e40;
 	color: #fff;
 	border-style: none;
+    margin-top: 15px;
 }
 
 #buyAll {
