@@ -83,12 +83,8 @@
 
                     $options = array();
                     for ($i = 0; $i < count($item->sizeArray); $i++) {
-                        array_push(
-                            $options, [
-                                'value' => $item->sizeArray[$i],
-                                'text' => $item->sizeArray[$i]
-                        ]
-                        );
+                        if($i === 0) array_push($options, ['value' => $item->sizeArray[$i], 'text' => $item->sizeArray[$i], 'checked' => true]);
+                        else array_push($options, ['value' => $item->sizeArray[$i], 'text' => $item->sizeArray[$i]]);
                     }
                     $sizeLabel = 'size' . $item->id;
                     echo $this->Form->create();

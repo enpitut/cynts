@@ -2,8 +2,8 @@ $.fn.extend({
     toggleButtons : function(callback){
         var radios = this;
         radios.on("change", function(e){
-            radios.closest("label").removeClass("selected");
-            $(e.target).closest("label").addClass("selected");
+            $(e.target).parent().parent().children(".selected").removeClass("selected");   //すでに押されてるラジオボタン
+            $(e.target).closest("label").addClass("selected");                             //今から押されるラジオボタン
             callback.call(this, e);
         });
         radios.closest("label").on("click", function(e){
