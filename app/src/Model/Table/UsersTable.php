@@ -31,16 +31,12 @@ class UsersTable extends Table
         $this->displayField('name');
         $this->primaryKey('id');
 
-        $this->hasMany(
-            'Coordinates', [
-                'foreignKey' => 'user_id'
-            ]
-        );
-        $this->hasMany(
-            'Favorites', [
-                'foreignKey' => 'user_id'
-            ]
-        );
+        $this->hasMany('Coordinates', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('Favorites', [
+            'foreignKey' => 'user_id'
+        ]);
     }
 
     /**

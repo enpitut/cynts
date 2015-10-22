@@ -2,7 +2,6 @@
 <html>
 <head>
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('header.css') ?>
     <?= $this->Html->css('battle.css') ?>
 </head>
 <body>
@@ -16,7 +15,6 @@
 <div class="select_box">
     <?php
     use App\Model\Entity\Coordinate;
-
     $coordinate = new Coordinate();
     echo $this->Form->create($coordinate, ['action' => 'battle']);
     echo $this->Form->select(

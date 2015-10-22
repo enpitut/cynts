@@ -2,7 +2,6 @@
 <html>
 <head>
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('header.css') ?>
     <?= $this->Html->css('coorView.css') ?>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript">
@@ -94,8 +93,7 @@
         </div>
     <?php endforeach; ?>
     <hr style="position: relative; float: right;" width="470px"/>
-    <div
-        style="position: relative; float: right; margin: 10px 0; width: 470px;">
+    <div style="position: relative; float: right; margin: 10px 0; width: 470px;">
         <div id="buyAll"><br/>
             すべて購入<br/>
 

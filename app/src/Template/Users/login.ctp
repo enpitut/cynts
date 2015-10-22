@@ -4,7 +4,6 @@
     <?= $this->Html->charset() ?>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('header.css') ?>
     <?= $this->Html->css('user/login.css') ?>
 </head>
 <body>

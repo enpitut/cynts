@@ -2,7 +2,6 @@
 <html>
 <head>
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('header.css') ?>
     <?= $this->Html->css('user/base.css') ?>
 </head>
 <body>

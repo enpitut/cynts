@@ -30,24 +30,23 @@ class AppController extends Controller
      * @var array
      * @see \Cake\Controller\Component\AuthComponent::$components
      */
-    public $components
-        = [
-            'Auth' => [
-                'authenticate' => [
-                    'Form' => [
-                        'fields' => [
-                            'username' => 'mail',
-                            'password' => 'password',
-                        ],
+    public $components = [
+        'Auth' => [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'mail',
+                        'password' => 'password',
                     ],
                 ],
-                'logoutRedirect' => [
-                    'controller' => 'Pages',
-                    'action' => 'home'
-                ],
-                'authError' => 'ログインしてください'
             ],
-        ];
+            'logoutRedirect' => [
+                'controller' => 'Pages',
+                'action' => 'home'
+            ],
+            'authError' => 'ログインしてください'
+        ],
+    ];
 
     /**
      * Initialization hook method.
