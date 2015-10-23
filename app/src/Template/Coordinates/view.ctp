@@ -30,10 +30,23 @@
             );
             ?>
         </div>
+        <div id="author">
+            製作者：
+            <?=
+            $this->Html->link(
+                $coordinate->user->name,
+                [
+                    'controller' => 'Users',
+                    'action' => 'view',
+                    $coordinate->user->id
+                ]
+            );
+            ?>
+        </div>
         <div id="favorite">
             <?php
             echo $this->Form->create();
-            echo $this->Form->button('favorite', ['class' => 'favoriteButton']);
+            echo $this->Form->button('お気に入り', ['class' => 'favoriteButton']);
             ?>
         </div>
     </div>
@@ -62,33 +75,32 @@
                     size
                 </p>
 
-                <div class="sizeButtons">
+                <div class="sizeButtons"
+                     style="height: <?php echo 34 * (int)(count(
+                                 $item->sizeArray
+                             ) / 4 + 1) ?>px">
                     <?php
-                    echo $this->Form->radio(
-                        'size',
-                        [
-                            ['value' => 'XS', 'text' => 'XS'],
-                            ['value' => 'S', 'text' => 'S'],
-                            ['value' => 'M', 'text' => 'M'],
-                            ['value' => 'L', 'text' => 'L'],
-                            ['value' => 'XL', 'text' => 'XL'],
-                            ['value' => 'XXL', 'text' => 'XXL'],
-                            ['value' => '3XL', 'text' => '3XL'],
-                            ['value' => '4XL', 'text' => '4XL'],
-                        ]
-                    );
+
+                    $options = array();
+                    for ($i = 0; $i < count($item->sizeArray); $i++) {
+                        if($i === 0) array_push($options, ['value' => $item->sizeArray[$i], 'text' => $item->sizeArray[$i], 'checked' => true]);
+                        else array_push($options, ['value' => $item->sizeArray[$i], 'text' => $item->sizeArray[$i]]);
+                    }
+                    $sizeLabel = 'size' . $item->id;
+                    echo $this->Form->create();
+                    echo $this->Form->radio($sizeLabel, $options);
+                    echo $this->Form->end();
                     ?>
                 </div>
-                <p class="itemPrice">
+                <div class="itemPrice">
                     <?php echo "￥" . $item->price; ?>
-                </p>
+                </div>
 
-                <p class="buyButton">
-                    <?php
+                <?php
                     echo $this->Form->create();
-                    echo $this->Form->button('Buy', ['class' => 'buyButton']);
-                    ?>
-                </p>
+                echo $this->Form->button('買う', ['class' => 'buyButton']);
+                echo $this->Form->end();
+                ?>
             </div>
         </div>
     <?php endforeach; ?>
@@ -100,14 +112,15 @@
             <p id="coordinatePrice">
                 <?php echo "￥" . $total_price; ?>
             </p>
-        <span class="buyButton">
             <?php
-            echo $this->Form->button('Buy', ['class' => 'buyButton']);
+            echo $this->Form->create();
+            echo $this->Form->button('買う', ['class' => 'buyButton']);
+            echo $this->Form->end();
             ?>
-        </span>
         </div>
     </div>
 </div>
+<?= $this->Html->script('coordinate/view.js') ?>
 <?= $this->element('footer') ?>
 </body>
 </html>
