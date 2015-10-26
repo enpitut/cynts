@@ -132,10 +132,10 @@
 <div class="picked_items_area">
     <div class="picked_items_message">選択済みのアイテム</div>
     <div style="position: relative; float: right;">
-    <?= $this->html->link(
+    <?= $this->Html->link(
         '>> コーディネートを作成',
         [
-            'controller' => 'coordinates',
+            'controller' => 'Coordinates',
             'action' => 'post',
         ],
         [
