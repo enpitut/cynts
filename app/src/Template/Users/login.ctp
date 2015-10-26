@@ -41,11 +41,9 @@
                         'placeholder' => 'パスワード',
                     ]
                 ) ?>
-
             </div>
             <?= $this->Form->submit('ログイン') ?>
             <?= $this->Form->end() ?>
-
 
             <div class="passwordRequestLink">
                 <?=

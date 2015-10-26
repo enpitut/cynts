@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Model\Entity\User;
 use Cake\Event\Event;
-use Cake\Controller\Component\SecurityComponent;
 
 /**
  * Users Controller
@@ -78,7 +77,7 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(
-                __('ユーザ名かパスワードが間違っています'),
+                __('メールアドレスかパスワードが間違っています'),
                 'default',
                 [],
                 'auth'
