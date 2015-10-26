@@ -25,6 +25,20 @@
 
     <button onclick="screenshot('#screen')" , style="position: relative; float: right; margin: 30px;">投稿</button>
 
+    <div style="clear: both;"></div>
+    <br />
+    <div style="position: relative; float: left;">
+    <?= $this->html->link(
+        '<< アイテムを選びなおす',
+        [
+            'controller' => 'coordinates',
+            'action' => 'create',
+        ],
+        [
+            'class' => 'link_to_post',
+        ]
+    ) ?>
+    </div>
     <script>
         var zIndex = 0;
 
