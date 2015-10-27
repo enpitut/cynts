@@ -75,16 +75,12 @@ class CoordinatesController extends AppController
     {
         $coordinate = $this->Coordinates->newEntity();
         if ($this->request->is('post')) {
-            $coordinate = $this->Coordinates->patchEntity(
-                $coordinate, $this->request->data
-            );
+            $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
             if ($this->Coordinates->save($coordinate)) {
                 $this->Flash->success(__('The coordinate has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(
-                    __('The coordinate could not be saved. Please, try again.')
-                );
+                $this->Flash->error(__('The coordinate could not be saved. Please, try again.'));
             }
         }
 
@@ -111,8 +107,7 @@ class CoordinatesController extends AppController
 
     /**
      * @param string $string_img
-     * @param array  $items
-     *
+     * @param array $items
      * @return int
      * @throws \Exception
      */
@@ -146,10 +141,7 @@ class CoordinatesController extends AppController
             }
 
             imagesavealpha($img_resource, true);
-            $result = imagepng(
-                $img_resource,
-                WWW_ROOT . '/img/coordinates/' . $coordinate->id . '.png'
-            );
+            $result = imagepng($img_resource, WWW_ROOT . '/img/coordinates/' . $coordinate->id . '.png');
             if ($result === false) {
                 throw new \Exception('Failed to save image.');
             }
@@ -161,9 +153,7 @@ class CoordinatesController extends AppController
                 $coordinates_item->created_at = $now->format('Y-m-d H:i:s');
 
                 if (!$coordinates_items_repository->save($coordinates_item)) {
-                    throw new \Exception(
-                        'Failed to save coordinates_item entity'
-                    );
+                    throw new \Exception('Failed to save coordinates_item entity');
                 }
             }
 
@@ -184,7 +174,7 @@ class CoordinatesController extends AppController
      */
     public function ajaxPostCoordinate()
     {
-        $this->autoRender = false;
+        $this->autoRender = FALSE;
         if ($this->request->is('post')) {
             $result = null;
             try {
@@ -206,7 +196,6 @@ class CoordinatesController extends AppController
      * @TODO : Also remove images of the coordinate when the coordinate deleted.
      *
      * @param int|null $id
-     *
      * @return \Cake\Network\Response|null
      * @throws \Exception
      */
@@ -215,9 +204,7 @@ class CoordinatesController extends AppController
         $coordinate = $this->Coordinates->get($id);
         $user_id = $this->request->session()->read('Auth.User.id');
         if ($user_id !== $coordinate->user_id) {
-            throw new \Exception(
-                'Permission error. Coordinate can be deleted only by that author.'
-            );
+            throw new \Exception('Permission error. Coordinate can be deleted only by that author.');
         }
 
         $result = $this->Coordinates->delete($coordinate);
@@ -236,7 +223,6 @@ class CoordinatesController extends AppController
 
     /**
      * @param array $request_data
-     *
      * @return array
      */
     protected static function validateCriteria(array $request_data)
@@ -249,11 +235,8 @@ class CoordinatesController extends AppController
         }
 
         if (!empty($request_data['category'])) {
-            if (array_key_exists(
-                $request_data['category'], Item::getCategories()
-            )) {
-                $criteria['category'] = Item::getCategories(
-                )[$request_data['category']];
+            if (array_key_exists($request_data['category'], Item::getCategories())) {
+                $criteria['category'] = Item::getCategories()[$request_data['category']];
             }
         }
 
@@ -276,7 +259,6 @@ class CoordinatesController extends AppController
 
     /**
      * @param array $criteria
-     *
      * @return \Cake\ORM\Query
      */
     protected function findItemList(array $criteria)
