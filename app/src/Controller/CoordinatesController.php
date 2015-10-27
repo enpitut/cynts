@@ -16,6 +16,8 @@ class CoordinatesController extends AppController
 {
     const N_ITEM_LIST_SHOW = 100;
     const SESSION_KEY = 'items';
+    const BUTTON_SIZE = 34;
+    const BUTTON_NUMBER_IN_ROW = 4;
 
     public function beforeFilter(Event $event)
     {
@@ -29,15 +31,15 @@ class CoordinatesController extends AppController
      * View method
      *
      * @param string|null $id Coordinate id.
+     *
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $coordinate = $this->Coordinates->get(
-            $id, [
-            'contain' => ['Users', 'Items', 'Favorites']
-        ]
+        $coordinate = $this->Coordinates->get($id, [
+                'contain' => ['Users', 'Items', 'Favorites']
+            ]
         );
 
         $total_price = 0;
@@ -45,22 +47,23 @@ class CoordinatesController extends AppController
             $total_price += $item->price;
         }
 
+        foreach ($coordinate->items as $item) {
+            $item->buttons_height = self::BUTTON_SIZE * (floor(count($item->size_array) / self::BUTTON_NUMBER_IN_ROW) + 1);
+            $item->size_label = 'size' . $item->id;
+            $item->options = [];
+            foreach ($item->size_array as $size) {
+                if ($size === $item->size_array[0]) {
+                    $item->options[] = ['value' => $size, 'text' => $size, 'checked' => true];
+                } else {
+                    $item->options[] = ['value' => $size, 'text' => $size];
+                }
+            }
+        }
+
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
 
-        foreach ($coordinate->items as $item) {
-            $item->options = [];
-            $item->buttons_height = 8.5 * (int)(count($item->size_array) + 1);
-            foreach ($item->size_array as $size) {
-                if ($size === $item->size_array[0]) {
-                    array_push($item->options, ['value' => $size, 'text' => $size, 'checked' => true]);
-                } else {
-                    array_push($item->options, ['value' => $size, 'text' => $size]);
-                }
-                $item->size_label = 'size' . $item->id;
-            }
-        }
     }
 
     /**
@@ -73,12 +76,16 @@ class CoordinatesController extends AppController
     {
         $coordinate = $this->Coordinates->newEntity();
         if ($this->request->is('post')) {
-            $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
+            $coordinate = $this->Coordinates->patchEntity(
+                $coordinate, $this->request->data
+            );
             if ($this->Coordinates->save($coordinate)) {
                 $this->Flash->success(__('The coordinate has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The coordinate could not be saved. Please, try again.'));
+                $this->Flash->error(
+                    __('The coordinate could not be saved. Please, try again.')
+                );
             }
         }
 
@@ -105,7 +112,8 @@ class CoordinatesController extends AppController
 
     /**
      * @param string $string_img
-     * @param array $items
+     * @param array  $items
+     *
      * @return int
      * @throws \Exception
      */
@@ -139,7 +147,10 @@ class CoordinatesController extends AppController
             }
 
             imagesavealpha($img_resource, true);
-            $result = imagepng($img_resource, WWW_ROOT . '/img/coordinates/' . $coordinate->id . '.png');
+            $result = imagepng(
+                $img_resource,
+                WWW_ROOT . '/img/coordinates/' . $coordinate->id . '.png'
+            );
             if ($result === false) {
                 throw new \Exception('Failed to save image.');
             }
@@ -151,7 +162,9 @@ class CoordinatesController extends AppController
                 $coordinates_item->created_at = $now->format('Y-m-d H:i:s');
 
                 if (!$coordinates_items_repository->save($coordinates_item)) {
-                    throw new \Exception('Failed to save coordinates_item entity');
+                    throw new \Exception(
+                        'Failed to save coordinates_item entity'
+                    );
                 }
             }
 
@@ -172,7 +185,7 @@ class CoordinatesController extends AppController
      */
     public function ajaxPostCoordinate()
     {
-        $this->autoRender = FALSE;
+        $this->autoRender = false;
         if ($this->request->is('post')) {
             $result = null;
             try {
@@ -194,6 +207,7 @@ class CoordinatesController extends AppController
      * @TODO : Also remove images of the coordinate when the coordinate deleted.
      *
      * @param int|null $id
+     *
      * @return \Cake\Network\Response|null
      * @throws \Exception
      */
@@ -202,7 +216,9 @@ class CoordinatesController extends AppController
         $coordinate = $this->Coordinates->get($id);
         $user_id = $this->request->session()->read('Auth.User.id');
         if ($user_id !== $coordinate->user_id) {
-            throw new \Exception('Permission error. Coordinate can be deleted only by that author.');
+            throw new \Exception(
+                'Permission error. Coordinate can be deleted only by that author.'
+            );
         }
 
         $result = $this->Coordinates->delete($coordinate);
@@ -221,6 +237,7 @@ class CoordinatesController extends AppController
 
     /**
      * @param array $request_data
+     *
      * @return array
      */
     protected static function validateCriteria(array $request_data)
@@ -233,8 +250,11 @@ class CoordinatesController extends AppController
         }
 
         if (!empty($request_data['category'])) {
-            if (array_key_exists($request_data['category'], Item::getCategories())) {
-                $criteria['category'] = Item::getCategories()[$request_data['category']];
+            if (array_key_exists(
+                $request_data['category'], Item::getCategories()
+            )) {
+                $criteria['category'] = Item::getCategories(
+                )[$request_data['category']];
             }
         }
 
@@ -257,6 +277,7 @@ class CoordinatesController extends AppController
 
     /**
      * @param array $criteria
+     *
      * @return \Cake\ORM\Query
      */
     protected function findItemList(array $criteria)

@@ -122,7 +122,7 @@
         </div>
     </div>
 </div>
-<?= $this->Html->script('coordinate/view.js') ?>
+<?= $this->Html->script('coordinates/view.js') ?>
 <?= $this->element('footer') ?>
 </body>
 </html>

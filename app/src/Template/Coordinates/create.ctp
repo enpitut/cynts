@@ -4,7 +4,7 @@
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('coordinates/create.css') ?>
     <script src='http://code.jquery.com/jquery-1.11.1.min.js'></script>
-    <?= $this->Html->script('coordinate/create.js') ?>
+    <?= $this->Html->script('coordinates/create.js') ?>
 </head>
 <body>
 
