@@ -46,7 +46,6 @@ class ItemsController extends AppController
         ]);
         $this->set('item', $item);
         $this->set('_serialize', ['item']);
-        $this->set('sizeArray', Item::_getSizeArray($item->get('sizes')));
     }
 
     /**

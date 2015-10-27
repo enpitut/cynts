@@ -31,7 +31,7 @@
             ?>
         </div>
         <div id="author">
-            製作者：
+            制作者：
             <?=
             $this->Html->link(
                 $coordinate->user->name,
@@ -54,8 +54,8 @@
         <div class="itemColumn">
             <div class="itemPhoto">
                 <?php
-                if (!empty($item->photoPaths)) {
-                    $photo_paths = $item->photoPaths;
+                if (!empty($item->photo_paths)) {
+                    $photo_paths = $item->photo_paths;
                     echo $this->Html->image(
                         current($photo_paths),
                         [
@@ -76,19 +76,10 @@
                 </p>
 
                 <div class="sizeButtons"
-                     style="height: <?php echo 34 * (int)(count(
-                                 $item->sizeArray
-                             ) / 4 + 1) ?>px">
+                     style="height: <?php echo $item->buttons_height ?>px">
                     <?php
-
-                    $options = array();
-                    for ($i = 0; $i < count($item->sizeArray); $i++) {
-                        if($i === 0) array_push($options, ['value' => $item->sizeArray[$i], 'text' => $item->sizeArray[$i], 'checked' => true]);
-                        else array_push($options, ['value' => $item->sizeArray[$i], 'text' => $item->sizeArray[$i]]);
-                    }
-                    $sizeLabel = 'size' . $item->id;
                     echo $this->Form->create();
-                    echo $this->Form->radio($sizeLabel, $options);
+                    echo $this->Form->radio($item->size_label, $item->options);
                     echo $this->Form->end();
                     ?>
                 </div>
@@ -97,7 +88,7 @@
                 </div>
 
                 <?php
-                    echo $this->Form->create();
+                echo $this->Form->create();
                 echo $this->Form->button('買う', ['class' => 'buyButton']);
                 echo $this->Form->end();
                 ?>

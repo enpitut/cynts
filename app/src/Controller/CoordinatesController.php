@@ -34,9 +34,11 @@ class CoordinatesController extends AppController
      */
     public function view($id = null)
     {
-        $coordinate = $this->Coordinates->get($id, [
+        $coordinate = $this->Coordinates->get(
+            $id, [
             'contain' => ['Users', 'Items', 'Favorites']
-        ]);
+        ]
+        );
 
         $total_price = 0;
         foreach ($coordinate->items as $item) {
@@ -46,6 +48,19 @@ class CoordinatesController extends AppController
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
+
+        foreach ($coordinate->items as $item) {
+            $item->options = [];
+            $item->buttons_height = 8.5 * (int)(count($item->size_array) + 1);
+            foreach ($item->size_array as $size) {
+                if ($size === $item->size_array[0]) {
+                    array_push($item->options, ['value' => $size, 'text' => $size, 'checked' => true]);
+                } else {
+                    array_push($item->options, ['value' => $size, 'text' => $size]);
+                }
+                $item->size_label = 'size' . $item->id;
+            }
+        }
     }
 
     /**
