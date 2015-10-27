@@ -29,19 +29,21 @@
 }
 
 .coordinateButtons {
-	text-align: center;
-	margin: 30px auto 0 auto;
-  position: relative;
-  float: left;
-  width: 100%;
+    text-align: center;
+    margin: 20px auto 0 auto;
+    position: relative;
+    float: left;
+    width: 100%;
 }
 
 button.favoriteButton {
     font-size: 14px;
+    cursor: pointer;
     padding: 5px 10px 5px 10px;
     background-color: #ffac00;
     color: #fff;
     border-style: none;
+    margin-bottom: 10px;
 }
 
 #coordinateColumn {
@@ -142,9 +144,10 @@ button.favoriteButton {
 }
 
 .deleteButton {
-	font-size: 14px;
-	padding: 5px 10px 5px 10px;
-	background-color: orangered;
-	color: #fff;
-	border-style: none;
+    font-size: 14px;
+    padding: 5px 10px 5px 10px;
+    background-color: orangered;
+    color: #fff;
+    text-decoration: none;
+    border-style: none;
 }

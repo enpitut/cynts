@@ -2,7 +2,7 @@
 <html>
 <head>
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('coorView.css') ?>
+    <?= $this->Html->css('coordinates/view.css') ?>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
