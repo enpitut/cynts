@@ -43,11 +43,22 @@
             );
             ?>
         </div>
-        <div id="favorite">
+        <div class="coordinateButtons">
             <?php
             echo $this->Form->create();
             echo $this->Form->button('お気に入り', ['class' => 'favoriteButton']);
-            ?>
+            if (
+                isset($coordinate->user->id)
+                && $this->request->session()->read('Auth.User.id') === $coordinate->user_id
+            ) {
+                echo "<div>";
+                echo $this->Html->link(
+                    __('削除'),
+                    ['action' => 'delete', $coordinate->id],
+                    ['class' => 'deleteButton', 'confirm' => '本当にコーディネートを削除してよろしいですか？']
+                );
+                echo "</div>";
+            } ?>
         </div>
     </div>
     <?php foreach ($coordinate->items as $item): ?>

@@ -19,14 +19,6 @@
     width: 100%;
 }
 
-#favorite {
-    text-align: center;
-    margin: 30px auto 0 auto;
-    position: relative;
-    float: left;
-    width: 100%;
-}
-
 #author {
     width: 100%;
     text-align: right;
@@ -34,6 +26,14 @@
 
 #author a {
     color: orange;
+}
+
+.coordinateButtons {
+	text-align: center;
+	margin: 30px auto 0 auto;
+  position: relative;
+  float: left;
+  width: 100%;
 }
 
 button.favoriteButton {
@@ -139,4 +139,12 @@ button.favoriteButton {
 
 .image {
     display: none;
+}
+
+.deleteButton {
+	font-size: 14px;
+	padding: 5px 10px 5px 10px;
+	background-color: orangered;
+	color: #fff;
+	border-style: none;
 }
