@@ -19,7 +19,7 @@
   width: 100%;
 }
 
-#favorite {
+.coordinateButtons {
 	text-align: center;
 	margin: 30px auto 0 auto;
   position: relative;
@@ -136,4 +136,12 @@ button.buyButton {
 
 .image {
     display: none;
+}
+
+.deleteButton {
+	font-size: 14px;
+	padding: 5px 10px 5px 10px;
+	background-color: orangered;
+	color: #fff;
+	border-style: none;
 }
