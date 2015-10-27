@@ -63,7 +63,6 @@ class CoordinatesController extends AppController
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
-
     }
 
     /**
