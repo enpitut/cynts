@@ -88,6 +88,20 @@ header {
     text-decoration: none;
 }
 
+.flash_failure {
+    color: #CD0A0A;
+    border: 1px solid #CD0A0A;
+    background-color: #FEF1EC;
+    padding: 5px;
+}
+
+.form-error {
+    border: 1px solid red;
+}
+
+.error-message{
+    color:red;
+}
 
 
 

@@ -4,76 +4,62 @@
 
 <?= $this->Html->css('sign.css') ?>
 <?= $this->element('eachpage_header') ?>
+
 <?php
 use \App\Model\Table\UsersTable
 ?>
 
 </head>
 
+
 <body>
-
-
-<script type="text/javascript">
-
-function hide_display(){     document.write("hide_displayしてるよ");
-    check_result = document.getElementsByName('attention_name').id; 
-    if(check_result == false) {
-    //フォーム表示
-        document.getElementById('attention').style = "display";
-    } else {
-    //フォーム非表示
-        document.getElementById('attention').style = "display.none";
-    }
-}
-//オンロードさせ、リロード時に選択を保持
-//window.onload = entryChange1;
-
-
-</script>
-
-<?php echo $this->Form->error('name'); ?>
 
 <div class="big"> Welcome to Unichronicle! </div>
 <p> Please enter your information. <p>
-
-<?= $this->Form->create() ?>
-
 <table border="0" align="center">
+<tr></tr>
+
+<?= $this->Form->create($user, array('novalidate'=>'novalidate')) ?>
+
 <tr><td>
 
-<tr><td>username:</td>
+<tr valign="baseline"><td>username:</td>
 <td><?= $this->Form->input('name',
-    array('label' => false,
-    )
+    [
+        'label' => false,
+    ]
 ) ?></td></tr>
 
-<tr><td>mail:</td>
+<tr valign="baseline"><td>mail:</td>
 <td><?= $this->Form->input('mail',
-    array('label' => false,
-    )
+    [
+        'label' => false,  
+    ]
 ) ?></td></tr>
 
-<tr><td>password:</td>
+<tr valign="baseline"><td>password:</td>
 <td><?= $this->Form->input('password',
-    array('label' => false,
-    )
+    [
+        'label' => false,
+    ]
 ) ?></td></tr>
 
-<tr><td>retype password:</td>
+<tr valign="baseline"><td>retype password:</td>
 <td><?= $this->Form->input('passwd',
-    array('label' => false,
-    )
+    [
+        'label' => false,
+    ]
 ) ?></td></tr>
 
 <!--
-sex:<br />
-<?= $this->Form->select('sex',
+<tr valign="baseline"><td>sex:<br />
+<td><?= $this->Form->select('sex',
         array('0' => 'male',
             '1' => 'female',
             '2' => 'neutral'),
         array('empty' => 'select')
     )
-?>
+?></td></tr>
 -->
 </td>
 </table>

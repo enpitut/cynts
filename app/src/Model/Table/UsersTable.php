@@ -56,24 +56,34 @@ class UsersTable extends Table
             
         $validator
             ->requirePresence('mail', 'create')
-            ->notEmpty('mail', 'A mail is required')
-            ->add('mail', 'validFormat', [
-                'rule' => 'email',
-                'message' => 'E-mail must be valid'
+            ->notEmpty('mail', 'A E-mail is required')
+            ->add('mail',  [
+                'emailValid'=>[
+                    'rule' => ['email', true],
+                    'message' => 'E-mail must be valid',
+                ],
+                'emailUnique'=>[
+                    'message'=>'This email is already registered',
+                    'rule' => 'validateUnique', 'provider' => 'table'
+                ],
             ]);
         
         $validator
             ->requirePresence('password', 'create')
-            ->notEmpty('password', 'A password is required');
+            ->notEmpty('password', 'A password is required')
+            ->add('password',[
+                'Length' => [
+                    'rule' => ['minLength', 4],
+                    'message' => 'Your password must be at least 4 characters long'
+                ],
+            ]);
 
-    // パスワード（確認用）
         $validator
             ->add('passwd', 'compare', [
                 'rule' => ['compareWith', 'password'],
-                'message'=>'パスワードが一致しません'])
-        
+                'message'=>'Passwords do not match'])
             ->requirePresence('passwd', 'create')
-            ->notEmpty('password', 'A retype password is required');
+            ->notEmpty('passwd', 'A retype password is required');
 
         $validator
             ->add('created_at', 'valid', ['rule' => 'datetime'])
@@ -84,11 +94,5 @@ class UsersTable extends Table
             ->notEmpty('updated_at');
 
         return $validator;
-
-        $errors = $validator->errors($this->request->data());
-        if (!empty($errors)) {
-            echo $errors;
-        }
-        
     }
 }

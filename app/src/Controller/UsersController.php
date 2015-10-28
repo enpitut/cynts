@@ -3,11 +3,12 @@ namespace App\Controller;
 
 use App\Model\Entity\User;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
  *
- * @property \App\Model\Table\UsersTable $Users
+ * @property ¥App¥Model¥Table¥UsersTable $Users
  */
 class UsersController extends AppController
 {
@@ -35,7 +36,7 @@ class UsersController extends AppController
      *
      * @param string|null $id User id.
      * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @throws ¥Cake¥Network¥Exception¥NotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -55,7 +56,7 @@ class UsersController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Network\Response|void
+     * @return ¥Cake¥Network¥Response|void
      */
     public function signup()
     {
@@ -63,7 +64,6 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             $user->set('password', User::hashPassword($user->get('password')));
-            $user->set('passwd', User::hashPassword($user->get('passwd')));
             $user->set('created_at', time());
             $user->set('updated_at', time());
             if ($this->Users->save($user)) {
@@ -71,6 +71,7 @@ class UsersController extends AppController
                 return $this->redirect(['action' => 'login']);
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                $user ->set('errors', $user->errors());
             }
         }
         $this->set(compact('user'));
