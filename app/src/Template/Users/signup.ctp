@@ -14,8 +14,8 @@ use \App\Model\Table\UsersTable
 
 <body>
 
-<div class="big"> Welcome to Unichronicle! </div>
-<p> Please enter your information. <p>
+<div class="big"> Unichronicle へようこそ </div>
+<p> アカウントを作成する <p>
 <table border="0" align="center">
 <tr></tr>
 
@@ -23,28 +23,28 @@ use \App\Model\Table\UsersTable
 
 <tr><td>
 
-<tr valign="baseline"><td>username:</td>
+<tr valign="baseline"><td>ユーザ名:</td>
 <td><?= $this->Form->input('name',
     [
         'label' => false,
     ]
 ) ?></td></tr>
 
-<tr valign="baseline"><td>mail:</td>
+<tr valign="baseline"><td>メールアドレス:</td>
 <td><?= $this->Form->input('mail',
     [
         'label' => false,  
     ]
 ) ?></td></tr>
 
-<tr valign="baseline"><td>password:</td>
+<tr valign="baseline"><td>パスワード:</td>
 <td><?= $this->Form->input('password',
     [
         'label' => false,
     ]
 ) ?></td></tr>
 
-<tr valign="baseline"><td>retype password:</td>
+<tr valign="baseline"><td>パスワード（確認）:</td>
 <td><?= $this->Form->input('retype_password',
     [
         'label' => false,
@@ -67,7 +67,7 @@ use \App\Model\Table\UsersTable
 
 <p><?php 
 
-    echo $this->Form->button('Sign up',
+    echo $this->Form->button('登録',
     [
         'type'=>'submit',
     ]);
@@ -78,10 +78,10 @@ use \App\Model\Table\UsersTable
 </form>
 </table>
 
-If you have a Unichronicle account,
+アカウントをお持ちの方は
 <a href="/users/login">
-    click here
-</a>.
+    こちら
+</a>．
 
 </body>
 </html>

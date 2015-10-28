@@ -46,37 +46,37 @@ class UsersTable extends Table
 
         $validator
             ->requirePresence('name', 'create')
-            ->notEmpty('name', 'Username is required');
+            ->notEmpty('name', '名前を入力してください');
 
         $validator
             ->requirePresence('mail', 'create')
-            ->notEmpty('mail', 'E-mail is required')
+            ->notEmpty('mail', 'メールアドレスを入力してください')
             ->add('mail',  [
                 'emailValid'=>[
                     'rule' => ['email', true],
-                    'message' => 'E-mail must be valid',
+                    'message' => '正しいメールアドレスを入力してください',
                 ],
                 'emailUnique'=>[
-                    'message'=>'This email is already registered',
+                    'message'=>'このメールアドレスは既に登録されています',
                     'rule' => 'validateUnique', 'provider' => 'table'
                 ],
             ]);
 
         $validator
             ->requirePresence('password', 'create')
-            ->notEmpty('password', 'Password is required')
+            ->notEmpty('password', 'パスワードを入力してください')
             ->add('password',[
                 'Length' => [
                     'rule' => ['minLength', 4],
-                    'message' => 'Your password must be at least 4 characters long'
+                    'message' => 'パスワードは4文字以上入力してください'
                 ],
             ]);
         $validator
             ->add('retype_password', 'compare', [
                 'rule' => ['compareWith', 'password'],
-                'message'=>'Passwords do not match'])
+                'message'=>'パスワードが違います'])
             ->requirePresence('retype_password', 'create')
-            ->notEmpty('retype_password', 'Retype password is required');
+            ->notEmpty('retype_password', 'パスワードを再入力してください');
         $validator
             ->add('created_at', 'valid', ['rule' => 'datetime'])
             ->allowEmpty('created_at');
