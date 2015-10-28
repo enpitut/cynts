@@ -1,14 +1,12 @@
 <?php
 namespace App\Controller;
-
 use App\Model\Entity\User;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
-
 /**
  * Users Controller
  *
- * @property ¥App¥Model¥Table¥UsersTable $Users
+ * @property \App\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
 {
@@ -18,17 +16,6 @@ class UsersController extends AppController
         $this->Auth->allow(
             ['signup', 'logout']
         );
-    }
-
-    /**
-     * Index method
-     *
-     * @return void
-     */
-    public function index()
-    {
-        $this->set('users', $this->paginate($this->Users));
-        $this->set('_serialize', ['users']);
     }
 
     /**
@@ -45,14 +32,12 @@ class UsersController extends AppController
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
-
         if ((int)$this->Auth->user('id') === (int)$id) {
             $this->set('is_self_page', true);
         } else {
             $this->set('is_self_page', false);
         }
     }
-
     /**
      * Add method
      *
@@ -71,13 +56,11 @@ class UsersController extends AppController
                 return $this->redirect(['action' => 'login']);
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
-                $user ->set('errors', $user->errors());
             }
         }
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
-
     public function login()
     {
         if ($this->request->is('post')) {
@@ -94,7 +77,6 @@ class UsersController extends AppController
             );
         }
     }
-
     public function logout()
     {
         return $this->redirect($this->Auth->logout());

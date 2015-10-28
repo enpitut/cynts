@@ -33,13 +33,4 @@ class User extends Entity
     }
     
         public $name = 'User';
-    
-    //保存前にパスワードのハッシュ化
-    public function beforeSave($options = array()) {
-        if(!$this->id){
-            $passwordHasher = new SimplePasswordHasher();
-            $this->data['User']['password'] = $passwordHasher->hash($this->data['User']['password']);
-        }
-        return true;
-    }    
 }

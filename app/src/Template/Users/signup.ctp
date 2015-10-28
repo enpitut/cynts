@@ -45,9 +45,10 @@ use \App\Model\Table\UsersTable
 ) ?></td></tr>
 
 <tr valign="baseline"><td>retype password:</td>
-<td><?= $this->Form->input('passwd',
+<td><?= $this->Form->input('retype_password',
     [
         'label' => false,
+        'type' => 'password',
     ]
 ) ?></td></tr>
 

@@ -1,12 +1,10 @@
 <?php
 namespace App\Model\Table;
-
 use App\Model\Entity\User;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
 /**
  * Users Model
  *
@@ -15,7 +13,6 @@ use Cake\Validation\Validator;
  */
 class UsersTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -25,11 +22,9 @@ class UsersTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-
         $this->table('users');
         $this->displayField('name');
         $this->primaryKey('id');
-
         $this->hasMany('Coordinates', [
             'foreignKey' => 'user_id'
         ]);
@@ -37,7 +32,6 @@ class UsersTable extends Table
             'foreignKey' => 'user_id'
         ]);
     }
-
     /**
      * Default validation rules.
      *
@@ -52,11 +46,11 @@ class UsersTable extends Table
 
         $validator
             ->requirePresence('name', 'create')
-            ->notEmpty('name', 'A username is required');
-            
+            ->notEmpty('name', 'Username is required');
+
         $validator
             ->requirePresence('mail', 'create')
-            ->notEmpty('mail', 'A E-mail is required')
+            ->notEmpty('mail', 'E-mail is required')
             ->add('mail',  [
                 'emailValid'=>[
                     'rule' => ['email', true],
@@ -67,32 +61,28 @@ class UsersTable extends Table
                     'rule' => 'validateUnique', 'provider' => 'table'
                 ],
             ]);
-        
+
         $validator
             ->requirePresence('password', 'create')
-            ->notEmpty('password', 'A password is required')
+            ->notEmpty('password', 'Password is required')
             ->add('password',[
                 'Length' => [
                     'rule' => ['minLength', 4],
                     'message' => 'Your password must be at least 4 characters long'
                 ],
             ]);
-
         $validator
-            ->add('passwd', 'compare', [
+            ->add('retype_password', 'compare', [
                 'rule' => ['compareWith', 'password'],
                 'message'=>'Passwords do not match'])
-            ->requirePresence('passwd', 'create')
-            ->notEmpty('passwd', 'A retype password is required');
-
+            ->requirePresence('retype_password', 'create')
+            ->notEmpty('retype_password', 'Retype password is required');
         $validator
             ->add('created_at', 'valid', ['rule' => 'datetime'])
             ->allowEmpty('created_at');
-
         $validator
             ->requirePresence('updated_at', 'create')
             ->notEmpty('updated_at');
-
         return $validator;
     }
 }
