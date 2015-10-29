@@ -9,6 +9,8 @@ use Cake\ORM\Entity;
 class Favorite extends Entity
 {
 
+    // const FAVORITE_PHOTO_DIRECTORY_ROOT = 'favorite/';
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      * Note that '*' is set to true, which allows all unspecified fields to be
@@ -21,4 +23,12 @@ class Favorite extends Entity
         '*' => true,
         'id' => false,
     ];
+
+    /**
+     * @return string
+     */
+    // protected function _getPhotoPath()
+    // {
+    //     return self::FAVORITE_PHOTO_DIRECTORY_ROOT . $this->_properties['photo'];
+    // }
 }
