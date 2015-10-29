@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\Item;
+use App\Model\Table\CoordinatesItemsTable;
 use App\Model\Table\ItemsTable;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
@@ -14,6 +15,9 @@ use Cake\Event\Event;
 class CoordinatesController extends AppController
 {
     const N_ITEM_LIST_SHOW = 100;
+    const SESSION_KEY = 'items';
+    const BUTTON_SIZE = 34;
+    const BUTTON_NUMBER_IN_ROW = 4;
 
     public function beforeFilter(Event $event)
     {
@@ -27,17 +31,33 @@ class CoordinatesController extends AppController
      * View method
      *
      * @param string|null $id Coordinate id.
+     *
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($id = null)
     {
         $coordinate = $this->Coordinates->get($id, [
-            'contain' => ['Users', 'Items', 'Favorites']
-        ]);
+                'contain' => ['Users', 'Items', 'Favorites']
+            ]
+        );
+
         $total_price = 0;
         foreach ($coordinate->items as $item) {
             $total_price += $item->price;
+        }
+
+        foreach ($coordinate->items as $item) {
+            $item->buttons_height = self::BUTTON_SIZE * (floor(count($item->size_array) / self::BUTTON_NUMBER_IN_ROW) + 1);
+            $item->size_label = 'size' . $item->id;
+            $item->options = [];
+            foreach ($item->size_array as $size) {
+                if ($size === $item->size_array[0]) {
+                    $item->options[] = ['value' => $size, 'text' => $size, 'checked' => true];
+                } else {
+                    $item->options[] = ['value' => $size, 'text' => $size];
+                }
+            }
         }
 
         $this->set('coordinate', $coordinate);
@@ -72,6 +92,133 @@ class CoordinatesController extends AppController
         $this->set('category_list', Item::getCategories());
         $this->set('color_list', Item::getColors());
         $this->set('criteria', $criteria);
+    }
+
+    /**
+     * コーディネートを作成し投稿を行う
+     *
+     * @return \Cake\Network\Response|void
+     */
+    public function post()
+    {
+        /* nothing to do */
+    }
+
+
+    /**
+     * @param string $string_img
+     * @param array $items
+     * @return int
+     * @throws \Exception
+     */
+    protected function postCoordinate($string_img, array $items)
+    {
+        /** @var CoordinatesItemsTable $coordinates_items_repository */
+        $coordinates_items_repository = TableRegistry::get('CoordinatesItems');
+
+        $now = new \DateTime();
+
+        /** @var /App/Model/Entity/Coordinate $coordinate */
+        $coordinate = $this->Coordinates->newEntity();
+
+        $coordinate->user_id = $this->Auth->user('id');
+        $coordinate->like = 0;
+        $coordinate->unlike = 0;
+        $coordinate->created_at = $now->format('Y-m-d H:i:s');
+
+        if ($this->Coordinates->save($coordinate)) {
+            $string_img = preg_replace("/data:[^,]+,/i", "", $string_img);
+            $base64_img = base64_decode($string_img);
+            if ($base64_img === false) {
+                throw new \Exception('Failed to decode to base64.');
+            }
+
+            $img_resource = imagecreatefromstring($base64_img);
+            if ($img_resource === false) {
+                throw new \Exception(
+                    'Failed to create image from string. The image type is unsupported, the data is not in a recognised format, or the image is corrupt and cannot be loaded.'
+                );
+            }
+
+            imagesavealpha($img_resource, true);
+            $result = imagepng($img_resource, WWW_ROOT . '/img/coordinates/' . $coordinate->id . '.png');
+            if ($result === false) {
+                throw new \Exception('Failed to save image.');
+            }
+
+            foreach ($items as $item) {
+                $coordinates_item = $coordinates_items_repository->newEntity();
+                $coordinates_item->coordinate_id = $coordinate->id;
+                $coordinates_item->item_id = $item['itemId'];
+                $coordinates_item->created_at = $now->format('Y-m-d H:i:s');
+
+                if (!$coordinates_items_repository->save($coordinates_item)) {
+                    throw new \Exception('Failed to save coordinates_item entity');
+                }
+            }
+
+            $coordinate->photo = $coordinate->id . '.png';
+            $this->Coordinates->save($coordinate);
+
+            return $coordinate->id;
+        } else {
+            throw new \Exception('Failed to save coordinate entity.');
+        }
+    }
+
+    /**
+     * Ajax用関数
+     * コーディネート画像を受け取り投稿処理を行う
+     *
+     * @throws \Exception
+     */
+    public function ajaxPostCoordinate()
+    {
+        $this->autoRender = FALSE;
+        if ($this->request->is('post')) {
+            $result = null;
+            try {
+                $result = $this->postCoordinate(
+                    $this->request->data('img'),
+                    json_decode($this->request->data(self::SESSION_KEY), true)
+                );
+            } catch (\Exception $e) {
+                trigger_error($e->getMessage(), E_USER_WARNING);
+                echo '{"hasSucceeded": false}';
+                exit;
+            }
+            echo '{"hasSucceeded": true, "id": ' . $result . '}';
+            exit;
+        }
+    }
+
+    /**
+     * @TODO : Also remove images of the coordinate when the coordinate deleted.
+     *
+     * @param int|null $id
+     * @return \Cake\Network\Response|null
+     * @throws \Exception
+     */
+    public function delete($id = null)
+    {
+        $coordinate = $this->Coordinates->get($id);
+        $user_id = $this->request->session()->read('Auth.User.id');
+        if ($user_id !== $coordinate->user_id) {
+            throw new \Exception('Permission error. Coordinate can be deleted only by that author.');
+        }
+
+        $result = $this->Coordinates->delete($coordinate);
+        if (!$result) {
+            throw new \Exception('Failed to delete coordinate.');
+        }
+
+        return $this->redirect(
+            [
+                'controller' => 'users',
+                'action' => 'view',
+                $user_id,
+            ]
+        );
     }
 
     /**
