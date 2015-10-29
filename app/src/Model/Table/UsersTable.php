@@ -1,10 +1,12 @@
 <?php
 namespace App\Model\Table;
+
 use App\Model\Entity\User;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+
 /**
  * Users Model
  *
@@ -13,6 +15,7 @@ use Cake\Validation\Validator;
  */
 class UsersTable extends Table
 {
+
     /**
      * Initialize method
      *
@@ -22,9 +25,11 @@ class UsersTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
+        
         $this->table('users');
         $this->displayField('name');
         $this->primaryKey('id');
+        
         $this->hasMany('Coordinates', [
             'foreignKey' => 'user_id'
         ]);
@@ -32,6 +37,7 @@ class UsersTable extends Table
             'foreignKey' => 'user_id'
         ]);
     }
+    
     /**
      * Default validation rules.
      *
@@ -63,26 +69,30 @@ class UsersTable extends Table
             ]);
 
         $validator
-            ->requirePresence('password', 'create')
-            ->notEmpty('password', 'パスワードを入力してください')
-            ->add('password',[
-                'Length' => [
+            ->requirePresence('password_confirm', 'create')
+            ->notEmpty('password_confirm', 'パスワードを入力してください')
+            ->add('password_confirm', [
+                'length' => [
                     'rule' => ['minLength', 4],
-                    'message' => 'パスワードは4文字以上入力してください'
-                ],
+                    'message' => 'パスワードは4文字以上入力してください',
+                ]
             ]);
+
         $validator
             ->add('retype_password', 'compare', [
                 'rule' => ['compareWith', 'password'],
                 'message'=>'パスワードが違います'])
             ->requirePresence('retype_password', 'create')
             ->notEmpty('retype_password', 'パスワードを再入力してください');
+
         $validator
             ->add('created_at', 'valid', ['rule' => 'datetime'])
             ->allowEmpty('created_at');
+
         $validator
             ->requirePresence('updated_at', 'create')
             ->notEmpty('updated_at');
+
         return $validator;
     }
 }

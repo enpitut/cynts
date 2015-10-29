@@ -1,8 +1,10 @@
 <?php
 namespace App\Controller;
+
 use App\Model\Entity\User;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+
 /**
  * Users Controller
  *
@@ -23,7 +25,7 @@ class UsersController extends AppController
      *
      * @param string|null $id User id.
      * @return void
-     * @throws ¥Cake¥Network¥Exception¥NotFoundException When record not found.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -32,16 +34,18 @@ class UsersController extends AppController
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
+        
         if ((int)$this->Auth->user('id') === (int)$id) {
             $this->set('is_self_page', true);
         } else {
             $this->set('is_self_page', false);
         }
     }
+    
     /**
      * Add method
      *
-     * @return ¥Cake¥Network¥Response|void
+     * @return \Cake\Network\Response|void
      */
     public function signup()
     {
@@ -61,6 +65,7 @@ class UsersController extends AppController
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
+    
     public function login()
     {
         if ($this->request->is('post')) {
@@ -77,6 +82,7 @@ class UsersController extends AppController
             );
         }
     }
+    
     public function logout()
     {
         return $this->redirect($this->Auth->logout());

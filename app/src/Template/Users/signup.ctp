@@ -2,7 +2,7 @@
 
 <head>
 
-<?= $this->Html->css('sign.css') ?>
+<?= $this->Html->css('users/signup.css') ?>
 <?= $this->element('eachpage_header') ?>
 
 <?php
@@ -41,6 +41,7 @@ use \App\Model\Table\UsersTable
 <td><?= $this->Form->input('password',
     [
         'label' => false,
+        'type' => 'password',
     ]
 ) ?></td></tr>
 
