@@ -69,15 +69,19 @@ class UsersTable extends Table
             );
 
         $validator
-            ->requirePresence('password_confirm', 'create')
-            ->notEmpty('password_confirm', 'パスワードを入力してください')
+            ->requirePresence('password', 'create')
+            ->notEmpty('password', 'パスワードを入力してください')
             ->add(
-                'password_confirm',
+                'password',
+                'custom',
                 [
-                    'length' => [
-                        'rule' => ['minLength', 4],
-                        'message' => 'パスワードは4文字以上入力してください',
-                    ]
+                    'rule' => function($value) {
+                        if (strlen($value) < 4) {
+                            return false;
+                        }
+                        return true;
+                    },
+                    'message' => 'パスワードは4文字以上で設定してください',
                 ]
             );
 

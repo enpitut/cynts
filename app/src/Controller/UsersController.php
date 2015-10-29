@@ -51,7 +51,6 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            $user->set('password', User::hashPassword($user->get('password')));
             $user->set('created_at', time());
             $user->set('updated_at', time());
             if ($this->Users->save($user)) {

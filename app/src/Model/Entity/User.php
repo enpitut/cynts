@@ -9,7 +9,6 @@ use Cake\ORM\Entity;
  */
 class User extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      * Note that '*' is set to true, which allows all unspecified fields to be
@@ -24,11 +23,11 @@ class User extends Entity
     ];
 
     /**
-     * @param string $password
+     * @param $password
      * @return bool|string
      */
-    public static function hashPassword($password)
+    protected function _setPassword($password)
     {
-        return (new DefaultPasswordHasher())->hash($password);
+        return (new DefaultPasswordHasher)->hash($password);
     }
 }
