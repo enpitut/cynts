@@ -53,16 +53,6 @@ use \App\Model\Table\UsersTable
     ]
 ) ?></td></tr>
 
-<!--
-<tr valign="baseline"><td>sex:<br />
-<td><?= $this->Form->select('sex',
-        array('0' => 'male',
-            '1' => 'female',
-            '2' => 'neutral'),
-        array('empty' => 'select')
-    )
-?></td></tr>
--->
 </td>
 </table>
 

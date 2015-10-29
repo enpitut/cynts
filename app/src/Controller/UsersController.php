@@ -34,7 +34,7 @@ class UsersController extends AppController
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
-        
+
         if ((int)$this->Auth->user('id') === (int)$id) {
             $this->set('is_self_page', true);
         } else {
@@ -82,7 +82,7 @@ class UsersController extends AppController
             );
         }
     }
-    
+
     public function logout()
     {
         return $this->redirect($this->Auth->logout());

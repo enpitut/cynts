@@ -25,11 +25,11 @@ class UsersTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-        
+
         $this->table('users');
         $this->displayField('name');
         $this->primaryKey('id');
-        
+
         $this->hasMany('Coordinates', [
             'foreignKey' => 'user_id'
         ]);
@@ -37,7 +37,7 @@ class UsersTable extends Table
             'foreignKey' => 'user_id'
         ]);
     }
-    
+
     /**
      * Default validation rules.
      *
