@@ -1,9 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\User;
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -15,7 +12,6 @@ use Cake\Validation\Validator;
  */
 class UsersTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -33,6 +29,7 @@ class UsersTable extends Table
         $this->hasMany('Coordinates', [
             'foreignKey' => 'user_id'
         ]);
+
         $this->hasMany('Favorites', [
             'foreignKey' => 'user_id'
         ]);
@@ -57,34 +54,42 @@ class UsersTable extends Table
         $validator
             ->requirePresence('mail', 'create')
             ->notEmpty('mail', 'メールアドレスを入力してください')
-            ->add('mail',  [
-                'emailValid' => [
-                    'rule' => [
-                        'email', true,
-                        ],
-                    'message' => '正しいメールアドレスを入力してください',
-                ],
-                'emailUnique' => [
-                    'message' => 'このメールアドレスは既に登録されています',
-                    'rule' => 'validateUnique',
-                    'provider' => 'table',
-                ],
-            ]);
+            ->add('mail',
+                [
+                    'emailValid' => [
+                        'rule' => ['email', true],
+                        'message' => '正しいメールアドレスを入力してください',
+                    ],
+                    'emailUnique' => [
+                        'message' => 'このメールアドレスは既に登録されています',
+                        'rule' => 'validateUnique',
+                        'provider' => 'table',
+                    ],
+                ]
+            );
 
         $validator
             ->requirePresence('password_confirm', 'create')
             ->notEmpty('password_confirm', 'パスワードを入力してください')
-            ->add('password_confirm', [
-                'length' => [
-                    'rule' => ['minLength', 4],
-                    'message' => 'パスワードは4文字以上入力してください',
+            ->add(
+                'password_confirm',
+                [
+                    'length' => [
+                        'rule' => ['minLength', 4],
+                        'message' => 'パスワードは4文字以上入力してください',
+                    ]
                 ]
-            ]);
+            );
 
         $validator
-            ->add('retype_password', 'compare', [
-                'rule' => ['compareWith', 'password'],
-                'message' => 'パスワードが違います'])
+            ->add(
+                'retype_password',
+                'compare',
+                [
+                    'rule' => ['compareWith', 'password'],
+                    'message' => 'パスワードが違います'
+                ]
+            )
             ->requirePresence('retype_password', 'create')
             ->notEmpty('retype_password', 'パスワードを再入力してください');
 
