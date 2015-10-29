@@ -1,48 +1,50 @@
 #body {
-    width: 810px;
+    width: 1000px;
     margin: 0 auto;
 }
 
-.side_contents{
+.left_contents{
     float:left;
     clear: right;
     left: 0;
-    width: 180px;
-    margin: 10px auto;
+    width: 150px;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
 }
-.side_contents h1{
+.left_contents h1{
     text-align: center;
     color: white;
-    font-size: small;
+    font-size: large;
     border-bottom: 1px solid white;
 }
+
 
 #profile table{
     margin: 0 auto;
     text-align: center;
-    font-size: small;
+    font-size: medium;
 }
 #profile img{
     width:100px;
     height:100px;
 }
 
-#main_contents {
+#center_contents {
     float:left;
     margin-left: 60px;
-    width: 570px;
+    width: 360px;
     text-align: center;
+    font-size: medium;    
 }
-#main_contents h3 {
+#center_contents h1 {
     text-align: center;
     border-bottom: 1px solid white;
+    font-size:large;
 }
 
 .list_photo {
-    width: 150px;
+    width: 100px;
     margin: 10px;
 }
 
@@ -50,3 +52,16 @@
     margin: 0 auto;
 }
 
+#right_contents {
+    float:left;
+    width: 360px;
+    margin-left: 60px;
+    text-align: center;
+    font-size: medium;
+}
+
+#right_contents h1 {
+    text-align: center;
+    border-bottom: 1px solid white;
+    font-size:large;
+}
