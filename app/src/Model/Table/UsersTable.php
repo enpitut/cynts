@@ -58,13 +58,16 @@ class UsersTable extends Table
             ->requirePresence('mail', 'create')
             ->notEmpty('mail', 'メールアドレスを入力してください')
             ->add('mail',  [
-                'emailValid'=>[
-                    'rule' => ['email', true],
+                'emailValid' => [
+                    'rule' => [
+                        'email', true,
+                        ],
                     'message' => '正しいメールアドレスを入力してください',
                 ],
-                'emailUnique'=>[
-                    'message'=>'このメールアドレスは既に登録されています',
-                    'rule' => 'validateUnique', 'provider' => 'table'
+                'emailUnique' => [
+                    'message' => 'このメールアドレスは既に登録されています',
+                    'rule' => 'validateUnique',
+                    'provider' => 'table',
                 ],
             ]);
 
@@ -81,7 +84,7 @@ class UsersTable extends Table
         $validator
             ->add('retype_password', 'compare', [
                 'rule' => ['compareWith', 'password'],
-                'message'=>'パスワードが違います'])
+                'message' => 'パスワードが違います'])
             ->requirePresence('retype_password', 'create')
             ->notEmpty('retype_password', 'パスワードを再入力してください');
 

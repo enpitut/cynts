@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Model\Entity\User;
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -41,7 +40,7 @@ class UsersController extends AppController
             $this->set('is_self_page', false);
         }
     }
-    
+
     /**
      * Add method
      *
@@ -65,7 +64,7 @@ class UsersController extends AppController
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
-    
+
     public function login()
     {
         if ($this->request->is('post')) {
