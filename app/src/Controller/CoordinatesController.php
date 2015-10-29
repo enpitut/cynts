@@ -16,6 +16,8 @@ class CoordinatesController extends AppController
 {
     const N_ITEM_LIST_SHOW = 100;
     const SESSION_KEY = 'items';
+    const BUTTON_SIZE = 34;
+    const BUTTON_NUMBER_IN_ROW = 4;
 
     public function beforeFilter(Event $event)
     {
@@ -29,18 +31,33 @@ class CoordinatesController extends AppController
      * View method
      *
      * @param string|null $id Coordinate id.
+     *
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($id = null)
     {
         $coordinate = $this->Coordinates->get($id, [
-            'contain' => ['Users', 'Items', 'Favorites']
-        ]);
+                'contain' => ['Users', 'Items', 'Favorites']
+            ]
+        );
 
         $total_price = 0;
         foreach ($coordinate->items as $item) {
             $total_price += $item->price;
+        }
+
+        foreach ($coordinate->items as $item) {
+            $item->buttons_height = self::BUTTON_SIZE * (floor(count($item->size_array) / self::BUTTON_NUMBER_IN_ROW) + 1);
+            $item->size_label = 'size' . $item->id;
+            $item->options = [];
+            foreach ($item->size_array as $size) {
+                if ($size === $item->size_array[0]) {
+                    $item->options[] = ['value' => $size, 'text' => $size, 'checked' => true];
+                } else {
+                    $item->options[] = ['value' => $size, 'text' => $size];
+                }
+            }
         }
 
         $this->set('coordinate', $coordinate);
