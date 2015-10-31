@@ -49,7 +49,20 @@ class UsersTable extends Table
 
         $validator
             ->requirePresence('name', 'create')
-            ->notEmpty('name', '名前を入力してください');
+            ->notEmpty('name', '名前を入力してください')
+            ->add(
+                'name',
+                'custom',
+                [
+                    'rule' => function($value) {
+                        if (mb_strlen($value) > 34) {
+                            return false;
+                        }
+                        return true;
+                    },
+                    'message' => '名前は34文字以下で設定してください',
+                ]
+            );
 
         $validator
             ->requirePresence('mail', 'create')
