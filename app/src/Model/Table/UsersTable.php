@@ -55,12 +55,12 @@ class UsersTable extends Table
                 'custom',
                 [
                     'rule' => function($value) {
-                        if (mb_strlen($value) > 34) {
+                        if (mb_strlen($value) > 100) {
                             return false;
                         }
                         return true;
                     },
-                    'message' => '名前は34文字以下で設定してください',
+                    'message' => '名前は100文字以下で設定してください',
                 ]
             );
 
