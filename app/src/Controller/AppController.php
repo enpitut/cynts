@@ -40,6 +40,11 @@ class AppController extends Controller
                     ],
                 ],
             ],
+            'logoutRedirect' => [
+                'controller' => 'Pages',
+                'action' => 'home'
+            ],
+            'authError' => 'ログインしてください'
         ],
     ];
 

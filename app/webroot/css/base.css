@@ -17,57 +17,6 @@ body {
     font-size: 18px;
 }
 
-header {
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    text-align: right;
-}
-
-#header_title {
-    margin: 24px 15%;
-    padding: 0;
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    width: 170px;
-    height: 40px;
-    text-align: left;
-    font-size: 28px;
-}
-
-#header_title a:link {
-    color: white;
-    text-decoration: none;
-}
-
-#header_title a:visited {
-    color: white;
-    text-decoration: none;
-}
-
-#header ul {
-    margin: 25px 15%;
-    font-size: 0;
-}
-
-#header li {
-    margin: 0 15px;
-    display: inline-block;
-    font-size: 24px;
-}
-
-#header a {
-    color: white;
-    text-decoration: none;
-}
-
 #topColumn {
     margin: 0;
     position: relative;
@@ -80,7 +29,7 @@ header {
 
 #title {
     position: relative;
-    margin: 12% auto 2% auto;
+    margin: 12% auto 0;
     width: 850px;
     font-size: 64px;
 }
@@ -99,10 +48,10 @@ header {
 
 .homeCaptionTitle{
     font-size: 32px;
-    margin: 1% auto;
+    margin: 5% auto;
 }
 .homeCaptionDescription{
-    margin: 5%  20% auto;
+    margin: 0 auto;
     width: 100%;
     line-height: 120%;
 }
@@ -112,7 +61,7 @@ header {
     list-style: none;
     display: none;
     vertical-align: middle;
-    margin: 0 5% auto;
+    margin: 5% auto;
     line-height: 140%;
 }
 
@@ -121,7 +70,7 @@ header {
     height: 100%;
     list-style: none;
     display: none;
-    margin: 0 10% auto;
+    margin: 5% auto;
     line-height: 140%;
 }
 
@@ -129,7 +78,7 @@ header {
     width: 100%;
     list-style: none;
     display: none;
-    margin: 0 10% auto;
+    margin: 5% auto;
     line-height: 140%;
 }
 
