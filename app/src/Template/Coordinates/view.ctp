@@ -13,10 +13,6 @@
 <body>
 
 <?= $this->element('eachpage_header') ?>
-<div id="centerMessage">
-    <p>コーディネートの詳細</p>
-</div>
-
 <div id="coordinateDetail">
     <div id="coordinateColumn">
         <div id="coordinatePhoto">
@@ -83,7 +79,7 @@
                 </p>
 
                 <p class="itemSize">
-                    size
+                    サイズ
                 </p>
 
                 <div class="sizeButtons"
