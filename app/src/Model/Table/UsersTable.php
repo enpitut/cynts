@@ -78,6 +78,10 @@ class UsersTable extends Table
                         'rule' => 'validateUnique',
                         'provider' => 'table',
                     ],
+                    'emailCharacter' => [
+                        'rule' => [ 'custom', '/^[a-zA-Z0-9_\-]*$/' ],
+                        'message' => '半角英数か_-以外の文字は使えません',
+                    ],
                 ]
             );
 
