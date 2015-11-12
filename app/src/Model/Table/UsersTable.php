@@ -55,7 +55,7 @@ class UsersTable extends Table
                 'custom',
                 [
                     'rule' => function($value) {
-                        if (mb_strlen($value) > 100) {
+                        if (strlen($value) > 100) {
                             return false;
                         }
                         return true;
