@@ -2,7 +2,7 @@
 <html>
 <head>
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('user/base.css') ?>
+    <?= $this->Html->css('users/base.css') ?>
 </head>
 <body>
 

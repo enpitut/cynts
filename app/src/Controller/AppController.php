@@ -40,6 +40,11 @@ class AppController extends Controller
                     ],
                 ],
             ],
+            'logoutRedirect' => [
+                'controller' => 'Pages',
+                'action' => 'home'
+            ],
+            'authError' => 'ログインしてください'
         ],
     ];
 
@@ -54,7 +59,7 @@ class AppController extends Controller
     {
         parent::initialize();
         $this->loadComponent('Flash');
-        $this->autoLayout = false;
+        $this->viewBuilder()->autoLayout(false);
     }
 
     public function isAuthorized($user = null)

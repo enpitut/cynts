@@ -8,9 +8,10 @@ var coordinate_id1; // mean side_b
 var push_enable = true;
 var previous_like_coordinate_id = -1;
 var n_continuously_like = 1;
-var n_battle = 1;
+var n_battle = 0;
 var usr_score = 0;
 var battle_info = {};
+const MAX_N_BATTLE = 30;
 const NUM_FOR_FAV = 10;
 
 /**
@@ -18,9 +19,8 @@ const NUM_FOR_FAV = 10;
  * @param side_id 選択した側がどちら側か？を示すID (0: 左, 1: 右)
  * @param like_coordinate_id 選択した側のコーデID
  * @param dislike_coordinate_id 選択しなかった側のコーデID
- * @param max_n_battle 最大バトル回数
  */
-function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_id, max_n_battle) {
+function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_id) {
     var like_side_id = side_id.id[5];
     var dislike_side_id = String((Number(side_id.id[5]) + 1) % 2);
 
@@ -28,8 +28,7 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
         return;
     }
 
-    if (n_battle == 1) {
-        battle_info.max_n_battle = max_n_battle;
+    if (n_battle == 0) {
         battle_info.battle_history = [];
     }
 
@@ -65,25 +64,38 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
         previous_like_coordinate_id = like_coordinate_id;
 
         dfd.done(function() {
-            // バトル終了判定
-            if (n_battle >= max_n_battle) {
-                battle_info.score = usr_score;
-
-                // redirect
-                var html =
-                    "<form method='post' action='result' id='refresh' style='display: none;'>" +
-                    "<input type='hidden' name='battle_info' value='" + JSON.stringify(battle_info) + "' >" +
-                    "</form>";
-                $("body").append(html);
-                $("#refresh").submit();
-            }
             n_battle++;
+            // バトル終了判定
+            if (n_battle >= MAX_N_BATTLE) {
+                finishBattle()
+            }
+            // 1回以上押下されたら finish ボタンを追加する
+            if (n_battle == 1) {
+                var element = document.getElementById('finish_button');
+                var buttonElement = document.createElement('button');
+                buttonElement.innerHTML = 'ゲーム終了!!';
+                var action = "finishBattle();";
+                buttonElement.setAttribute('onclick', action);
+                element.appendChild(buttonElement);
+            }
         });
     } catch (exception) {
         alert(exception);
     }
 }
 
+function finishBattle() {
+    battle_info.max_n_battle = n_battle;
+    battle_info.score = usr_score;
+
+    // redirect
+    var html =
+        "<form method='post' action='result' id='refresh' style='display: none;'>" +
+        "<input type='hidden' name='battle_info' value='" + JSON.stringify(battle_info) + "' >" +
+        "</form>";
+    $("body").append(html);
+    $("#refresh").submit();
+}
 
 /**
  * controller の action へ POST メソッドで ajax による通信を行う

@@ -1,20 +1,7 @@
 <header>
+    <?= $this->Html->css('header.css') ?>
     <div id="header">
         <ul>
-            <?php if ($this->Session->read('Auth.User')): ?>
-                <li>
-                    <?=
-                    $this->Html->link(
-                        'User',
-                        array(
-                            'controller' => 'Users',
-                            'action' => 'view',
-                            $this->Session->read('Auth.User.id')
-                        )
-                    );
-                    ?>
-                </li>
-            <?php endif; ?>
             <li>
                 <?=
                 $this->Html->link(
@@ -50,4 +37,6 @@
             </li>
         </ul>
     </div>
+
+    <?= $this->element('login') ?>
 </header>

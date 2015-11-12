@@ -34,7 +34,7 @@ $(document).ready(function () {
     const STORAGE_KEY = 'items';
     const ITEM_KEY_PREFIX = 'item_';
 
-    function addItemIdToSessionStorage(itemId, photoPath, price) {
+    function addItemIdToSessionStorage(itemId, photoPath, price, name) {
         var storage = localStorage;
         var items = JSON.parse(storage.getItem(STORAGE_KEY));
 
@@ -46,7 +46,8 @@ $(document).ready(function () {
             items[ITEM_KEY_PREFIX + itemId] = {
                 'itemId': itemId,
                 'photoPath': photoPath,
-                'price': price
+                'price': price,
+                'name': name
             };
             storage.setItem(STORAGE_KEY, JSON.stringify(items));
             return true;
@@ -100,7 +101,8 @@ $(document).ready(function () {
         var itemId = $(this).data('item-id');
         var photoPath = $(this).data('item-photo-path');
         var price = $(this).data('item-price');
-        var result = addItemIdToSessionStorage(itemId, photoPath, price);
+        var name = $(this).data('item-name');
+        var result = addItemIdToSessionStorage(itemId, photoPath, price, name);
         if (result) {
             drawItemInPickedItemsArea(itemId, photoPath, price);
         }

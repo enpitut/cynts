@@ -62,7 +62,6 @@
 }
 
 .picked_items_area {
-    height: 170px;
     width: 100%;
     bottom: 0;
     position: fixed;
@@ -72,7 +71,14 @@
 }
 
 .picked_items_message {
+    position: relative;
+    float: left;
     font-size: 16px;
+}
+
+.picked_items {
+  position: relative;
+  float: left;
 }
 
 .picked_item {
