@@ -8,8 +8,8 @@
 <div class="big">Unichronicle へようこそ</div>
 <p> アカウントを作成する</p>
 
+<?= $this->Form->create($user, ['novalidate' => true]) ?>
 <table border="0" align="center">
-    <?= $this->Form->create($user, array('novalidate' => 'novalidate')) ?>
     <tr valign="baseline">
         <td>ユーザ名:</td>
         <td>
