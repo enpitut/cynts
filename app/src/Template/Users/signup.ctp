@@ -67,8 +67,3 @@
 </p>
 
 <?= $this->Form->end() ?>
-
-アカウントをお持ちの方は<a href="/users/login">こちら</a>．
-
-</body>
-</html>
