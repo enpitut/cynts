@@ -53,6 +53,7 @@
                             ) : ''
                         );
                     }
+
                     echo $this->Html->tableCells(
                         [
                             $array
@@ -72,48 +73,61 @@
     </div>
     <div id = "right_contents">
         <h1>Fovorite Coordinates</h1>
-            <?php if (!empty($favorite)): ?>
-                <table cellpadding="0" cellspacing="0" id="favoriteCordinates">
+        <?php if (!empty($favorite)): ?>
+            <table cellpadding="0" cellspacing="0" id="favoriteCordinates">
                 <?php
                 $count = 0;
                 $all_count = 0;
                 $fav_array = [];
                     foreach($favorite as $id => $fav) {
                         array_push(
-                            $fav_array,
-                            $this->Html->image($fav->coordinate->photo_path,
-                                [
-                                'class' => 'favoritelist_photo',
-                                'url' => [
-                                    'controller' => 'Coordinates',
-                                    'action' => 'view',
-                                     $fav->coordinate_id,
-                                    ],
-                                ]
-                            )
+                        $fav_array,
+                        $this->Html->image($fav->coordinate->photo_path,
+                        [
+                            'class' => 'favoritelist_photo',
+                            'url' => [
+                                'controller' => 'Coordinates',
+                                'action' => 'view',
+                                $fav->coordinate_id,
+                                ],
+                            ]
+                        )
                         );
-                        $count++;
-                        $all_count++;
-                        if($count == 3 || $all_count == count($user->favorites)){
-                            echo $this->Html->tableCells(
-                                [
-                                    $fav_array
-                                ]
-                                );
-                                $count = 0;
-                                $fav_array = [];
-                        }
+                    $count++;
+                    $all_count++;
+                    if($count == 3 || $all_count == count($user->favorites)){
+                        
+                        echo $this->Html->tableCells(
+                            [
+                                $fav_array
+                            ]
+                        );
+                        $count = 0;
+                        $fav_array = [];
+                        
                     }
+                }
                 ?>
         </table>
-            <?php else: ?>
+        <?php else: ?>
             <?php if ($is_self_page): ?>
-                You have
+                <?=
+                $this->Html->link(
+                    'Post',
+                    [
+                        'controller' => 'Coordinates',
+                        'action' => 'create',
+                    ],
+                    [
+                        'class' => 'link',
+                    ]
+                );
+                ?> からコーディネートを作ってみてください！
             <?php else: ?>
-                This user has
+                投稿がまだありません
             <?php endif; ?>
-            not yet favorite coordinates.
         <?php endif; ?>
     </div>
+</div>
 </body>
 </html>
