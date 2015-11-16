@@ -70,49 +70,40 @@
             not yet posted coordinates.
         <?php endif; ?>
     </div>
-
-
     <div id = "right_contents">
-                <h1>Fovorite Coordinates</h1>
-                <?php if (!empty($user->favorites)): ?>
+        <h1>Fovorite Coordinates</h1>
+            <?php if (!empty($favorite)): ?>
                 <table cellpadding="0" cellspacing="0" id="favoriteCordinates">
-                 <?php
-                $coordinates_table_row = 3;
-                for (
-                    $i = 0;
-                    $i < count($user->favorites);
-                    $i += $coordinates_table_row
-                ) {
-                    $array = [];
-                    for ($j = $i; $j < $i + $coordinates_table_row; $j++) {
-                        $id = $user->favorites[$j]->coordinate_id;
-                        foreach($this->Coordinates as Coordinates->){
-
-                        }
-
-
+                <?php
+                $count = 0;
+                $all_count = 0;
+                $fav_array = [];
+                    foreach($favorite as $id => $fav) {
                         array_push(
-                            $array,
-                            array_key_exists($j, $user->favorites)
-                                ? $this->Html->image(
-                                $user->favorites[$j]->photo_path,
+                            $fav_array,
+                            $this->Html->image($fav->coordinate->photo_path,
                                 [
-                                    'class' => 'favorite_photo',
-                                    'url' => [
-                                        'controller' => 'Favorite',
-                                        'action' => 'view',
-                                         $user->favorites[$j]->id,
+                                'class' => 'favoritelist_photo',
+                                'url' => [
+                                    'controller' => 'Coordinates',
+                                    'action' => 'view',
+                                     $fav->coordinate_id,
                                     ],
                                 ]
-                            ) : ''
+                            )
                         );
+                        $count++;
+                        $all_count++;
+                        if($count == 3 || $all_count == count($user->favorites)){
+                            echo $this->Html->tableCells(
+                                [
+                                    $fav_array
+                                ]
+                                );
+                                $count = 0;
+                                $fav_array = [];
+                        }
                     }
-                    echo $this->Html->tableCells(
-                        [
-                            $array
-                        ]
-                    );
-                }
                 ?>
         </table>
             <?php else: ?>

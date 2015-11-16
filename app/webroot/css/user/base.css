@@ -48,6 +48,11 @@
     margin: 10px;
 }
 
+.favoritelist_photo {
+    width: 100px;
+    margin: 10px;
+}
+
 #related_coordinates {
     margin: 0 auto;
 }
