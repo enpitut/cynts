@@ -16,6 +16,8 @@ class CoordinatesController extends AppController
 {
     const N_ITEM_LIST_SHOW = 100;
     const SESSION_KEY = 'items';
+    const BUTTON_SIZE = 34;
+    const BUTTON_NUMBER_IN_ROW = 4;
 
     public function beforeFilter(Event $event)
     {
@@ -29,18 +31,33 @@ class CoordinatesController extends AppController
      * View method
      *
      * @param string|null $id Coordinate id.
+     *
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($id = null)
     {
         $coordinate = $this->Coordinates->get($id, [
-            'contain' => ['Users', 'Items', 'Favorites']
-        ]);
+                'contain' => ['Users', 'Items', 'Favorites']
+            ]
+        );
 
         $total_price = 0;
         foreach ($coordinate->items as $item) {
             $total_price += $item->price;
+        }
+
+        foreach ($coordinate->items as $item) {
+            $item->buttons_height = self::BUTTON_SIZE * (floor(count($item->size_array) / self::BUTTON_NUMBER_IN_ROW) + 1);
+            $item->size_label = 'size' . $item->id;
+            $item->options = [];
+            foreach ($item->size_array as $size) {
+                if ($size === $item->size_array[0]) {
+                    $item->options[] = ['value' => $size, 'text' => $size, 'checked' => true];
+                } else {
+                    $item->options[] = ['value' => $size, 'text' => $size];
+                }
+            }
         }
 
         $this->set('coordinate', $coordinate);
@@ -173,6 +190,35 @@ class CoordinatesController extends AppController
             echo '{"hasSucceeded": true, "id": ' . $result . '}';
             exit;
         }
+    }
+
+    /**
+     * @TODO : Also remove images of the coordinate when the coordinate deleted.
+     *
+     * @param int|null $id
+     * @return \Cake\Network\Response|null
+     * @throws \Exception
+     */
+    public function delete($id = null)
+    {
+        $coordinate = $this->Coordinates->get($id);
+        $user_id = $this->request->session()->read('Auth.User.id');
+        if ($user_id !== $coordinate->user_id) {
+            throw new \Exception('Permission error. Coordinate can be deleted only by that author.');
+        }
+
+        $result = $this->Coordinates->delete($coordinate);
+        if (!$result) {
+            throw new \Exception('Failed to delete coordinate.');
+        }
+
+        return $this->redirect(
+            [
+                'controller' => 'users',
+                'action' => 'view',
+                $user_id,
+            ]
+        );
     }
 
     /**

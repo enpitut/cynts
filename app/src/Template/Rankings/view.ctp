@@ -49,7 +49,7 @@
             <div class="information_right">
                 <div class="user">
                     <?php if (isset($coordinate->user->name)) { ?>
-                        Posted by
+                        制作者 :
                         <span class="user_name">
                             <?= $this->Html->link(
                                 $coordinate->user->name,
