@@ -21,6 +21,7 @@
                     'label' => '',
                     'options' => $sex_list,
                     'empty' => '指定なし',
+                    'onChange' => 'this.form.submit();'
                 ]
             ); ?>
         </td>
@@ -34,6 +35,7 @@
                     'label' => '',
                     'options' => $category_list,
                     'empty' => '指定なし',
+                    'onChange' => 'this.form.submit();'
                 ]
             ); ?>
         </td>
@@ -47,6 +49,7 @@
                     'label' => '',
                     'options' => $color_list,
                     'empty' => '指定なし',
+                    'onChange' => 'this.form.submit();'
                 ]
             ); ?>
         </td>
@@ -65,14 +68,9 @@
                         '5001,10000' => '¥5001 - ¥10000',
                     ],
                     'empty' => '指定なし',
+                    'onChange' => 'this.form.submit();'
                 ]
             ); ?>
-        </td>
-    </tr>
-    <tr class="search_button">
-        <td colspan="2">
-            <?= $this->Form->button('検索') ?>
-            <?= $this->Form->end() ?>
         </td>
     </tr>
 </table>
