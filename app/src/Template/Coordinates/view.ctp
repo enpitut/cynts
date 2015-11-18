@@ -27,10 +27,10 @@
             ?>
         </div>
         <div id="author">
-            制作者：
+
             <?php
             if (isset($coordinate->user)) {
-                $this->Html->link(
+                echo '制作者：' . $this->Html->link(
                     $coordinate->user->name,
                     [
                         'controller' => 'Users',
