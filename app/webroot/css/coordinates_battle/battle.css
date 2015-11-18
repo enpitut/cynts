@@ -98,7 +98,7 @@ select {
     width: 100px;
     height: 33px;
     text-align: -webkit-center;
-    background: #eaeaea url('../img/view/select_arrow.jpg') no-repeat right;
+    background: #eaeaea url('../../img/view/select_arrow.jpg') no-repeat right;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -210,3 +210,9 @@ img.selected_coordinate_photo {
     line-height: 1;
     transition: .2s;
 }
+
+.search_area {
+    font-size: small;
+    margin: auto;
+}
+

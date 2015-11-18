@@ -11,6 +11,7 @@ var n_continuously_like = 1;
 var n_battle = 0;
 var usr_score = 0;
 var battle_info = {};
+var battle_filter = {};
 const MAX_N_BATTLE = 30;
 const NUM_FOR_FAV = 10;
 
@@ -37,9 +38,6 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
 
         // コーデが押下された際の通常処理(スコアの計算・保持, 新たなコーデの取得・表示)
         dfd = dfd.then(function() {
-                return getScore(like_coordinate_id);
-            }
-        ).then(function() {
                 return getNewCoordinate(like_coordinate_id, dislike_coordinate_id);
             }
         ).then(function(new_coordinate_data) {
@@ -63,6 +61,11 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
         }
         previous_like_coordinate_id = like_coordinate_id;
 
+        dfd = dfd.then(function() {
+                return getScore(like_coordinate_id);
+            }
+        )
+
         dfd.done(function() {
             n_battle++;
             // バトル終了判定
@@ -78,6 +81,8 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
                 buttonElement.setAttribute('onclick', action);
                 element.appendChild(buttonElement);
             }
+        }).fail(function() {
+            // TODO: ちゃんとエラーハンドリングする
         });
     } catch (exception) {
         alert(exception);
@@ -171,7 +176,8 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
     sendPost("getNewCoordinate",
         {
             liked_coordinate_id: liked_coordinate_id,
-            disliked_coordinate_id: disliked_coordinate_id
+            disliked_coordinate_id: disliked_coordinate_id,
+            coordinate_criteria: JSON.stringify(battle_filter)
         },
         null
     ).done(
@@ -179,7 +185,9 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
             // 重複しない新たなコーデを取得する
             var new_coordinate = JSON.parse(coordinate_data);
             if (!new_coordinate["hasSucceeded"]) {
-                throw new Error("Illegal post value");
+                alert(new_coordinate["errorMessage"]);
+                $.Deferred().reject('Fail to get new coordinate');
+                throw new Error('Fail to get new coordinate');
             }
             // 取得したコーデを次の then ブロックに渡す
             dfd.resolve(new_coordinate);
@@ -245,6 +253,22 @@ function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side
 
     return dfd.promise();
 }
+
+
+function setBattleFilter() {
+    var select_forms = document.getElementsByClassName('criteria_value');
+
+    for(var i=0,l=select_forms.length; l>i; i++)
+    {
+        var index = select_forms[i].selectedIndex;
+        if (index != "") {
+            battle_filter[select_forms[i].name] = select_forms[i].options[index].value;
+        } else {
+            delete battle_filter[select_forms[i].name];
+        }
+    }
+}
+
 
 /**
  * コーデ画像をアニメーションで置き換える
