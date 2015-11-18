@@ -52,9 +52,8 @@ button.favoriteButton {
     position: relative;
     float: right;
     width: 470px;
-    padding: 5px;
-    padding-left: 5px;
     display: inline-block;
+    margin: 20px 0;
 }
 
 .itemPhoto {
@@ -72,8 +71,11 @@ button.favoriteButton {
     margin-left: 20px;
 }
 
+.itemName {
+    color: orange;
+}
+
 .sizeButtons {
-    width: 300px;
     padding-left: 40px;
 }
 
@@ -99,20 +101,28 @@ button.favoriteButton {
     color: #fff;
 }
 
-.itemPrice {
-    float: left;
-    width: 240px;
-    margin-left: 10px;
+.priceBox {
+    clear: both;
     margin-top: 20px;
 }
 
+.itemPrice {
+    float: left;
+}
+
 .buyButton {
+    float: right;
     font-size: 14px;
     padding: 5px 10px 5px 10px;
     background-color: #e40;
     color: #fff;
     border-style: none;
-    margin-top: 15px;
+    text-decoration: none;
+}
+
+.disabled {
+    background-color: #bdc3c7;
+    color: #444;
 }
 
 #buyAll {
@@ -127,7 +137,6 @@ button.favoriteButton {
     float: left;
     display: inline-block;
     margin-left: 0px;
-    width: 240px;
 }
 
 .image {
