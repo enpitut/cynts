@@ -99,7 +99,7 @@
                     <span>
                         <?php
                         if (isset($item->purchase_url)) {
-                            echo "<a class='buyButton' href='$item->purchase_url'>商品ページ</a>";
+                            echo "<a target='_blank' class='buyButton' href='$item->purchase_url'>商品ページ</a>";
                         } else {
                             echo "<a class='buyButton disabled'>商品ページ</a>";
                         }
