@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ba4390f5819118d9cdbcba02b87f4879",
-    "content-hash": "88692048c1c3168eec00399270f389fe",
+    "hash": "f961b9e3c33ff99adb29eec662d850de",
+    "content-hash": "2ab3fc93d443e82aa7c3019f5d2841d9",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -476,7 +476,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/43313ad89c0ad1851aeefafc164e2822e49867e3",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/06740769d9b02365cfbed104f9a44776a3d14478",
                 "reference": "43313ad89c0ad1851aeefafc164e2822e49867e3",
                 "shasum": ""
             },
@@ -2288,6 +2288,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "cakephp/migrations": 0,
         "psy/psysh": 0
     },
     "prefer-stable": true,
