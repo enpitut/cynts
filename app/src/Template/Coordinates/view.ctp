@@ -28,15 +28,17 @@
         </div>
         <div id="author">
             制作者：
-            <?=
-            $this->Html->link(
-                $coordinate->user->name,
-                [
-                    'controller' => 'Users',
-                    'action' => 'view',
-                    $coordinate->user->id
-                ]
-            );
+            <?php
+            if (isset($coordinate->user)) {
+                $this->Html->link(
+                    $coordinate->user->name,
+                    [
+                        'controller' => 'Users',
+                        'action' => 'view',
+                        $coordinate->user->id
+                    ]
+                );
+            }
             ?>
         </div>
         <div class="coordinateButtons">
@@ -90,15 +92,20 @@
                     echo $this->Form->end();
                     ?>
                 </div>
-                <div class="itemPrice">
-                    <?php echo "￥" . $item->price; ?>
+                <div class="priceBox">
+                    <span class="itemPrice">
+                        <?php echo "￥" . $item->price; ?>
+                    </span>
+                    <span>
+                        <?php
+                        if (isset($item->purchase_url)) {
+                            echo "<a class='buyButton' href='$item->purchase_url'>商品ページ</a>";
+                        } else {
+                            echo "<a class='buyButton disabled'>商品ページ</a>";
+                        }
+                        ?>
+                    </span>
                 </div>
-
-                <?php
-                echo $this->Form->create();
-                echo $this->Form->button('買う', ['class' => 'buyButton']);
-                echo $this->Form->end();
-                ?>
             </div>
         </div>
     <?php endforeach; ?>
@@ -112,7 +119,7 @@
             </p>
             <?php
             echo $this->Form->create();
-            echo $this->Form->button('買う', ['class' => 'buyButton']);
+            echo $this->Form->button('買う', ['class' => 'buyButton disabled']);
             echo $this->Form->end();
             ?>
         </div>
