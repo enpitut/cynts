@@ -1,7 +1,7 @@
 <?php
 use Migrations\AbstractMigration;
 
-class AddPurchaseUrlToCoordinates extends AbstractMigration
+class AddPurchaseUrlToItems extends AbstractMigration
 {
     /**
      * Change Method.
@@ -12,7 +12,7 @@ class AddPurchaseUrlToCoordinates extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('coordinates');
+        $table = $this->table('items');
         $table->addColumn('purchase_url', 'text', [
             'default' => null,
             'null' => true,
