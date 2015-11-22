@@ -9,8 +9,8 @@
 <?= $this->element('eachpage_header') ?>
 
 <div id="body">
-    <div id="side_contents">
-        <div class="side_contents">
+    <div id="left_contents">
+        <div class="left_contents">
             <h1>Profile</h1>
 
             <div id="profile">
@@ -24,8 +24,8 @@
             </div>
         </div>
     </div>
-    <div id="main_contents">
-        <h3>Coordinates</h3>
+    <div id="center_contents">
+        <h1>Posted Coordinates</h1>
         <?php if (!empty($user->coordinates)): ?>
             <table cellpadding="0" cellspacing="0" id="related_coordinates">
                 <?php
@@ -78,6 +78,49 @@
                 ?> からコーディネートを作ってみてください！
             <?php else: ?>
                 投稿がまだありません
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+    <div id = "right_contents">
+        <h1>Fovorite Coordinates</h1>
+        <?php if (!empty($favorite)): ?>
+            <table cellpadding="0" cellspacing="0" id="favoriteCordinates">
+                <?php
+                $count = 0;
+                $all_count = 0;
+                $fav_array = [];
+                    foreach($favorite as $id => $fav) {
+                        array_push(
+                        $fav_array,
+                        $this->Html->image($fav->coordinate->photo_path,
+                        [
+                            'class' => 'favoritelist_photo',
+                            'url' => [
+                                'controller' => 'Coordinates',
+                                'action' => 'view',
+                                $fav->coordinate_id,
+                                ],
+                            ]
+                        )
+                        );
+                        $count++;
+                        $all_count++;
+                        if($count == 3 || $all_count == count($user->favorites)){
+                            echo $this->Html->tableCells(
+                            [
+                                $fav_array
+                            ]
+                        );
+                        $count = 0;
+                        $fav_array = [];
+                        }
+                    }
+                ?>
+        </table>
+        <?php else: ?>
+            <?php if ($is_self_page): ?>
+                お気に入りコーデはまだありません
+            <?php else: ?>
             <?php endif; ?>
         <?php endif; ?>
     </div>
