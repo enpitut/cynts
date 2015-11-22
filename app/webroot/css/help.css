@@ -23,10 +23,6 @@
     top: 35%;
 }
 
-.help_window_game_end {
-    margin: 30%;
-}
-
 #modal_overlay {
     z-index:3;
     display:none;
