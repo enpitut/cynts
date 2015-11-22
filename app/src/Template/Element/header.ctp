@@ -41,7 +41,10 @@
             </li>
         </ul>
     </div>
-
-    <?= $this->element('login') ?>
+    <?php
+    if (!in_array($this->request->here, ['/users/signup'])) {
+        echo $this->element('login');
+    }
+    ?>
     <?= $this->Html->script('help.js', ['id' => 'help_script', 'controller_name' => $this->name]) ?>
 </header>

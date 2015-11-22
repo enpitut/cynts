@@ -12,7 +12,9 @@
         );
         ?>
     </div>
-    <?php if ($this->request->here !== '/users/login'): ?>
-        <?= $this->element('header') ?>
-    <?php endif; ?>
+    <?php
+    if (!in_array($this->request->here, ['/users/login'])) {
+        echo $this->element('header');
+    }
+    ?>
 </div>

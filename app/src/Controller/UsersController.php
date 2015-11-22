@@ -1,9 +1,8 @@
 <?php
 namespace App\Controller;
 
-use App\Model\Entity\User;
 use Cake\Event\Event;
-
+use Cake\ORM\TableRegistry;
 /**
  * Users Controller
  *
@@ -31,6 +30,13 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => ['Coordinates', 'Favorites']
         ]);
+        $favoriteTable = TableRegistry::get('Favorites');
+        $favorite = $favoriteTable->find()->where(
+            [
+                'Favorites.user_id' => $id
+            ]
+        )->contain(['Coordinates']);
+        $this->set('favorite', $favorite);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
 
@@ -51,21 +57,13 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            $user->set('password', User::hashPassword($user->get('password')));
             $user->set('created_at', time());
             $user->set('updated_at', time());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect([
-                    'controller' => 'Pages',
-                    'action' => 'display',
-                ]);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                return $this->redirect(['action' => 'login']);
             }
         }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
+        $this->set('user', $user);
     }
 
     public function login()
