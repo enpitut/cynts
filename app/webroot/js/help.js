@@ -13,17 +13,17 @@ $("#modal_open").click(
 
         $("body").append('<div id="modal_overlay"></div>');
         $("#modal_overlay").fadeIn("slow");
-        $("#modal_help").fadeIn("slow");
 
-        $("#modal_overlay").load(HELP_ROOT + "help #modal_help_" + controller_name, function(data) {
+        $("body").append('<div id="modal_help"></div>');
+        $("#modal_help").load(HELP_ROOT + "help #modal_help_" + controller_name, function(data) {
             if(data === null) {
                 console.log("Reading Error");
             }
         })
 
-        $("#modal_overlay").unbind().click(function() {
-            $("#modal_overlay").fadeOut("slow", function() {
-                $("#modal_overlay").remove();
+        $("#modal_overlay, #modal_help").unbind().click(function() {
+            $("#modal_overlay, #modal_help").fadeOut("slow", function() {
+                $("#modal_overlay, #modal_help").remove();
             });
         });
     }
