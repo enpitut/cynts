@@ -23,6 +23,7 @@
             echo $this->Form->input('description');
             echo $this->Form->input('sex');
             echo $this->Form->input('status');
+            echo $this->Form->input('purchase_url');
             echo $this->Form->input('created_at');
             echo $this->Form->input('updated_at');
             echo $this->Form->input('coordinates._ids', ['options' => $coordinates]);
