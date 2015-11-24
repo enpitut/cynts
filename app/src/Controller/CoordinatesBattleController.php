@@ -97,7 +97,7 @@ class CoordinatesBattleController extends AppController
             $n_loop = 0;
             while (true) {
                 // 条件にあったコーデをランダムに1着取得する
-                $coordinate = $this->formatCriteriaJsonStringToQuery(
+                $coordinate = $this->_formatCriteriaJsonStringToQuery(
                     $criteria_json_string
                 )->first();
 
@@ -142,7 +142,7 @@ class CoordinatesBattleController extends AppController
         }
     }
 
-    private function formatCriteriaJsonStringToQuery($json_string)
+    private function _formatCriteriaJsonStringToQuery($json_string)
     {
         $array = json_decode($json_string, true);
 
@@ -170,15 +170,16 @@ class CoordinatesBattleController extends AppController
             array_push($having_conditions, $price_criteria);
         }
 
-        // TODO: コーデ投稿画面で sex を登録させる
         if (array_key_exists('sex', $array)) {
             if ($array["sex"] === "0") {
-                $sex_criteria = $query->newExpr()->lte(
-                    $query->func()->avg('Items.sex'), 0.5
+                $sex_criteria = $query->newExpr()->eq(
+                    'Coordinates.sex',
+                    false
                 );
             } else {
-                $sex_criteria = $query->newExpr()->gt(
-                    $query->func()->avg('Items.sex'), 0.5
+                $sex_criteria = $query->newExpr()->eq(
+                    'Coordinates.sex',
+                    true
                 );
             }
 
