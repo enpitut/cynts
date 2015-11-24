@@ -101,17 +101,18 @@ class CoordinatesController extends AppController
      */
     public function post()
     {
-        /* nothing to do */
+        $this->set('sex_list', Item::getSexes());
     }
 
 
     /**
      * @param string $string_img
      * @param array $items
+     * @param int $sex
      * @return int
      * @throws \Exception
      */
-    protected function postCoordinate($string_img, array $items)
+    protected function postCoordinate($string_img, array $items, $sex)
     {
         /** @var CoordinatesItemsTable $coordinates_items_repository */
         $coordinates_items_repository = TableRegistry::get('CoordinatesItems');
@@ -122,8 +123,9 @@ class CoordinatesController extends AppController
         $coordinate = $this->Coordinates->newEntity();
 
         $coordinate->user_id = $this->Auth->user('id');
-        $coordinate->like = 0;
-        $coordinate->unlike = 0;
+        $coordinate->n_like = 0;
+        $coordinate->n_unlike = 0;
+        $coordinate->sex = $sex === "1" ? true : false;
         $coordinate->created_at = $now->format('Y-m-d H:i:s');
 
         if ($this->Coordinates->save($coordinate)) {
@@ -180,7 +182,8 @@ class CoordinatesController extends AppController
             try {
                 $result = $this->postCoordinate(
                     $this->request->data('img'),
-                    json_decode($this->request->data(self::SESSION_KEY), true)
+                    json_decode($this->request->data(self::SESSION_KEY), true),
+                    $this->request->data('sex')
                 );
             } catch (\Exception $e) {
                 trigger_error($e->getMessage(), E_USER_WARNING);

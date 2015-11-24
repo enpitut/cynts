@@ -23,6 +23,12 @@
         </tr>
     </table>
 
+    <?= $this->Form->select(
+        'sex',
+        $sex_list,
+        ["id" => "sex"]
+    ) ?>
+
     <button onclick="screenshot('#screen')" , style="position: relative; float: right; margin: 30px;">投稿</button>
 
     <div style="clear: both;"></div>
@@ -130,7 +136,8 @@
                     sendPost("ajaxPostCoordinate",
                         {
                             img: imgData,
-                            items: JSON.stringify(items)
+                            items: JSON.stringify(items),
+                            sex: document.getElementById('sex').value
                         },
                         null
                     ).done(function (result) {
