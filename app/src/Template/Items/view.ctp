@@ -25,6 +25,8 @@
             <p><?= h($item->sizes) ?></p>
             <h6 class="subheader"><?= __('Category') ?></h6>
             <p><?= h($item->category) ?></p>
+            <h6 class="subheader"><?= __('Purchase_url') ?></h6>
+            <p><a target='_blank' href="<?= $item->purchase_url ?>"><?= $item->purchase_url ?></a></p>
         </div>
         <div class="large-2 columns numbers end">
             <h6 class="subheader"><?= __('Id') ?></h6>

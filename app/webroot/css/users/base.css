@@ -1,66 +1,48 @@
 #body {
-    width: 1000px;
+    width: 810px;
     margin: 0 auto;
 }
 
-.left_contents{
+.side_contents{
     float:left;
     clear: right;
     left: 0;
-    width: 150px;
+    width: 180px;
+    margin: 10px auto;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
 }
-.left_contents h1{
+.side_contents h1{
     text-align: center;
     color: white;
-    font-size: large;
+    font-size: small;
     border-bottom: 1px solid white;
 }
 
 #profile table{
     margin: 0 auto;
     text-align: center;
-    font-size: medium;
+    font-size: small;
 }
 #profile img{
     width:100px;
     height:100px;
 }
 
-#center_contents {
+#main_contents {
     float:left;
     margin-left: 60px;
-    width: 360px;
+    width: 570px;
     text-align: center;
-    font-size: medium;
 }
-#center_contents h1 {
+#main_contents h3 {
     text-align: center;
     border-bottom: 1px solid white;
-    font-size:large;
-}
-
-#right_contents {
-    float:left;
-    width: 360px;
-    margin-left: 60px;
-    text-align: center;
-    font-size: medium;
-}
-#right_contents h1 {
-    text-align: center;
-    border-bottom: 1px solid white;
-    font-size:large;
 }
 
 .list_photo {
-    width: 100px;
-    margin: 10px;
-}
-.favoritelist_photo {
-    width: 100px;
+    width: 150px;
     margin: 10px;
 }
 

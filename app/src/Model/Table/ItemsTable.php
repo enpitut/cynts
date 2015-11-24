@@ -1,8 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Item;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -90,6 +88,10 @@ class ItemsTable extends Table
         $validator
             ->requirePresence('updated_at', 'create')
             ->notEmpty('updated_at');
+
+        $validator
+            ->add('purchase_url', 'valid', ['rule' => 'url'])
+            ->allowEmpty('purchase_url');
 
         return $validator;
     }
