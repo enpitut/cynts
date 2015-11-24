@@ -27,7 +27,8 @@ class UsersTable extends Table
         $this->primaryKey('id');
 
         $this->hasMany('Coordinates', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
+            'sort' => ['Coordinates.created_at' => 'DESC'],
         ]);
 
         $this->hasMany('Favorites', [
