@@ -6,6 +6,7 @@
     height: 100%;
     background-color:rgba(0,0,0,0);
     z-index: 4;
+    color: #eee;
     text-align: center;
 }
 
@@ -19,8 +20,18 @@
     position: relative;
 }
 
-.help_window_battle_caption {
+.help_window_battlecolumn {
     top: 35%;
+}
+
+.help_window_finish_button {
+
+}
+
+.close_message {
+    position: absolute;
+    top: 95%;
+    right: 5%;
 }
 
 #modal_overlay {
@@ -33,3 +44,4 @@
     height:100%;
     background-color:rgba(0,0,0,0.5);
 }
+

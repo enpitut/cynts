@@ -46,5 +46,5 @@
         echo $this->element('login');
     }
     ?>
-    <?= $this->Html->script('help.js', ['id' => 'help_script', 'controller_name' => $this->name]) ?>
+    <?= $this->Html->script('help.js', ['id' => 'help_script', 'controller' => $this->name, 'action' => $this->request->action]) ?>
 </header>
