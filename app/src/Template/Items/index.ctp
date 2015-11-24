@@ -19,6 +19,7 @@
             <th><?= $this->Paginator->sort('sizes') ?></th>
             <th><?= $this->Paginator->sort('category') ?></th>
             <th><?= $this->Paginator->sort('price') ?></th>
+            <th><?= $this->Paginator->sort('purchase_url') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
     </thead>
@@ -34,6 +35,7 @@
             <td><?= h($item->sizes) ?></td>
             <td><?= h($item->category) ?></td>
             <td><?= $this->Number->format($item->price) ?></td>
+            <td><a target='_blank' href="<?= $item->purchase_url ?>"><?= $item->purchase_url ?></a></td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $item->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $item->id]) ?>
