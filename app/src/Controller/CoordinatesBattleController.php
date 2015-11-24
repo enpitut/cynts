@@ -88,26 +88,22 @@ class CoordinatesBattleController extends AppController
             $like_coordinate->n_like = $like_coordinate->n_like + 1;
             $this->Coordinates->save($like_coordinate);
 
-            $dislike_coordinate = $this->Coordinates->get(
-                $dislike_coordinate_id
-            );
+            $dislike_coordinate = $this->Coordinates->get($dislike_coordinate_id);
             $dislike_coordinate->n_unlike = $dislike_coordinate->n_unlike + 1;
             $this->Coordinates->save($dislike_coordinate);
 
             $n_loop = 0;
             while (true) {
                 // 条件にあったコーデをランダムに1着取得する
-                $coordinate = $this->_formatCriteriaJsonStringToQuery(
+                $coordinate = $this->_createQueryFromCriteriaJson(
                     $criteria_json_string
                 )->first();
 
-                if ($coordinate === NULL) {
+                if ($coordinate === null) {
                     // 条件に一致するコーデが存在しない
                     echo sprintf(
                         '{"hasSucceeded":false, "errorMessage":"%s"}',
-                        "条件に一致するコーデが存在しません！" .
-                        "条件を変更するか，ヘッダーの Post から条件にあうような" .
-                        "コーデを新しく投稿してみてください！"
+                        "条件に一致するコーデが存在しません！"
                     );
                     break;
                 }
@@ -121,9 +117,7 @@ class CoordinatesBattleController extends AppController
                         // (1~2着しか条件に一致するコーデがない)
                         echo sprintf(
                             '{"hasSucceeded":false, "errorMessage":"%s"}',
-                            "条件に一致するコーデが十分に存在しません！" .
-                            "条件を変更するか，ヘッダーの Post から条件にあうような" .
-                            "コーデを新しく投稿してみてください！"
+                            "条件に一致するコーデが十分に存在しません！"
                         );
                         break;
                     }
@@ -142,10 +136,16 @@ class CoordinatesBattleController extends AppController
         }
     }
 
-    private function _formatCriteriaJsonStringToQuery($json_string)
+    private function _createQueryFromCriteriaJson($criteria_string)
     {
-        $array = json_decode($json_string, true);
+        $criteria_json = json_decode($criteria_string, true);
 
+        /**
+         * Coordinates に Coordinates_items と Items を内部結合して，
+         * coordinate_id でまとめる
+         *
+         * 条件に合わせて，どのようにまとめるかを having 句として記述していく
+         */
         $query = $this->Coordinates->find()
             ->order('rand()')
             ->limit(1)
@@ -155,11 +155,14 @@ class CoordinatesBattleController extends AppController
             )
             ->innerJoin('items', 'coordinates_items.item_id = items.id')
             ->group(['coordinate_id']);
-
         $having_conditions = [];
 
-        if (array_key_exists('price', $array)) {
-            $price_scope = $array['price'];
+        /**
+         * Coordinates に関わる Items の合計金額が，
+         * 条件範囲内のものをグループとしてまとめる
+         */
+        if (array_key_exists('price', $criteria_json)) {
+            $price_scope = $criteria_json['price'];
             $price_scopes = explode(',', $price_scope);
             $price_criteria = $query->newExpr()->between(
                 $query->func()->sum('Items.price'),
@@ -170,16 +173,19 @@ class CoordinatesBattleController extends AppController
             array_push($having_conditions, $price_criteria);
         }
 
-        if (array_key_exists('sex', $array)) {
-            if ($array["sex"] === "0") {
+        /**
+         * Coordinates の sex が条件に沿ったものをまとめる
+         */
+        if (array_key_exists('sex', $criteria_json)) {
+            if ($criteria_json["sex"] === Item::SEX_MAN) {
                 $sex_criteria = $query->newExpr()->eq(
                     'Coordinates.sex',
-                    false
+                    Item::SEX_MAN
                 );
             } else {
                 $sex_criteria = $query->newExpr()->eq(
                     'Coordinates.sex',
-                    true
+                    Item::SEX_WOMAN
                 );
             }
 

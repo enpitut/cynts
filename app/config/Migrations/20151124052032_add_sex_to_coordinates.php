@@ -15,7 +15,7 @@ class AddSexToCoordinates extends AbstractMigration
         $table = $this->table('coordinates');
         $table->addColumn('sex', 'boolean', [
             'default' => null,
-            'null' => false,
+            'null' => true,
         ]);
         $table->update();
     }
