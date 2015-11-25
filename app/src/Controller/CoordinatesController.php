@@ -74,6 +74,7 @@ class CoordinatesController extends AppController
     public function create()
     {
         $coordinate = $this->Coordinates->newEntity();
+
         if ($this->request->is('post')) {
             $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
             if ($this->Coordinates->save($coordinate)) {
@@ -86,7 +87,7 @@ class CoordinatesController extends AppController
 
         $criteria = self::validateCriteria($this->request->data);
         $items = $this->findItemList($criteria);
-
+        
         $this->set('items', $items->toArray());
         $this->set('sex_list', Item::getSexes());
         $this->set('category_list', Item::getCategories());
@@ -120,7 +121,6 @@ class CoordinatesController extends AppController
 
         /** @var /App/Model/Entity/Coordinate $coordinate */
         $coordinate = $this->Coordinates->newEntity();
-
         $coordinate->user_id = $this->Auth->user('id');
         $coordinate->like = 0;
         $coordinate->unlike = 0;
@@ -280,7 +280,7 @@ class CoordinatesController extends AppController
      * @return bool 登録できたなら true, 重複により登録できなかったなら false
      * @throws \Exception
      */
-    public function postFavorite($uid, $coordinate_id)
+    public function postFavorite($uid, $coordinate_id)  /*Addにするか検討*/
     {
         if (is_numeric($coordinate_id) == false
             || is_numeric($uid) == false
@@ -306,6 +306,7 @@ class CoordinatesController extends AppController
                 ]
             );
             $favorite->created_at = $now->format('Y-m-d H:i:s');
+            /*ここにfavorite専用のphoto_pathを設定するか検討*/
             $favorites_table->save($favorite);
             return true;
         } else {
