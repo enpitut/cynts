@@ -50,6 +50,37 @@
             ); ?>
         </td>
     </tr>
+    <tr>
+        <td class="search_label">季節</td>
+        <td>
+            <?php
+            echo "春" . $this->Form->checkbox(
+                    'spring', [
+                    'hiddenField' => false,
+                    'value' => 'spring',
+                    'onChange' => 'setBattleFilter();'
+                ]);
+            echo "夏" . $this->Form->checkbox(
+                    'summer', [
+                    'hiddenField' => false,
+                    'value' => 'summer',
+                    'onChange' => 'setBattleFilter();'
+                ]);
+            echo "秋" . $this->Form->checkbox(
+                    'autumn', [
+                    'hiddenField' => false,
+                    'value' => 'autumn',
+                    'onChange' => 'setBattleFilter();'
+                ]);
+            echo "冬" . $this->Form->checkbox(
+                    'winter', [
+                    'hiddenField' => false,
+                    'value' => 'winter',
+                    'onChange' => 'setBattleFilter();'
+                ]);
+            ?>
+        </td>
+    </tr>
 </table>
 
 <div id="centermessage">

@@ -192,6 +192,21 @@ class CoordinatesBattleController extends AppController
             array_push($having_conditions, $sex_criteria);
         }
 
+        if (array_key_exists('season', $criteria_json)) {
+            $season_binary_string = $criteria_json["season"];
+            $expression = "";
+            foreach(str_split($season_binary_string) as $season_flag){
+                $expression .= $season_flag === "1" ? "1" : "_";
+            }
+            $expression .= '%';
+
+            $season_criteria = $query->newExpr()->like(
+                'Coordinates.season',
+                $expression
+            );
+            array_push($having_conditions, $season_criteria);
+        }
+
         $query->having($having_conditions);
 
         return $query;

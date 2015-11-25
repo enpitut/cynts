@@ -257,7 +257,13 @@ function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side
 
 function setBattleFilter() {
     var select_forms = document.getElementsByClassName('criteria_value');
+    var season_binary_string =
+        ($("[name=spring]").prop("checked") ? "1" : "0") +
+        ($("[name=summer]").prop("checked") ? "1" : "0") +
+        ($("[name=autumn]").prop("checked") ? "1" : "0") +
+        ($("[name=winter]").prop("checked") ? "1" : "0");
 
+    battle_filter["season"] = season_binary_string;
     for(var i=0,l=select_forms.length; l>i; i++)
     {
         var index = select_forms[i].selectedIndex;
