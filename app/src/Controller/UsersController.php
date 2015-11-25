@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller;
 
-use App\Model\Entity\User;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 /**
@@ -52,31 +51,18 @@ class UsersController extends AppController
      *
      * @return \Cake\Network\Response|void
      */
-    public function add()
+    public function signup()
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            $user->set('password', User::hashPassword($user->get('password')));
             $user->set('created_at', time());
             $user->set('updated_at', time());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect([
-                    'controller' => 'Pages',
-                    'action' => 'display',
-                ]);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                return $this->redirect(['action' => 'login']);
             }
         }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
-    }
-
-    public function signup()
-    {
-        $this->add();
+        $this->set('user', $user);
     }
 
     public function login()
@@ -88,11 +74,13 @@ class UsersController extends AppController
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(
-                __('Username or password is incorrect'),
+                __('メールアドレスかパスワードが間違っています'),
                 'default',
                 [],
                 'auth'
             );
+            $this->request->data['mail'] = '';
+            $this->request->data['password'] = '';
         }
     }
 

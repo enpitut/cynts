@@ -11,7 +11,7 @@
 <br>
 
 <div id="centerposition">
-    <p>Your score is...</p>
+    <p>あなたのおしゃれ度は...</p>
     <?php
     echo "<p class='result_score'>" . $score . '</p>' .
         "<p class='max_score'>/" . $max_n_battle * $score_win . "</p>";

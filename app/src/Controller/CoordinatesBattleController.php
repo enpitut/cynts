@@ -35,12 +35,6 @@ class CoordinatesBattleController extends AppController
      */
     public function battle()
     {
-        if ($this->request->is('post')) {
-            $max_n_battle = $this->request->data('max_n_battle');
-        } else {
-            return $this->redirect(['action' => 'selectBattleMode']);
-        }
-
         $coordinates = $this->Coordinates->find(
             'all',
             [
@@ -57,7 +51,7 @@ class CoordinatesBattleController extends AppController
                 ]
             );
         }
-        $this->set(compact('coordinates', 'max_n_battle'));
+        $this->set(compact('coordinates'));
     }
 
     /**
@@ -121,7 +115,7 @@ class CoordinatesBattleController extends AppController
                 }
             }
         } else {
-            return $this->redirect(['action' => 'selectBattleMode']);
+            return $this->redirect(['action' => 'battle']);
         }
     }
 
@@ -159,13 +153,8 @@ class CoordinatesBattleController extends AppController
                 exit;
             }
         } else {
-            return $this->redirect(['action' => 'selectBattleMode']);
+            return $this->redirect(['action' => 'battle']);
         }
-    }
-
-    public function selectBattleMode()
-    {
-        // dummy
     }
 
     const SCORE_WIN = 100;
@@ -231,7 +220,7 @@ class CoordinatesBattleController extends AppController
                 $result
             );
         } else {
-            return $this->redirect(['action' => 'selectBattleMode']);
+            return $this->redirect(['action' => 'battle']);
         }
     }
 
@@ -255,7 +244,7 @@ class CoordinatesBattleController extends AppController
 
             $this->set(compact('score', 'max_n_battle', 'battle_history', 'score_win'));
         } else {
-            return $this->redirect(['action' => 'selectBattleMode']);
+            return $this->redirect(['action' => 'battle']);
         }
     }
 }

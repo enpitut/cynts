@@ -2,7 +2,7 @@
 <html>
 <head>
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('user/base.css') ?>
+    <?= $this->Html->css('users/base.css') ?>
 </head>
 <body>
 
@@ -64,11 +64,21 @@
             </table>
         <?php else: ?>
             <?php if ($is_self_page): ?>
-                You have
+                <?=
+                $this->Html->link(
+                    'Post',
+                    [
+                        'controller' => 'Coordinates',
+                        'action' => 'create',
+                    ],
+                    [
+                        'class' => 'link',
+                    ]
+                );
+                ?> からコーディネートを作ってみてください！
             <?php else: ?>
-                This user has
+                投稿がまだありません
             <?php endif; ?>
-            not yet posted coordinates.
         <?php endif; ?>
     </div>
     <div id = "right_contents">

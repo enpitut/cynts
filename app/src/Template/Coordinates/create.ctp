@@ -4,7 +4,7 @@
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('coordinates/create.css') ?>
     <script src='http://code.jquery.com/jquery-1.11.1.min.js'></script>
-    <?= $this->Html->script('coordinate/create.js') ?>
+    <?= $this->Html->script('coordinates/create.js') ?>
 </head>
 <body>
 
@@ -13,46 +13,49 @@
 <table class="search_area">
     <?= $this->Form->create() ?>
     <tr>
-        <td class="search_label">Sex</td>
+        <td class="search_label">性別</td>
         <td class="search_value">
             <?= $this->Form->input(
                 'sex',
                 [
                     'label' => '',
                     'options' => $sex_list,
-                    'empty' => 'Choose one',
+                    'empty' => '指定なし',
+                    'onChange' => 'this.form.submit();'
                 ]
             ); ?>
         </td>
     </tr>
     <tr>
-        <td class="search_label">Category</td>
+        <td class="search_label">種類</td>
         <td class="search_value">
             <?= $this->Form->input(
                 'category',
                 [
                     'label' => '',
                     'options' => $category_list,
-                    'empty' => 'Choose one',
+                    'empty' => '指定なし',
+                    'onChange' => 'this.form.submit();'
                 ]
             ); ?>
         </td>
     </tr>
     <tr>
-        <td class="search_label">Color</td>
+        <td class="search_label">カラー</td>
         <td class="search_value">
             <?= $this->Form->input(
                 'color',
                 [
                     'label' => '',
                     'options' => $color_list,
-                    'empty' => 'Choose one',
+                    'empty' => '指定なし',
+                    'onChange' => 'this.form.submit();'
                 ]
             ); ?>
         </td>
     </tr>
     <tr>
-        <td class="search_label">Price</td>
+        <td class="search_label">価格帯</td>
         <td class="search_value">
             <?= $this->Form->input(
                 'price',
@@ -64,15 +67,10 @@
                         '3001,5000' => '¥3001 - ¥5000',
                         '5001,10000' => '¥5001 - ¥10000',
                     ],
-                    'empty' => 'Choose one',
+                    'empty' => '指定なし',
+                    'onChange' => 'this.form.submit();'
                 ]
             ); ?>
-        </td>
-    </tr>
-    <tr class="search_button">
-        <td colspan="2">
-            <?= $this->Form->button('Search') ?>
-            <?= $this->Form->end() ?>
         </td>
     </tr>
 </table>
@@ -130,10 +128,10 @@
 </div>
 
 <div class="picked_items_area">
-    <div class="picked_items_message">Picked Items</div>
-    <div class="picked_items"></div>
+    <div class="picked_items_message">選択済みのアイテム</div>
+    <div style="position: relative; float: right;">
     <?= $this->Html->link(
-        '>> Next step',
+        '>> コーディネートを作成',
         [
             'controller' => 'Coordinates',
             'action' => 'post',
@@ -142,7 +140,9 @@
             'class' => 'link_to_post',
         ]
     ) ?>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="picked_items"></div>
 </div>
-
 </body>
 </html>

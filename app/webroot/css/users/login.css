@@ -1,0 +1,175 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+[class*="fontawesome-"]:before {
+    font-family: 'FontAwesome', sans-serif;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+a {
+    color: #eee;
+    outline: 0;
+    text-decoration: none;
+}
+
+a:focus,
+a:hover {
+    text-decoration: underline;
+}
+
+input {
+    border: 0;
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    -webkit-transition: background-color .3s;
+    -moz-transition: background-color .3s;
+    -ms-transition: background-color .3s;
+    -o-transition: background-color .3s;
+    transition: background-color .3s;
+}
+
+.siteContainer {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 3rem 0;
+}
+
+.messageBox {
+    margin: 0 30% 2rem;
+    padding: 1rem;
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
+.messageBox label {
+    padding: 1rem;
+}
+
+.message.error{
+    padding: 0;
+    display: inline;
+}
+
+.loginForm {
+    color: #aaa;
+    max-width: 20rem;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.loginForm label,
+.loginForm input[type="text"],
+.loginForm input[type="password"],
+.loginForm input[type="submit"] {
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+
+.loginForm label {
+    background-color: #363b41;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+.loginForm input[type="text"],
+.loginForm input[type="password"],
+.loginForm input[type="submit"] {
+    width: 100%;
+}
+
+.loginForm input[type="text"],
+.loginForm input[type="password"] {
+    background-color: #3b4148;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.loginForm input[type="text"]:focus,
+.loginForm input[type="text"]:hover,
+.loginForm input[type="password"]:focus,
+.loginForm input[type="password"]:hover {
+    background-color: #434A52;
+}
+
+.loginForm input[type="submit"] {
+    background-color: orangered;
+    color: #eee;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.loginForm input[type="submit"]:focus,
+.loginForm input[type="submit"]:hover {
+    background-color: darkorange;
+}
+
+.formField {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0 0 1rem 0;
+}
+
+.inputForm {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.align {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+.hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.passwordRequestLink {
+    margin: 1rem auto;
+    position: relative;
+    float: left;
+}
+
+.signupLink {
+    margin: 1rem auto;
+    position: relative;
+    float: right;
+}
