@@ -112,7 +112,7 @@ class CoordinatesController extends AppController
      * @return int
      * @throws \Exception
      */
-    protected function postCoordinate($string_img, array $items, $sex)
+    protected function postCoordinate($string_img, array $items, $sex, $season)
     {
         /** @var CoordinatesItemsTable $coordinates_items_repository */
         $coordinates_items_repository = TableRegistry::get('CoordinatesItems');
@@ -126,6 +126,7 @@ class CoordinatesController extends AppController
         $coordinate->n_like = 0;
         $coordinate->n_unlike = 0;
         $coordinate->sex = $sex === "1" ? true : false;
+        $coordinate->season = $season;
         $coordinate->created_at = $now->format('Y-m-d H:i:s');
 
         if ($this->Coordinates->save($coordinate)) {
@@ -183,7 +184,8 @@ class CoordinatesController extends AppController
                 $result = $this->postCoordinate(
                     $this->request->data('img'),
                     json_decode($this->request->data(self::SESSION_KEY), true),
-                    $this->request->data('sex')
+                    $this->request->data('sex'),
+                    $this->request->data('season')
                 );
             } catch (\Exception $e) {
                 trigger_error($e->getMessage(), E_USER_WARNING);

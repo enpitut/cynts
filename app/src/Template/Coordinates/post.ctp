@@ -29,6 +29,25 @@
         ["id" => "sex"]
     ) ?>
 
+    <?php
+    echo "春" . $this->Form->checkbox('spring', [
+        'hiddenField' => false,
+        'value' => 'spring',
+    ]);
+    echo "夏" . $this->Form->checkbox('summer', [
+        'hiddenField' => false,
+        'value' => 'summer',
+    ]);
+    echo "秋" . $this->Form->checkbox('autumn', [
+        'hiddenField' => false,
+        'value' => 'autumn',
+    ]);
+    echo "冬" . $this->Form->checkbox('winter', [
+        'hiddenField' => false,
+        'value' => 'winter',
+    ]);
+    ?>
+
     <button onclick="screenshot('#screen')" , style="position: relative; float: right; margin: 30px;">投稿</button>
 
     <div style="clear: both;"></div>
@@ -126,6 +145,13 @@
             })
         }
 
+        function getSeasonJson() {
+            return ($("[name=spring]").prop("checked") ? "1" : "0") +
+                ($("[name=summer]").prop("checked") ? "1" : "0") +
+                ($("[name=autumn]").prop("checked") ? "1" : "0") +
+                ($("[name=winter]").prop("checked") ? "1" : "0");
+        }
+
         function screenshot(selector) {
             var dfd = $.Deferred();
 
@@ -137,7 +163,8 @@
                         {
                             img: imgData,
                             items: JSON.stringify(items),
-                            sex: document.getElementById('sex').value
+                            sex: document.getElementById('sex').value,
+                            season: getSeasonJson()
                         },
                         null
                     ).done(function (result) {
