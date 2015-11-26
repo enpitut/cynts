@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 
 /**
  * Application Controller
@@ -46,6 +47,7 @@ class AppController extends Controller
             ],
             'authError' => 'ログインしてください'
         ],
+        'Security',
     ];
 
     /**
@@ -60,6 +62,18 @@ class AppController extends Controller
         parent::initialize();
         $this->loadComponent('Flash');
         $this->viewBuilder()->autoLayout(false);
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Security->config('blackHoleCallback', 'blackhole');
+        $this->Security->requireSecure();
+    }
+
+    public function blackhole()
+    {
+        return $this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
     }
 
     public function isAuthorized($user = null)
