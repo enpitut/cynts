@@ -103,7 +103,7 @@ class CoordinatesBattleController extends AppController
                     // 条件に一致するコーデが存在しない
                     echo sprintf(
                         '{"hasSucceeded":false, "errorMessage":"%s"}',
-                        "条件に一致するコーデが存在しません！"
+                        "条件に一致するコーデが存在しません"
                     );
                     break;
                 }
@@ -117,7 +117,7 @@ class CoordinatesBattleController extends AppController
                         // (1~2着しか条件に一致するコーデがない)
                         echo sprintf(
                             '{"hasSucceeded":false, "errorMessage":"%s"}',
-                            "条件に一致するコーデが十分に存在しません！"
+                            "条件に一致するコーデが存在しません"
                         );
                         break;
                     }

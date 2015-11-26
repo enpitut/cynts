@@ -109,6 +109,7 @@ class CoordinatesController extends AppController
      * @param string $string_img
      * @param array $items
      * @param int $sex
+     * @param string $season
      * @return int
      * @throws \Exception
      */
@@ -125,7 +126,7 @@ class CoordinatesController extends AppController
         $coordinate->user_id = $this->Auth->user('id');
         $coordinate->n_like = 0;
         $coordinate->n_unlike = 0;
-        $coordinate->sex = $sex === "1" ? true : false;
+        $coordinate->sex = $sex === "1";
         $coordinate->season = $season;
         $coordinate->created_at = $now->format('Y-m-d H:i:s');
 
