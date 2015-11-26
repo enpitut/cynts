@@ -40,7 +40,7 @@ class User extends Entity
      * かなりテキトーに決めたので，誰かいい関数考えて欲しい
      *
      * i.e.
-     * point : score
+     * point : level
      * 0 : 0
      * 1000 : 1
      * 2200 : 2
