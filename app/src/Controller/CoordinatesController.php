@@ -41,8 +41,7 @@ class CoordinatesController extends AppController
                 'contain' => ['Users', 'Items', 'Favorites']
             ]
         );
-
-        $coordinate->has()
+        
         $total_price = 0;
         foreach ($coordinate->items as $item) {
             $total_price += $item->price;
