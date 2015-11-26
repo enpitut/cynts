@@ -239,12 +239,25 @@ class CoordinatesBattleController extends AppController
             $score = $json_data->{"score"};
             $max_n_battle = $json_data->{"max_n_battle"};
             $battle_history = $json_data->{"battle_history"};
-
             $score_win = self::SCORE_WIN;
+
+            self::incrementUserCoordinatePoint($score);
 
             $this->set(compact('score', 'max_n_battle', 'battle_history', 'score_win'));
         } else {
             return $this->redirect(['action' => 'battle']);
         }
+    }
+
+    /**
+     * @param int $score
+     */
+    protected function incrementUserCoordinatePoint($score)
+    {
+        $UserRegistry = TableRegistry::get('Users');
+        $user = $UserRegistry->get($this->Auth->user('id'));
+        $user->coordinate_point = is_null($user->coordinate_point) ? 0 : $user->coordinate_point;
+        $user->coordinate_point += $score;
+        $UserRegistry->save($user);
     }
 }
