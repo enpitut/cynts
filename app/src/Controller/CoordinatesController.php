@@ -42,6 +42,7 @@ class CoordinatesController extends AppController
             ]
         );
 
+        $coordinate->has()
         $total_price = 0;
         foreach ($coordinate->items as $item) {
             $total_price += $item->price;

@@ -128,6 +128,8 @@ foreach ($coordinates as $coordinate) {
 
     echo '</li>' . PHP_EOL;
 
+    echo '<p>' . $coordinate->price . '</p>';
+
     $side_id++;
 }
 echo '<script>var image_obj0 = document.getElementById("photo0");</script>';

@@ -255,6 +255,11 @@ function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side
 }
 
 
+/**
+ * バトルの条件(性別，季節等)が選択された際に呼び出される
+ * バトルのフィルタリング条件をリストで格納しておく
+ * 季節に関しては，春夏秋冬を4bitのビット列(選択されていれば1，そうでなければ0)として保持する
+ */
 function setBattleFilter() {
     var select_forms = document.getElementsByClassName('criteria_value');
     var season_binary_string =
