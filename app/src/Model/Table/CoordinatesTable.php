@@ -81,6 +81,14 @@ class CoordinatesTable extends Table
             ->requirePresence('updated_at', 'create')
             ->notEmpty('updated_at');
 
+        $validator
+            ->add('sex', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('sex');
+
+        $validator
+            ->add('season', 'valid', ['rule' => 'binary'])
+            ->allowEmpty('season');
+
         return $validator;
     }
 
