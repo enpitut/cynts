@@ -86,7 +86,7 @@
         <?php if (!empty($user->favorites)): ?>
             <table cellpadding="0" cellspacing="0" id="favoriteCordinates">
                 <?php
-                $count = 0;         /*お気に入りコーデの改行する為のタイミングを決める変数*/
+                $count = 0;
                 $limit = count($favorite->toArray());
                 foreach($favorite as $id => $fav) {
                     $fav_array[] =
@@ -103,10 +103,10 @@
                     $count++;
                     if($count % 3 == 0 || $count == $limit){
                         echo $this->Html->tableCells(
-                        [
-                            $fav_array
-                        ]
-                    );
+                            [
+                                $fav_array
+                            ]
+                        );
                     $fav_array = [];
                     }
                 }
