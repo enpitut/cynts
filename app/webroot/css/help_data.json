@@ -1,0 +1,18 @@
+/**
+ * Created by admin on 2015/11/28.
+ */
+
+const COORDINATESBATTLE_BATTLE = {
+    'header_title': {
+        'data-intro': "test",
+        'data-position': "bottom"
+    },
+    'battlecolumn': {
+        'data-intro': "test1",
+        'data-position': "right"
+    },
+    'finish-button': {
+        'data-intro': "test2",
+        'data-position': "top"
+    },
+}
