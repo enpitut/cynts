@@ -87,7 +87,7 @@
             <table cellpadding="0" cellspacing="0" id="favoriteCordinates">
                 <?php
                 $count = 0;         /*お気に入りコーデの改行する為のタイミングを決める変数*/
-                $all_count = 0;     /*お気に入りコーデを全て数える*/
+                $limit = count($favorite->toArray());
                 foreach($favorite as $id => $fav) {
                     $fav_array[] =
                         $this->Html->image($fav->coordinate->photo_path,
@@ -101,14 +101,12 @@
                         ]
                     );
                     $count++;
-                    $all_count++;
-                    if($count == 3 || $all_count == count($user->favorites)){
+                    if($count % 3 == 0|| $count == $limit){
                         echo $this->Html->tableCells(
                         [
                             $fav_array
                         ]
                     );
-                    $count = 0;
                     $fav_array = [];
                     }
                 }
