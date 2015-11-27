@@ -25,5 +25,5 @@
     }
     ?>
 </div>
-<?= $this->Html->script('http://code.jquery.com/jquery-1.11.1.min.js') ?>
+
 <?= $this->Html->script('help.js', ['id' => 'help_script', 'controller' => $this->name, 'action' => $this->request->action]) ?>

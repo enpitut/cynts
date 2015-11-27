@@ -7,7 +7,6 @@
     background-color:rgba(0,0,0,0);
     z-index: 4;
     color: #eee;
-    text-align: center;
 }
 
 [class^="help_window"] {
@@ -16,16 +15,19 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
     padding: 10px 25px 10px 25px;
-    display: inline-block;
-    position: relative;
+    position: absolute;
+}
+
+.help_window_header_title {
+    margin: 8% 0 0 8%;
 }
 
 .help_window_battlecolumn {
-    margin: 20%;
+    margin: 20% 0 0 31.5%;
 }
 
 .help_window_finish_button {
-    margin: 3% 0 0 10%;
+    margin: 70% 0 0 32%;
 }
 
 #close_message {
