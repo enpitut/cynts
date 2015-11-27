@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
+
 /**
  * Users Controller
  *
@@ -30,8 +30,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => ['Coordinates', 'Favorites']
         ]);
-        $favoriteTable = TableRegistry::get('Favorites');
-        $favorite = $favoriteTable->find()->where(
+        $favorite = $this->Users->favorites->find()->where(
             [
                 'Favorites.user_id' => $id
             ]
