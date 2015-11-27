@@ -1,5 +1,5 @@
 #body {
-    width: 1000px;
+    width: 810px;
     margin: 0 auto;
 }
 
@@ -7,15 +7,15 @@
     float:left;
     clear: right;
     left: 0;
-    width: 150px;
+    width: 120px;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
 }
 .left_contents h1{
     text-align: center;
-    color: white;
-    font-size: large;
+    color: orange;
+    font-size: 15px;
     border-bottom: 1px solid white;
 }
 
@@ -31,36 +31,36 @@
 
 #center_contents {
     float:left;
-    margin-left: 60px;
-    width: 360px;
+    margin-left: 20px;
+    width: 310px;
     text-align: center;
-    font-size: medium;
+    font-size: 14px;
 }
 #center_contents h1 {
     text-align: center;
     border-bottom: 1px solid white;
-    font-size:large;
+    font-size:15px;
 }
 
 #right_contents {
     float:left;
-    width: 360px;
-    margin-left: 60px;
+    margin-left: 20px;
+    width: 310px;
     text-align: center;
-    font-size: medium;
+    font-size: 14px;
 }
 #right_contents h1 {
     text-align: center;
     border-bottom: 1px solid white;
-    font-size:large;
+    font-size:15px;
 }
 
 .list_photo {
-    width: 100px;
+    width: 80px;
     margin: 10px;
 }
 .favoritelist_photo {
-    width: 100px;
+    width: 80px;
     margin: 10px;
 }
 
