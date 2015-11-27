@@ -101,7 +101,7 @@
                         ]
                     );
                     $count++;
-                    if($count % 3 == 0|| $count == $limit){
+                    if($count % 3 == 0 || $count == $limit){
                         echo $this->Html->tableCells(
                         [
                             $fav_array
