@@ -36,9 +36,6 @@
                 );
                 ?>
             </li>
-            <li>
-                <a id="modal_open">Help</a>
-            </li>
         </ul>
     </div>
     <?php
@@ -46,5 +43,4 @@
         echo $this->element('login');
     }
     ?>
-    <?= $this->Html->script('help.js', ['id' => 'help_script', 'controller' => $this->name, 'action' => $this->request->action]) ?>
 </header>

@@ -1,3 +1,9 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+[class*="fontawesome-"]:before {
+    font-family: 'FontAwesome', sans-serif;
+}
+
 header {
     margin: 0;
     padding: 0;
@@ -9,6 +15,7 @@ header {
     height: 40px;
     text-align: right;
 }
+
 #header_title {
     margin: 24px 15%;
     padding: 0;
@@ -30,6 +37,11 @@ header {
 #header_title a:visited {
     color: white;
     text-decoration: none;
+}
+
+#help_button {
+    color: #fff;
+    font-size: 24px;
 }
 
 #header ul {

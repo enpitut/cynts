@@ -11,7 +11,7 @@
 }
 
 [class^="help_window"] {
-    background-color: #212121;
+    background-color: #444;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -21,27 +21,42 @@
 }
 
 .help_window_battlecolumn {
-    top: 35%;
+    margin: 20%;
 }
 
 .help_window_finish_button {
-
+    margin: 3% 0 0 10%;
 }
 
-.close_message {
-    position: absolute;
+#close_message {
+    z-index: 5;
+    display:none;
+    position: fixed;
     top: 95%;
     right: 5%;
 }
 
-#modal_overlay {
-    z-index:3;
-    display:none;
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background-color:rgba(0,0,0,0.5);
+[class^="help_window"]:after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    content: '';
+    border-top: 0;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid #444;
+    margin: 0 0 0 -10px;
 }
 
+#modal_overlay {
+    z-index: 3;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
