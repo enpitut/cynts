@@ -86,6 +86,13 @@ return [
             'path' => CACHE,
         ],
 
+        'filtered_coordinates' => [
+            'className' => 'File',
+            'duration' => '+30 minutes',
+            'path' => CACHE,
+            'prefix' => 'filtered_coordinates_'
+        ],
+
         /**
          * Configure the cache used for general framework caching. Path information,
          * object listings, and translation cache files are stored with this

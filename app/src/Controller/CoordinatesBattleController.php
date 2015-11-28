@@ -93,15 +93,23 @@ class CoordinatesBattleController extends AppController
                 "条件に一致するコーデが存在しません"
             );
             while (true) {
-                // 条件にあったコーデをランダムに1着取得する
-                $coordinate = $this->_createQueryFromCriteriaJson(
+                // 条件にあったコーデ群を取得する
+                // 検索条件毎に一意の文字列(JSON文字列に対してSHA-1を使用する)を生成し，
+                // それをキーとしてキャッシュする
+                $filtered_coordinates = $this->_createQueryFromCriteriaJson(
                     $criteria_json_string
-                )->first();
+                )->cache('filtered_coordinates_' . sha1($criteria_json_string));
 
-                if ($coordinate === null) {
-                    // 条件に一致するコーデが存在しない
+                // 取得したコーデ群を配列に変換し，ランダムに1つ取得する
+                // 取得したコーデのIDから Entity を取得し直す(_getPhotoPath を利用するため)
+                $filtered_coordinates_array = $filtered_coordinates->toArray();
+                if ($filtered_coordinates_array === []) {
                     echo $err_message;
                     break;
+                } else {
+                    $coordinate_array =
+                        $filtered_coordinates_array[array_rand($filtered_coordinates_array)];
+                    $coordinate = $this->Coordinates->get($coordinate_array['id']);
                 }
 
                 if ($like_coordinate_id == $coordinate->id ||
@@ -149,6 +157,14 @@ class CoordinatesBattleController extends AppController
         $this->Coordinates->save($coordinate);
     }
 
+    /**
+     * 条件にあったコーデ群を取得するクエリを生成する
+     * 条件は JSON 形式で指定する
+     *
+     * @param string $criteria_string
+     *
+     * @return \Cake\ORM\Query $query
+     */
     private function _createQueryFromCriteriaJson($criteria_string)
     {
         $criteria_json = json_decode($criteria_string, true);
@@ -167,8 +183,6 @@ class CoordinatesBattleController extends AppController
          *   HAVING ( hoge AND fuga AND ...) // hoge や fuga を以下で追記し，絞り込んでいく
          */
         $query = $this->Coordinates->find()
-            ->order('rand()')
-            ->limit(1)
             ->innerJoin(
                 'coordinates_items',
                 'coordinates.id = coordinates_items.coordinate_id'
@@ -210,13 +224,13 @@ class CoordinatesBattleController extends AppController
      *   Coordinates.sex = :c0
      *   - :c0 0もしくは1
      *
-     * @param $sex_criteria string 0 または 1
+     * @param string $sex_criteria 0 または 1
      *
-     * @return $this
+     * @return \Cake\ORM\Query $query
      */
     private function _createQueryMatchSexCriteria($sex_criteria)
     {
-        if ($sex_criteria === (string)Item::SEX_MAN) {
+        if ((int)$sex_criteria === Item::SEX_MAN) {
             $criteria_query = $this->Coordinates->find()->newExpr()->eq(
                 'Coordinates.sex',
                 Item::SEX_MAN
@@ -239,9 +253,9 @@ class CoordinatesBattleController extends AppController
      *   - :c0 最小価格
      *   - :c1 最大価格
      *
-     * @param $price_criteria string 形式は "最小価格,最大価格"
+     * @param string $price_criteria 形式は "最小価格,最大価格"
      *
-     * @return $this
+     * @return \Cake\ORM\Query $criteria_query
      */
     private function _createQueryMatchPriceCriteria($price_criteria)
     {
@@ -262,9 +276,9 @@ class CoordinatesBattleController extends AppController
      *   Coordinates.season LIKE :c0
      *   - :c0 正規表現．例) 春と秋がチェックされている場合は "1_1_%"
      *
-     * @param $season_criteria string 形式は4bitのビット列  例) "1010"
+     * @param string $season_criteria 形式は4bitのビット列  例) "1010"
      *
-     * @return $this
+     * @return \Cake\ORM\Query $criteria_query
      */
     private function _createQueryMatchSeasonCriteria($season_criteria)
     {
@@ -353,10 +367,10 @@ class CoordinatesBattleController extends AppController
             }
 
             $a_side_coordinate = $this->Coordinates->find()->where(
-                ['Coordinates.id' => $a_side_coordinate_id,]
+                ['Coordinates.id' => $a_side_coordinate_id]
             )->first();
             $b_side_coordinate = $this->Coordinates->find()->where(
-                ['Coordinates.id' => $b_side_coordinate_id,]
+                ['Coordinates.id' => $b_side_coordinate_id]
             )->first();
 
             // TODO: コーデの得票数が明らかに少ない場合には，無視した方が良い？

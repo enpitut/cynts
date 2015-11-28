@@ -64,7 +64,7 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
         dfd = dfd.then(function() {
                 return getScore(like_coordinate_id);
             }
-        )
+        );
 
         dfd.done(function() {
             n_battle++;
