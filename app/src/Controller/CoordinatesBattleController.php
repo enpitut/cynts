@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Model\Entity\User;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 
@@ -225,7 +226,6 @@ class CoordinatesBattleController extends AppController
     }
 
     /**
-     * JavaScript から呼ばれる関数
      * POST メソッドで画面遷移してきた場合にのみ利用可能
      * JS 側のデータを受け渡すために，現在は JS 上で form タグを動的に生成し，それを実行することで result 画面に遷移させている
      * バトルの結果を取得し，結果画面をレンダリングする
@@ -241,23 +241,31 @@ class CoordinatesBattleController extends AppController
             $battle_history = $json_data->{"battle_history"};
             $score_win = self::SCORE_WIN;
 
-            self::incrementUserCoordinatePoint($score);
+            /** @var User $user */
+            $user = TableRegistry::get('Users')->get($this->Auth->user('id'));
 
-            $this->set(compact('score', 'max_n_battle', 'battle_history', 'score_win'));
+            $previous_level = $user->getCoordinateLevel();
+            self::incrementUserCoordinatePoint($user, $score);
+            $current_level = $user->getCoordinateLevel();
+            $point_to_next_level = $user->getPointToNextLevel();
+
+            $this->set(compact(
+                'score', 'max_n_battle', 'battle_history', 'score_win',
+                'previous_level', 'current_level', 'point_to_next_level'
+            ));
         } else {
             return $this->redirect(['action' => 'battle']);
         }
     }
 
     /**
+     * @param User $user
      * @param int $score
      */
-    protected function incrementUserCoordinatePoint($score)
+    protected function incrementUserCoordinatePoint(User $user, $score)
     {
-        $UserRegistry = TableRegistry::get('Users');
-        $user = $UserRegistry->get($this->Auth->user('id'));
         $user->coordinate_point = is_null($user->coordinate_point) ? 0 : $user->coordinate_point;
         $user->coordinate_point += $score;
-        $UserRegistry->save($user);
+        TableRegistry::get('Users')->save($user);
     }
 }

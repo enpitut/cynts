@@ -9,6 +9,10 @@ use Cake\ORM\Entity;
  */
 class User extends Entity
 {
+    const LEVEL_METHOD_DIV = 10000;
+    const LEVEL_METHOD_PLUS = 1;
+    const LEVEL_METHOD_MULTI = 25;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      * Note that '*' is set to true, which allows all unspecified fields to be
@@ -56,6 +60,26 @@ class User extends Entity
      */
     public function getCoordinateLevel()
     {
-        return floor(log($this->_properties['coordinate_point'] / 10000 + 1) * 25);
+        return floor(
+            log(
+                $this->_properties['coordinate_point'] / self::LEVEL_METHOD_DIV + self::LEVEL_METHOD_PLUS
+            ) * self::LEVEL_METHOD_MULTI
+        );
+    }
+
+    /**
+     * @see \App\Model\Entity\User::getCoordinateLevel
+     *
+     * @return float
+     */
+    public function getPointToNextLevel()
+    {
+        $current_level = self::getCoordinateLevel();
+        $min_point_of_next_level = (
+                exp(
+                    ($current_level + 1) / self::LEVEL_METHOD_MULTI
+                ) - self::LEVEL_METHOD_PLUS
+            ) * self::LEVEL_METHOD_DIV;
+        return floor($min_point_of_next_level - $this->_properties['coordinate_point']);
     }
 }
