@@ -129,7 +129,9 @@
 </div>
 
 <div class="picked_items_area">
-    <div class="picked_items_message">選択済みのアイテム</div>
+    <div class="picked_items_message">
+        選択済みのアイテム<span class="sum_price"></span>
+    </div>
     <div style="position: relative; float: right;">
     <?= $this->Html->link(
         '>> コーディネートを作成',
