@@ -1,0 +1,14 @@
+{
+    "div#header_title": {
+        "data-intro": "タイトルをクリックすると，<br>トップページに戻れます",
+        "data-position": "right"
+    },
+    "div#battlecolumn ul li": {
+        "data-intro": "好きな方をクリック！",
+        "data-position": "top"
+    },
+    "div#finish_button button": {
+        "data-intro": "ゲームを終了したいときはクリック<br>自分のおしゃれ度がわかります",
+        "data-position": "right"
+    }
+}

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?= $this->Html->script('http://code.jquery.com/jquery-1.11.1.min.js') ?>
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('battle.css') ?>
 </head>

@@ -1,0 +1,14 @@
+{
+    "div#header_title": {
+        "data-intro": "タイトルをクリックすると，<br>トップページに戻れます",
+        "data-position": "right"
+    },
+    "div#centerposition p.result_score": {
+        "data-intro": "あなたのスコアです",
+        "data-position": "top"
+    },
+    "ul.battle_result": {
+        "data-intro": "あなたのゲーム戦績詳細です<br>赤く囲ってあるコーディネートがあなたが選んだコーディネートです",
+        "data-position": "right"
+    }
+}
