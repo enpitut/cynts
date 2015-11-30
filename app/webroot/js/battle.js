@@ -137,7 +137,7 @@ function getScore(like_coordinate_id) {
     ).done(function(result) {
             var result_data = JSON.parse(result);
             if (!result_data["hasSucceeded"]) {
-                throw new Error("Illegal post value");
+                throw new Error(result_data["errorMessage"]);
             }
 
             // コーデバトルの履歴を保持する

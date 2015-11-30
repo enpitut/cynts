@@ -4,6 +4,7 @@ namespace App\Controller;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 use App\Model\Entity\Item;
+use App\Model\Criteria;
 
 /**
  * Class CoordinatesBattleController
@@ -84,8 +85,13 @@ class CoordinatesBattleController extends AppController
             }
             $criteria_json_string = $this->request->data('coordinate_criteria');
 
-            $this->_incrementCoordinatesPoint('n_like', $like_coordinate_id);
-            $this->_incrementCoordinatesPoint('n_unlike', $dislike_coordinate_id);
+            try {
+                $this->_incrementCoordinatesPoint('n_like', $like_coordinate_id);
+                $this->_incrementCoordinatesPoint('n_unlike', $dislike_coordinate_id);
+            } catch(\Exception $e) {
+                error_log($e->getMessage());
+                exit();
+            }
 
             $n_loop = 0;
             $err_message = sprintf(
@@ -96,20 +102,14 @@ class CoordinatesBattleController extends AppController
                 // 条件にあったコーデ群を取得する
                 // 検索条件毎に一意の文字列(JSON文字列に対してSHA-1を使用する)を生成し，
                 // それをキーとしてキャッシュする
-                $filtered_coordinates = $this->_createQueryFromCriteriaJson(
+                $filtered_coordinates = Criteria\CoordinatesCriteria::createQueryFromJson(
                     $criteria_json_string
                 )->cache('filtered_coordinates_' . sha1($criteria_json_string));
+                $coordinate = $filtered_coordinates->all()->shuffle()->first();
 
-                // 取得したコーデ群を配列に変換し，ランダムに1つ取得する
-                // 取得したコーデのIDから Entity を取得し直す(_getPhotoPath を利用するため)
-                $filtered_coordinates_array = $filtered_coordinates->toArray();
-                if ($filtered_coordinates_array === []) {
+                if ($coordinate === null) {
                     echo $err_message;
                     break;
-                } else {
-                    $coordinate_array =
-                        $filtered_coordinates_array[array_rand($filtered_coordinates_array)];
-                    $coordinate = $this->Coordinates->get($coordinate_array['id']);
                 }
 
                 if ($like_coordinate_id == $coordinate->id ||
@@ -139,6 +139,7 @@ class CoordinatesBattleController extends AppController
 
     /**
      * コーディネートのポイント(n_like, n_unlike)の値をインクリメントする
+     * 指定された ID のコーディネートが見つからなかった場合は，何もしない
      *
      * @param $element
      * @param $id
@@ -152,147 +153,12 @@ class CoordinatesBattleController extends AppController
                 'Invalid element is given. \'n_like\' or \'n_unlike\' is only allowed.'
             );
         }
-        $coordinate = $this->Coordinates->get($id);
+        $coordinate = $this->Coordinates->find()->where(
+            ['Coordinates.id' => $id]
+        )->first();
+        if (is_null($coordinate)) { return; }
         $coordinate->$element = $coordinate->$element + 1;
         $this->Coordinates->save($coordinate);
-    }
-
-    /**
-     * 条件にあったコーデ群を取得するクエリを生成する
-     * 条件は JSON 形式で指定する
-     *
-     * @param string $criteria_string
-     *
-     * @return \Cake\ORM\Query $query
-     */
-    private function _createQueryFromCriteriaJson($criteria_string)
-    {
-        $criteria_json = json_decode($criteria_string, true);
-
-        /**
-         * Coordinates に Coordinates_items と Items を内部結合して，
-         * coordinate_id でまとめる
-         *
-         * 条件に合わせて，どのようにまとめるかを having 句として記述していく
-         *
-         * SQL:
-         * SELECT * FROM Coordinates
-         *   INNER JOIN coordinates_items ON coordinates.id = coordinates_items.coordinate_id
-         *   INNER JOIN items ON coordinates_items.item_id = items.id
-         *   GROUP BY coordinate_id
-         *   HAVING ( hoge AND fuga AND ...) // hoge や fuga を以下で追記し，絞り込んでいく
-         */
-        $query = $this->Coordinates->find()
-            ->innerJoin(
-                'coordinates_items',
-                'coordinates.id = coordinates_items.coordinate_id'
-            )
-            ->innerJoin('items', 'coordinates_items.item_id = items.id')
-            ->group(['coordinate_id']);
-        $having_conditions = [];
-
-        if (array_key_exists('price', $criteria_json)) {
-            array_push(
-                $having_conditions,
-                $this->_createQueryMatchPriceCriteria($criteria_json["price"])
-            );
-        }
-
-        if (array_key_exists('sex', $criteria_json)) {
-            array_push(
-                $having_conditions,
-                $this->_createQueryMatchSexCriteria($criteria_json["sex"])
-            );
-        }
-
-        if (array_key_exists('season', $criteria_json)) {
-            array_push(
-                $having_conditions,
-                $this->_createQueryMatchSeasonCriteria($criteria_json["season"])
-            );
-        }
-
-        $query->having($having_conditions);
-
-        return $query;
-    }
-
-    /**
-     * Coordinates の sex が条件に沿ったものをまとめる
-     *
-     * SQL:
-     *   Coordinates.sex = :c0
-     *   - :c0 0もしくは1
-     *
-     * @param string $sex_criteria 0 または 1
-     *
-     * @return \Cake\ORM\Query $query
-     */
-    private function _createQueryMatchSexCriteria($sex_criteria)
-    {
-        if ((int)$sex_criteria === Item::SEX_MAN) {
-            $criteria_query = $this->Coordinates->find()->newExpr()->eq(
-                'Coordinates.sex',
-                Item::SEX_MAN
-            );
-        } else {
-            $criteria_query = $this->Coordinates->find()->newExpr()->eq(
-                'Coordinates.sex',
-                Item::SEX_WOMAN
-            );
-        }
-        return $criteria_query;
-    }
-
-    /**
-     * Coordinates に関わる Items の合計金額が，
-     * 条件範囲内のものをグループとしてまとめる
-     *
-     * SQL:
-     *   SUM(Items.price) BETWEEN :c0 AND :c1
-     *   - :c0 最小価格
-     *   - :c1 最大価格
-     *
-     * @param string $price_criteria 形式は "最小価格,最大価格"
-     *
-     * @return \Cake\ORM\Query $criteria_query
-     */
-    private function _createQueryMatchPriceCriteria($price_criteria)
-    {
-        $price_scopes = explode(',', $price_criteria);
-        $criteria_query = $this->Coordinates->find()->newExpr()->between(
-            $this->Coordinates->find()->func()->sum('Items.price'),
-            $price_scopes[0],
-            $price_scopes[1]
-        );
-        return $criteria_query;
-    }
-
-    /**
-     * 季節の情報は春夏秋冬を4bitのビット列で保持する
-     * ビットが立っていれば 1，そうでなければ_(任意の一文字)を正規表現に加える
-     *
-     * SQL(夏，秋がチェックされている場合):
-     *   Coordinates.season LIKE :c0
-     *   - :c0 正規表現．例) 春と秋がチェックされている場合は "1_1_%"
-     *
-     * @param string $season_criteria 形式は4bitのビット列  例) "1010"
-     *
-     * @return \Cake\ORM\Query $criteria_query
-     */
-    private function _createQueryMatchSeasonCriteria($season_criteria)
-    {
-        $expression = "";
-        foreach(str_split($season_criteria) as $season_flag){
-            $expression .= $season_flag === "1" ? "1" : "_";
-        }
-        $expression .= '%';
-
-        $criteria_query = $this->Coordinates->find()->newExpr()->like(
-            'Coordinates.season',
-            $expression
-        );
-        return $criteria_query;
     }
 
     public function buy()
@@ -325,7 +191,9 @@ class CoordinatesBattleController extends AppController
                 }
             } catch (\Exception $e) {
                 error_log($e->getMessage(), E_WARNING);
-                echo '{"hasSucceeded": false}';
+                sprintf('{"hasSucceeded": false, "errorMessage":%s}',
+                    $e->getMessage()
+                );
                 exit;
             }
         } else {
@@ -362,7 +230,9 @@ class CoordinatesBattleController extends AppController
                 || $like_coordinate_id === false
             ) {
                 error_log('Illegal value type');
-                echo '{"hasSucceeded": false}';
+                echo sprintf('{"hasSucceeded": false, "errorMessage": "%s"}',
+                    "Received illegal post value."
+                );
                 exit;
             }
 
@@ -372,6 +242,14 @@ class CoordinatesBattleController extends AppController
             $b_side_coordinate = $this->Coordinates->find()->where(
                 ['Coordinates.id' => $b_side_coordinate_id]
             )->first();
+
+            if (is_null($a_side_coordinate) || is_null($b_side_coordinate))
+            {
+                echo sprintf('{"hasSucceeded": false, "errorMessage": "%s"}',
+                    "Selected coordinates are not found. Ignored."
+                );
+                exit;
+            }
 
             // TODO: コーデの得票数が明らかに少ない場合には，無視した方が良い？
             $a_side_point = $a_side_coordinate->n_like;
@@ -384,8 +262,8 @@ class CoordinatesBattleController extends AppController
                 $result = -1;
                 $score = self::SCORE_DRAW;
             } else {
-                $winner = $a_side_point > $b_side_point ? $a_side_coordinate_id
-                    : $b_side_coordinate_id;
+                $winner = $a_side_point > $b_side_point ?
+                    $a_side_coordinate_id : $b_side_coordinate_id;
                 $result = $winner === $like_coordinate_id ? 1 : 0;
                 $score = $result === 1 ? self::SCORE_WIN : self::SCORE_LOOSE;
             }
