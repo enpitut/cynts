@@ -53,7 +53,17 @@ foreach ($coordinates as $coordinate) {
         ]
     );
     echo '</div>';
-
+    echo $this->Html->css('coordinates/view.css');
+    echo $this->Form->button(
+        'コーディネートの詳細',
+        [
+            'class' => 'detail_button',
+            'onClick' => sprintf(
+                'showCoordinateDetail(coordinate_id%d)',
+                $side_id
+            )
+        ]
+        );
     echo '</li>' . PHP_EOL;
 
     $side_id++;

@@ -13,6 +13,7 @@ var usr_score = 0;
 var battle_info = {};
 const MAX_N_BATTLE = 30;
 const NUM_FOR_FAV = 10;
+const COORDINATE_VIEW_ROOT = location.origin + "/coordinates/view"
 
 /**
  * コーデ画像を更新する
@@ -333,4 +334,37 @@ function animateCoordinateImage(coordinate_data, side_id) {
     );
 
     return dfd.promise();
+}
+
+function showCoordinateDetail(coordinate_id) {
+    $("body").append('<div id="modal_overlay"></div>');
+    $("#modal_overlay").fadeIn("slow");
+
+    $("body").append('<div id="modal_detail"><div id="modal_window">' +
+        '<div id="detail"></div>' +
+        '</div></div>');
+
+    $("#detail").load(COORDINATE_VIEW_ROOT + "/" + coordinate_id + " #coordinateDetail", function() {
+        $(document).ready(function() {
+            $(".image").fadeIn(700);
+            $.getScript("../js/coordinates/view.js");
+            $("#detail").prepend('<div id="close_button">×</div>');
+            $("#modal_detail").fadeIn("slow");
+
+
+            $("#modal_overlay, #modal_detail").unbind().click(function() {
+                $("#modal_overlay, #modal_detail").fadeOut("slow", function() {
+                    $("#modal_overlay, #modal_detail").remove();
+                });
+
+            $("#close_button").click(function() {
+                $("#modal_overlay, #modal_detail").fadeOut("slow", function() {
+                    $("#modal_overlay, #modal_detail").remove();
+                });
+            });
+        })
+    });
+
+    });
+
 }
