@@ -1,0 +1,22 @@
+select {
+    width: 100px;
+    height: 33px;
+    text-align: -webkit-center;
+    background: #eaeaea url('../../img/view/select_arrow.jpg') no-repeat right;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    border: 0;
+    margin: 0;
+    padding: 0 33px 0 0;
+    vertical-align: middle;
+    font-size: inherit;
+    color: #000;
+    box-sizing: content-box;
+}
+
+.search_area {
+    font-size: small;
+    margin: auto;
+}
