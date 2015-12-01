@@ -18,7 +18,7 @@
                 ); ?>
             </h3>
             <div class="coordinate_level">
-                コーディネートレベル : <?= $user->getCoordinateLevel() ?>
+                おしゃれレベル : <?= $user->getCoordinateLevel() ?>
             </div>
         </div>
     </div>
