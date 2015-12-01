@@ -102,23 +102,22 @@
                     data-item-name="<?= $item->name ?>"
                     type="button"
                     >
-                        Pick
-                    </button>
+                    Pick
+                </button>
+            </div>
+            <div class="info">
+                <div class="name">
+                    <?= $item->name ?>
                 </div>
-                <div class="info">
-                    <div class="name">
-                        <?= $item->name ?>
-                    </div>
-                    <div class="price">
-                        ¥<?= $item->price ?>
-                    </div>
+                <div class="price">
+                    ¥<?= $item->price ?>
                 </div>
             </div>
+        </div>
 
-            <?php if (++$loop % 3 === 0): ?>
-                </div>
-                <div class="clear"></div>
-            <?php endif; ?>
+        <?php if (++$loop % 3 === 0): ?>
+            </div>
+            <div class="clear"></div>
         <?php endif; ?>
     <?php endforeach; ?>
     <?php if ($loop % 3 !== 0) { ?>
@@ -134,16 +133,16 @@
         選択済みのアイテム<span class="sum_price"></span>
     </div>
     <div style="position: relative; float: right;">
-    <?= $this->Html->link(
-        '>> コーディネートを作成',
-        [
-            'controller' => 'Coordinates',
-            'action' => 'post',
-        ],
-        [
-            'class' => 'link_to_post',
-        ]
-    ) ?>
+        <?= $this->Html->link(
+            '>> コーディネートを作成',
+            [
+                'controller' => 'Coordinates',
+                'action' => 'post',
+            ],
+            [
+                'class' => 'link_to_post',
+            ]
+        ) ?>
     </div>
     <div style="clear: both;"></div>
     <div class="picked_items"></div>
