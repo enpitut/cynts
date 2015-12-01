@@ -340,29 +340,27 @@ function showCoordinateDetail(coordinate_id) {
     $("body").append('<div id="modal_overlay"></div>');
     $("#modal_overlay").fadeIn("slow");
 
-    $("body").append('<div id="modal_detail"><div id="modal_window">' +
-        '<div id="detail"></div>' +
-        '</div></div>');
+    $("body").append('<div id="modal_window"></div>');
 
-    $("#detail").load(COORDINATE_VIEW_ROOT + "/" + coordinate_id + " #coordinateDetail", function() {
+    $("#modal_window").load(COORDINATE_VIEW_ROOT + "/" + coordinate_id + " #coordinateDetail", function() {
         $(document).ready(function() {
             $(".image").fadeIn(700);
             $.getScript("../js/coordinates/view.js");
-            $("#detail").prepend('<div id="close_button">×</div>');
-            $("#modal_detail").fadeIn("slow");
+            $("#modal_window").prepend('<div id="window_header">' +
+                '<div id="window_title">コーディネートの詳細</div><div id="close_button">×</div></div>');
+            $("#modal_window").fadeIn("slow");
 
-
-            $("#modal_overlay, #modal_detail").unbind().click(function() {
-                $("#modal_overlay, #modal_detail").fadeOut("slow", function() {
-                    $("#modal_overlay, #modal_detail").remove();
-                });
-
-            $("#close_button").click(function() {
-                $("#modal_overlay, #modal_detail").fadeOut("slow", function() {
-                    $("#modal_overlay, #modal_detail").remove();
-                });
+            $("#modal_overlay").unbind().click(function() {
+                $("#modal_overlay, #modal_window").fadeOut("slow", function() {
+                    $("#modal_overlay, #modal_window").remove();
+                })
             });
-        })
+
+            $("#close_button").unbind().click(function() {
+                $("#modal_overlay, #modal_window").fadeOut("slow", function() {
+                    $("#modal_overlay, #modal_window").remove();
+                })
+            });
     });
 
     });
