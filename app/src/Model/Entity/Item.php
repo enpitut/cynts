@@ -12,6 +12,7 @@ class Item extends Entity
 
     const SEX_MAN = 0;
     const SEX_WOMAN = 1;
+    const SEX_UNISEX = 2;  // Union of man and woman
 
     const COLOR_WHITE = 1;
     const COLOR_BLACK = 2;
@@ -74,6 +75,8 @@ class Item extends Entity
     }
 
     /**
+     * 定数としては Item::SEX_UNISEX も存在するが，このリストは検索条件であるため，ここには含めない
+     *
      * @return array
      */
     public static function getSexes()

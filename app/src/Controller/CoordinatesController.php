@@ -236,7 +236,7 @@ class CoordinatesController extends AppController
         $criteria = [];
         if (!empty($request_data['sex'])) {
             if (array_key_exists($request_data['sex'], Item::getSexes())) {
-                $criteria['sex'] = (int)$request_data['sex'];
+                $criteria['sex in'] = [(int)$request_data['sex'], Item::SEX_UNISEX];
             }
         }
 

@@ -104,8 +104,13 @@
 .link_to_post {
     float: right;
     margin: 0 10px 0 0;
-    font-size: 20px;
+    font-size: 18px;
     color: darkorange;
+}
+
+.sum_price {
+    margin-left: 20px;
+    color: yellow;
 }
 
 .disabled {

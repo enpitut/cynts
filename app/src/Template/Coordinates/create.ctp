@@ -100,24 +100,26 @@
                     data-item-photo-path="<?= $item->photo_paths[0] ?>"
                     data-item-price="<?= $item->price ?>"
                     data-item-name="<?= $item->name ?>"
+                    type="button"
                     >
-                    Pick
-                </button>
-            </div>
-            <div class="info">
-                <div class="name">
-                    <?= $item->name ?>
+                        Pick
+                    </button>
                 </div>
-                <div class="price">
-                    ¥<?= $item->price ?>
+                <div class="info">
+                    <div class="name">
+                        <?= $item->name ?>
+                    </div>
+                    <div class="price">
+                        ¥<?= $item->price ?>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <?php if (++$loop % 3 === 0) { ?>
-            </div>
-            <div class="clear"></div>
-        <?php } ?>
+            <?php if (++$loop % 3 === 0): ?>
+                </div>
+                <div class="clear"></div>
+            <?php endif; ?>
+        <?php endif; ?>
     <?php endforeach; ?>
     <?php if ($loop % 3 !== 0) { ?>
 </div>
@@ -128,7 +130,9 @@
 </div>
 
 <div class="picked_items_area">
-    <div class="picked_items_message">選択済みのアイテム</div>
+    <div class="picked_items_message">
+        選択済みのアイテム<span class="sum_price"></span>
+    </div>
     <div style="position: relative; float: right;">
     <?= $this->Html->link(
         '>> コーディネートを作成',
