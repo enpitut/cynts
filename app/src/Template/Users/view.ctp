@@ -9,9 +9,9 @@
 <?= $this->element('eachpage_header') ?>
 
 <div id="body">
-    <div id="side_contents">
-        <div class="side_contents">
-            <h1>Profile</h1>
+    <div id="left_contents">
+        <div class="left_contents">
+            <h1>プロフィール</h1>
 
             <div id="profile">
                 <table>
@@ -24,8 +24,8 @@
             </div>
         </div>
     </div>
-    <div id="main_contents">
-        <h3>Coordinates</h3>
+    <div id="center_contents">
+        <h1>投稿コーディネート</h1>
         <?php if (!empty($user->coordinates)): ?>
             <table cellpadding="0" cellspacing="0" id="related_coordinates">
                 <?php
@@ -81,7 +81,41 @@
             <?php endif; ?>
         <?php endif; ?>
     </div>
+    <div id="right_contents">
+        <h1>お気に入りコーディネート</h1>
+        <?php if (!empty($user->favorites)): ?>
+            <table cellpadding="0" cellspacing="0" id="favoriteCordinates">
+                <?php
+                $count = 0;
+                $limit = count($favorite->toArray());
+                foreach($favorite as $id => $fav) {
+                    $fav_array[] =
+                        $this->Html->image($fav->coordinate->photo_path,
+                        [
+                            'class' => 'favoritelist_photo',
+                            'url' => [
+                                'controller' => 'Coordinates',
+                                'action' => 'view',
+                                $fav->coordinate_id,
+                            ],
+                        ]
+                    );
+                    $count++;
+                    if($count % 3 == 0 || $count == $limit){
+                        echo $this->Html->tableCells(
+                            [
+                                $fav_array
+                            ]
+                        );
+                    $fav_array = [];
+                    }
+                }
+                ?>
+            </table>
+        <?php else: ?>
+            お気に入りコーデがまだありません
+        <?php endif;?>
+    </div>
 </div>
-
 </body>
 </html>

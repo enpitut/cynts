@@ -30,6 +30,12 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => ['Coordinates', 'Favorites']
         ]);
+        $favorite = $this->Users->favorites->find()->where(
+            [
+                'Favorites.user_id' => $id
+            ]
+        )->contain(['Coordinates']);
+        $this->set('favorite', $favorite);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
 

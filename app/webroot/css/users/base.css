@@ -3,46 +3,64 @@
     margin: 0 auto;
 }
 
-.side_contents{
+.left_contents{
     float:left;
     clear: right;
     left: 0;
-    width: 180px;
-    margin: 10px auto;
+    width: 120px;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
 }
-.side_contents h1{
+.left_contents h1{
     text-align: center;
-    color: white;
-    font-size: small;
+    color: orange;
+    font-size: 15px;
     border-bottom: 1px solid white;
 }
 
 #profile table{
     margin: 0 auto;
     text-align: center;
-    font-size: small;
+    font-size: medium;
 }
 #profile img{
     width:100px;
     height:100px;
 }
 
-#main_contents {
+#center_contents {
     float:left;
-    margin-left: 60px;
-    width: 570px;
+    margin-left: 20px;
+    width: 310px;
     text-align: center;
+    font-size: 14px;
 }
-#main_contents h3 {
+#center_contents h1 {
     text-align: center;
     border-bottom: 1px solid white;
+    font-size:15px;
+}
+
+#right_contents {
+    float:left;
+    margin-left: 20px;
+    width: 310px;
+    text-align: center;
+    font-size: 14px;
+}
+#right_contents h1 {
+    text-align: center;
+    border-bottom: 1px solid white;
+    font-size:15px;
 }
 
 .list_photo {
-    width: 150px;
+    width: 80px;
+    margin: 10px;
+}
+.favoritelist_photo {
+    width: 80px;
     margin: 10px;
 }
 
