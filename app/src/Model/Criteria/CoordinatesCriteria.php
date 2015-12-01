@@ -34,7 +34,12 @@ class CoordinatesCriteria {
          *   GROUP BY coordinate_id
          *   HAVING ( hoge AND fuga AND ...) // hoge や fuga を以下で追記し，絞り込んでいく
          */
-        $query = TableRegistry::get('Coordinates')->find()
+        $query = TableRegistry::get('Coordinates')->find(
+            'all',
+            [
+                'contain' => ['Users', 'Favorites', 'Items']
+            ]
+        )
             ->innerJoin(
                 'coordinates_items',
                 'coordinates.id = coordinates_items.coordinate_id'
