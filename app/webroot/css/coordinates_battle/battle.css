@@ -134,8 +134,18 @@ select {
 
 .result_score {
     font-size: xx-large;
+    color: orange;
     padding: 0;
     margin: 0;
+}
+
+.level {
+    font-size: x-large;
+    color: cornflowerblue;
+}
+
+.info {
+    font-size: smaller;
 }
 
 .max_score {

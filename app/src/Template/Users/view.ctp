@@ -11,21 +11,19 @@
 <div id="body">
     <div id="side_contents">
         <div class="side_contents">
-            <h1>Profile</h1>
-
-            <div id="profile">
-                <table>
-                    <?= $this->Html->tableCells(
-                        [
-                            [h($user->name)]
-                        ]
-                    ); ?>
-                </table>
+            <h3><?= $this->Html->tableCells(
+                    [
+                        [$user->name]
+                    ]
+                ); ?>
+            </h3>
+            <div class="coordinate_level">
+                おしゃれレベル : <?= $user->getCoordinateLevel() ?>
             </div>
         </div>
     </div>
     <div id="main_contents">
-        <h3>Coordinates</h3>
+        <h3>コーディネート</h3>
         <?php if (!empty($user->coordinates)): ?>
             <table cellpadding="0" cellspacing="0" id="related_coordinates">
                 <?php
