@@ -2,7 +2,7 @@
 <html>
 <head>
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('battle.css') ?>
+    <?= $this->Html->css('coordinates_battle/battle.css') ?>
 </head>
 <body>
 

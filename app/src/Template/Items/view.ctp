@@ -34,7 +34,7 @@
             <h6 class="subheader"><?= __('Price') ?></h6>
             <p><?= $this->Number->format($item->price) ?></p>
             <h6 class="subheader"><?= __('Sex') ?></h6>
-            <p><?= $this->Number->format($item->sex) ?></p>
+            <p><?= h($sex_list[$item->sex]) ?></p>
             <h6 class="subheader"><?= __('Status') ?></h6>
             <p><?= $this->Number->format($item->status) ?></p>
         </div>

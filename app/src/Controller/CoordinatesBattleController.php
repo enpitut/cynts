@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Model\Entity\User;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
+use App\Model\Entity\Item;
+use App\Model\Criteria;
 
 /**
  * Class CoordinatesBattleController
@@ -52,6 +54,7 @@ class CoordinatesBattleController extends AppController
                 ]
             );
         }
+        $this->set('sex_list', Item::getSexes());
         $this->set(compact('coordinates'));
     }
 
@@ -63,61 +66,100 @@ class CoordinatesBattleController extends AppController
     public function getNewCoordinate()
     {
         if ($this->request->is('post')) {
-            $like_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
-            $dislike_coordinate_id = filter_input(INPUT_POST, 'disliked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
-            if ($like_coordinate_id === NULL || $like_coordinate_id === false
-                || $dislike_coordinate_id === NULL || $dislike_coordinate_id === false
+            $like_coordinate_id = filter_input(
+                INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT
+            );
+            $dislike_coordinate_id = filter_input(
+                INPUT_POST, 'disliked_coordinate_id', FILTER_SANITIZE_NUMBER_INT
+            );
+            if ($like_coordinate_id === null || $like_coordinate_id === false
+                || $dislike_coordinate_id === null || $dislike_coordinate_id === false
             ) {
                 error_log('Illegal value type');
-                echo '{"hasSucceeded": false}';
+                echo sprintf(
+                    '{"hasSucceeded":false, "errorMessage":"%s"}',
+                    "POSTメソッドで送信された値が不正でした．" .
+                    "ページをリロードするか，ヘッダーの「Unichronicle」からTOPページへ" .
+                    "戻り，Play しなおしてください(これまでのバトル経過は破棄されます)．"
+                );
                 exit;
             }
+            $criteria_json_string = $this->request->data('coordinate_criteria');
 
-            $like_coordinate = $this->Coordinates->get($like_coordinate_id);
-            $like_coordinate->n_like = $like_coordinate->n_like + 1;
-            $this->Coordinates->save($like_coordinate);
+            try {
+                $this->_incrementCoordinatesPoint('n_like', $like_coordinate_id);
+                $this->_incrementCoordinatesPoint('n_unlike', $dislike_coordinate_id);
+            } catch(\Exception $e) {
+                error_log($e->getMessage());
+                exit();
+            }
 
-            $dislike_coordinate = $this->Coordinates->get($dislike_coordinate_id);
-            $dislike_coordinate->n_unlike = $dislike_coordinate->n_unlike + 1;
-            $this->Coordinates->save($dislike_coordinate);
-
-            $duplicated_flg = false;
             $n_loop = 0;
+            $err_message = sprintf(
+                '{"hasSucceeded":false, "errorMessage":"%s"}',
+                "条件に一致するコーデが存在しません"
+            );
             while (true) {
-                $coordinates = $this->Coordinates->find(
-                    'all',
-                    [
-                        'order' => 'rand()',
-                        'limit' => 1
-                    ]
-                );
+                // 条件にあったコーデ群を取得する
+                // 検索条件毎に一意の文字列(JSON文字列に対してSHA-1を使用する)を生成し，
+                // それをキーとしてキャッシュする
+                $filtered_coordinates = Criteria\CoordinatesCriteria::createQueryFromJson(
+                    $criteria_json_string
+                )->cache('filtered_coordinates_' . sha1($criteria_json_string));
+                $coordinate = $filtered_coordinates->all()->shuffle()->first();
 
-                foreach ($coordinates as $coordinate) {
-                    if ($like_coordinate_id == $coordinate->id ||
-                        $dislike_coordinate_id == $coordinate->id
-                    ) {
-                        continue;
+                if ($coordinate === null) {
+                    echo $err_message;
+                    break;
+                }
+
+                if ($like_coordinate_id == $coordinate->id ||
+                    $dislike_coordinate_id == $coordinate->id
+                ) {
+                    // セーフティブレーク
+                    if (++$n_loop > 20) {
+                        // 条件に一致するコーデは存在しているが，現在表示されているコーデと重複している
+                        // (1~2着しか条件に一致するコーデがない)
+                        echo $err_message;
+                        break;
                     }
+                    continue;
+                } else {
                     echo sprintf(
                         '{"id":%d, "url":"%s", "hasSucceeded":true}',
                         $coordinate->id,
                         $coordinate->photo_path
                     );
-                    $duplicated_flg = true;
-                }
-
-                if ($duplicated_flg) {
-                    break;
-                }
-
-                // セーフティブレーク
-                if (++$n_loop > 20) {
                     break;
                 }
             }
         } else {
             return $this->redirect(['action' => 'battle']);
         }
+    }
+
+    /**
+     * コーディネートのポイント(n_like, n_unlike)の値をインクリメントする
+     * 指定された ID のコーディネートが見つからなかった場合は，何もしない
+     *
+     * @param $element
+     * @param $id
+     *
+     * @throws \Exception
+     */
+    private function _incrementCoordinatesPoint($element, $id)
+    {
+        if ($element !== 'n_like' && $element !== 'n_unlike') {
+            throw new \Exception(
+                'Invalid element is given. \'n_like\' or \'n_unlike\' is only allowed.'
+            );
+        }
+        $coordinate = $this->Coordinates->find()->where(
+            ['Coordinates.id' => $id]
+        )->first();
+        if (is_null($coordinate)) { return; }
+        $coordinate->$element = $coordinate->$element + 1;
+        $this->Coordinates->save($coordinate);
     }
 
     public function buy()
@@ -150,7 +192,9 @@ class CoordinatesBattleController extends AppController
                 }
             } catch (\Exception $e) {
                 error_log($e->getMessage(), E_WARNING);
-                echo '{"hasSucceeded": false}';
+                sprintf('{"hasSucceeded": false, "errorMessage":%s}',
+                    $e->getMessage()
+                );
                 exit;
             }
         } else {
@@ -170,28 +214,43 @@ class CoordinatesBattleController extends AppController
     public function getScore()
     {
         if ($this->request->is('post')) {
-            $a_side_coordinate_id = filter_input(INPUT_POST, 'a_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
-            $b_side_coordinate_id = filter_input(INPUT_POST, 'b_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
-            $like_coordinate_id = filter_input(INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT);
-            if ($a_side_coordinate_id === NULL || $a_side_coordinate_id === false
-                || $b_side_coordinate_id === NULL || $b_side_coordinate_id === false
-                || $like_coordinate_id === NULL || $like_coordinate_id === false
+            $a_side_coordinate_id = filter_input(
+                INPUT_POST, 'a_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT
+            );
+            $b_side_coordinate_id = filter_input(
+                INPUT_POST, 'b_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT
+            );
+            $like_coordinate_id = filter_input(
+                INPUT_POST, 'liked_coordinate_id', FILTER_SANITIZE_NUMBER_INT
+            );
+            if (is_null($a_side_coordinate_id)
+                || $a_side_coordinate_id === false
+                || is_null($b_side_coordinate_id)
+                || $b_side_coordinate_id === false
+                || is_null($like_coordinate_id)
+                || $like_coordinate_id === false
             ) {
                 error_log('Illegal value type');
-                echo '{"hasSucceeded": false}';
+                echo sprintf('{"hasSucceeded": false, "errorMessage": "%s"}',
+                    "Received illegal post value."
+                );
                 exit;
             }
 
             $a_side_coordinate = $this->Coordinates->find()->where(
-                [
-                    'Coordinates.id' => $a_side_coordinate_id,
-                ]
+                ['Coordinates.id' => $a_side_coordinate_id]
             )->first();
             $b_side_coordinate = $this->Coordinates->find()->where(
-                [
-                    'Coordinates.id' => $b_side_coordinate_id,
-                ]
+                ['Coordinates.id' => $b_side_coordinate_id]
             )->first();
+
+            if (is_null($a_side_coordinate) || is_null($b_side_coordinate))
+            {
+                echo sprintf('{"hasSucceeded": false, "errorMessage": "%s"}',
+                    "Selected coordinates are not found. Ignored."
+                );
+                exit;
+            }
 
             // TODO: コーデの得票数が明らかに少ない場合には，無視した方が良い？
             $a_side_point = $a_side_coordinate->n_like;
@@ -204,7 +263,8 @@ class CoordinatesBattleController extends AppController
                 $result = -1;
                 $score = self::SCORE_DRAW;
             } else {
-                $winner = $a_side_point > $b_side_point ? $a_side_coordinate_id : $b_side_coordinate_id;
+                $winner = $a_side_point > $b_side_point ?
+                    $a_side_coordinate_id : $b_side_coordinate_id;
                 $result = $winner === $like_coordinate_id ? 1 : 0;
                 $score = $result === 1 ? self::SCORE_WIN : self::SCORE_LOOSE;
             }
