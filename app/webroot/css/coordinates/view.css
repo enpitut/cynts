@@ -133,12 +133,6 @@ button.favoriteButton {
     text-align: left;
 }
 
-#coordinatePrice {
-    float: left;
-    display: inline-block;
-    margin-left: 0px;
-}
-
 .image {
     display: none;
 }

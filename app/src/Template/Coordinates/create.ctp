@@ -84,41 +84,43 @@
             <div class="row">
         <?php } ?>
 
-        <div class="span3">
-            <div class="photo">
-                <?= $this->Html->image(
-                    $item->photo_paths[0],
-                    [
-                        'class' => 'item_image',
-                        'width' => '280px',
-                    ]
-                )
-                ?>
-                <button
-                    class="pick_button"
-                    data-item-id="<?= $item->id ?>"
-                    data-item-photo-path="<?= $item->photo_paths[0] ?>"
-                    data-item-price="<?= $item->price ?>"
-                    data-item-name="<?= $item->name ?>"
-                    type="button"
+        <?php if (isset($item->photo_paths[0])): ?>
+            <div class="span3">
+                <div class="photo">
+                    <?= $this->Html->image(
+                        $item->photo_paths[0],
+                        [
+                            'class' => 'item_image',
+                            'width' => '280px',
+                        ]
+                    )
+                    ?>
+                    <button
+                        class="pick_button"
+                        data-item-id="<?= $item->id ?>"
+                        data-item-photo-path="<?= $item->photo_paths[0] ?>"
+                        data-item-price="<?= $item->price ?>"
+                        data-item-name="<?= $item->name ?>"
+                        type="button"
                     >
-                    Pick
-                </button>
-            </div>
-            <div class="info">
-                <div class="name">
-                    <?= $item->name ?>
+                        Pick
+                    </button>
                 </div>
-                <div class="price">
-                    ¥<?= $item->price ?>
+                <div class="info">
+                    <div class="name">
+                        <?= $item->name ?>
+                    </div>
+                    <div class="price">
+                        ¥<?= $item->price ?>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <?php if (++$loop % 3 === 0): ?>
-            </div>
-            <div class="clear"></div>
-        <?php endif; ?>
+            <?php if (++$loop % 3 === 0): ?>
+                </div>
+                <div class="clear"></div>
+            <?php endif; ?>
+        <?php endif ?>
     <?php endforeach; ?>
     <?php if ($loop % 3 !== 0) { ?>
 </div>
