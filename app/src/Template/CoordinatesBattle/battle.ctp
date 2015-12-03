@@ -3,6 +3,7 @@
 <head>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.1.0/velocity.js"></script>
+<?= $this->Html->script('jquery.session.js') ?>
 <?= $this->Html->script('battle.js') ?>
 <?= $this->Html->css('base.css') ?>
 <?= $this->Html->css('coordinates_battle/battle.css') ?>
