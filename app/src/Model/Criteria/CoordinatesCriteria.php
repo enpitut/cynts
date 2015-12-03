@@ -113,7 +113,7 @@ class CoordinatesCriteria {
     {
         $price_scopes = explode(',', $price_criteria);
         $criteria_query = TableRegistry::get('Coordinates')->find()->newExpr()->between(
-            TableRegistry::get('Coordinates')->find()->func()->sum('Items.price'),
+            TableRegistry::get('Coordinates')->find()->func()->sum('items.price'),
             $price_scopes[0],
             $price_scopes[1]
         );
