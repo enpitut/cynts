@@ -267,6 +267,11 @@ function setBattleFilter() {
         ($("[name=summer]").prop("checked") ? "1" : "0") +
         ($("[name=autumn]").prop("checked") ? "1" : "0") +
         ($("[name=winter]").prop("checked") ? "1" : "0");
+    if (season_binary_string === "0000") {
+        delete battle_filter["season"];
+    } else {
+        battle_filter["season"] = season_binary_string;
+    }
 
     battle_filter["season"] = season_binary_string;
     for(var i=0,l=select_forms.length; l>i; i++)
