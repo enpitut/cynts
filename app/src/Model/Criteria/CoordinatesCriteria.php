@@ -37,7 +37,7 @@ class CoordinatesCriteria {
         $query = TableRegistry::get('Coordinates')->find()
             ->innerJoin(
                 'coordinates_items',
-                'coordinates.id = coordinates_items.coordinate_id'
+                'Coordinates.id = coordinates_items.coordinate_id'
             )
             ->innerJoin('items', 'coordinates_items.item_id = items.id')
             ->group(['coordinate_id']);
