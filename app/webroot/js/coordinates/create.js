@@ -89,12 +89,32 @@ $(document).ready(function () {
         if (Object.keys(items).length == 0) {
             $('.link_to_post').addClass('disabled');
         }
+
+        drawSumPrice();
+    }
+
+    function drawSumPrice() {
+        var storage = localStorage;
+        var items = JSON.parse(storage.getItem(STORAGE_KEY));
+
+        // TODO : 真面目にバリデーションする
+        if (items == null) {
+            items = {};
+        }
+        var sumPrice = 0;
+        for (var key in items) {
+            sumPrice += items[key]['price'];
+        }
+        $('.sum_price').html(
+            "¥" + sumPrice
+        );
     }
 
     $(document).on('click', '.delete_picked_button', function () {
         var itemId = $(this).data('item-id');
         deleteItemIdFromSessionStorage(itemId);
         $('.picked_items [data-item-id=' + itemId + ']').fadeOut('fast');
+        drawSumPrice();
     });
 
     $('.pick_button').click(function () {
@@ -105,6 +125,7 @@ $(document).ready(function () {
         var result = addItemIdToSessionStorage(itemId, photoPath, price, name);
         if (result) {
             drawItemInPickedItemsArea(itemId, photoPath, price);
+            drawSumPrice();
         }
         var linkToPost = $('.link_to_post');
         if (linkToPost.hasClass('disabled')) {

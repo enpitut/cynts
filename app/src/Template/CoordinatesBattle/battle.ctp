@@ -5,11 +5,83 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.1.0/velocity.js"></script>
 <?= $this->Html->script('battle.js') ?>
 <?= $this->Html->css('base.css') ?>
-<?= $this->Html->css('battle.css') ?>
+<?= $this->Html->css('coordinates_battle/battle.css') ?>
 </head>
 <body>
 
 <?= $this->element('eachpage_header') ?>
+
+<table class="search_area">
+    <?= $this->Form->create(null, ['name' => 'criteria_form']) ?>
+    <tr>
+        <td class="search_label">性別</td>
+        <td class="search_value" id="sex">
+            <?= $this->Form->input(
+                'sex',
+                [
+                    'label' => '',
+                    'options' => $sex_list,
+                    'empty' => '指定なし',
+                    'class' => 'criteria_value',
+                    'onChange' => 'setBattleFilter();'
+                ]
+            ); ?>
+        </td>
+    </tr>
+    <tr>
+        <td class="search_label">価格帯</td>
+        <td class="search_value" id="price">
+            <?= $this->Form->input(
+                'price',
+                [
+                    'label' => '',
+                    'options' => [
+                        '0,1000' => '¥0 - ¥1000',
+                        '1001,3000' => '¥1001 - ¥3000',
+                        '3001,5000' => '¥3001 - ¥5000',
+                        '5001,10000' => '¥5001 - ¥10000',
+                        '10001,15000' => '¥10001 - ¥15000',
+                        '15001,20000' => '¥15001 - ¥20000',
+                    ],
+                    'empty' => '指定なし',
+                    'class' => 'criteria_value',
+                    'onChange' => 'setBattleFilter();'
+                ]
+            ); ?>
+        </td>
+    </tr>
+    <tr>
+        <td class="search_label">季節</td>
+        <td>
+            <?php
+            echo "春" . $this->Form->checkbox(
+                    'spring', [
+                    'hiddenField' => false,
+                    'value' => 'spring',
+                    'onChange' => 'setBattleFilter();'
+                ]);
+            echo "夏" . $this->Form->checkbox(
+                    'summer', [
+                    'hiddenField' => false,
+                    'value' => 'summer',
+                    'onChange' => 'setBattleFilter();'
+                ]);
+            echo "秋" . $this->Form->checkbox(
+                    'autumn', [
+                    'hiddenField' => false,
+                    'value' => 'autumn',
+                    'onChange' => 'setBattleFilter();'
+                ]);
+            echo "冬" . $this->Form->checkbox(
+                    'winter', [
+                    'hiddenField' => false,
+                    'value' => 'winter',
+                    'onChange' => 'setBattleFilter();'
+                ]);
+            ?>
+        </td>
+    </tr>
+</table>
 
 <div id="centermessage">
   <p>どっちが好き？</p>

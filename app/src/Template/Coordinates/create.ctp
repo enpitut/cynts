@@ -115,10 +115,10 @@
             </div>
         </div>
 
-        <?php if (++$loop % 3 === 0) { ?>
+        <?php if (++$loop % 3 === 0): ?>
             </div>
             <div class="clear"></div>
-        <?php } ?>
+        <?php endif; ?>
     <?php endforeach; ?>
     <?php if ($loop % 3 !== 0) { ?>
 </div>
@@ -129,7 +129,9 @@
 </div>
 
 <div class="picked_items_area">
-    <div class="picked_items_message">選択済みのアイテム</div>
+    <div class="picked_items_message">
+        選択済みのアイテム<span class="sum_price"></span>
+    </div>
     <div style="position: relative; float: right;">
     <?= $this->Html->link(
         '>> コーディネートを作成',

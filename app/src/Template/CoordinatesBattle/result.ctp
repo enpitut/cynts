@@ -2,7 +2,7 @@
 <html>
 <head>
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('battle.css') ?>
+    <?= $this->Html->css('coordinates_battle/battle.css') ?>
 </head>
 <body>
 
@@ -13,9 +13,13 @@
 <div id="centerposition">
     <p>あなたのおしゃれ度は...</p>
     <?php
-    echo "<p class='result_score'>" . $score . '</p>' .
-        "<p class='max_score'>/" . $max_n_battle * $score_win . "</p>";
+    echo "<p><span class='result_score'>" . floor((100 * $score) / ($max_n_battle * $score_win)) . "</span><span class='max_score'> / 100</span></p>";
     ?>
+    <?= "<p>おしゃれレベル : <span class='level'>$current_level</span></p>" ?>
+    <?= "<p class='info'>次のレベルまで $point_to_next_level pt</p>" ?>
+    <?php if ($previous_level !== $current_level): ?>
+        <p class='info'>おしゃれレベルが上がりました!</p>
+    <?php endif ?>
 </div>
 
 <ul class="battle_result">
