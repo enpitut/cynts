@@ -172,7 +172,7 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
             var new_coordinate = JSON.parse(coordinate_data);
             if (!new_coordinate["hasSucceeded"]) {
                 alert(new_coordinate["errorMessage"]);
-                $.Deferred().reject('Fil to get new coordinate');
+                $.Deferred().reject('Fail to get new coordinate');
                 throw new Error('Fail to get new coordinate');
             }
             // 取得したコーデを次の then ブロックに渡す
