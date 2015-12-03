@@ -272,8 +272,7 @@ function setBattleFilter() {
     } else {
         battle_filter["season"] = season_binary_string;
     }
-
-    battle_filter["season"] = season_binary_string;
+    
     for(var i=0,l=select_forms.length; l>i; i++)
     {
         var index = select_forms[i].selectedIndex;
