@@ -17,6 +17,8 @@ use Cake\Validation\Validator;
 class CoordinatesTable extends Table
 {
 
+    const COORDINATES_CACHE_PREFIX = 'filtered_coordinates_';
+
     /**
      * Initialize method
      *

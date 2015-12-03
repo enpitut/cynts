@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Model\Entity\Coordinate;
 use App\Model\Entity\Item;
+use App\Model\Table\CoordinatesTable;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use App\Model\Criteria;
@@ -89,7 +90,7 @@ class RankingsController extends AppController
             // それをキーとしてキャッシュする
             $filtered_coordinates = Criteria\CoordinatesCriteria::createQueryFromJson(
                 $criteria_json_string
-            )->cache('filtered_coordinates_' . sha1($criteria_json_string));
+            )->cache(CoordinatesTable::COORDINATES_CACHE_PREFIX . sha1($criteria_json_string));
             $coordinates = $filtered_coordinates
                 ->limit(self::RANKING_SHOW_LIMIT)
                 ->all()

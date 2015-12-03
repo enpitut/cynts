@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\User;
+use App\Model\Table\CoordinatesTable;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 use App\Model\Entity\Item;
@@ -105,7 +106,7 @@ class CoordinatesBattleController extends AppController
                 // それをキーとしてキャッシュする
                 $filtered_coordinates = Criteria\CoordinatesCriteria::createQueryFromJson(
                     $criteria_json_string
-                )->cache('filtered_coordinates_' . sha1($criteria_json_string));
+                )->cache(CoordinatesTable::COORDINATES_CACHE_PREFIX . sha1($criteria_json_string));
                 $coordinate = $filtered_coordinates->all()->shuffle()->first();
 
                 if ($coordinate === null) {
