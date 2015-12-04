@@ -42,7 +42,7 @@ class CoordinatesCriteria {
         )
             ->innerJoin(
                 'coordinates_items',
-                'coordinates.id = coordinates_items.coordinate_id'
+                'Coordinates.id = coordinates_items.coordinate_id'
             )
             ->innerJoin('items', 'coordinates_items.item_id = items.id')
             ->group(['coordinate_id']);
@@ -118,7 +118,7 @@ class CoordinatesCriteria {
     {
         $price_scopes = explode(',', $price_criteria);
         $criteria_query = TableRegistry::get('Coordinates')->find()->newExpr()->between(
-            TableRegistry::get('Coordinates')->find()->func()->sum('Items.price'),
+            TableRegistry::get('Coordinates')->find()->func()->sum('items.price'),
             $price_scopes[0],
             $price_scopes[1]
         );
