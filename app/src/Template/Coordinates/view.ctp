@@ -44,7 +44,13 @@
         <div class="coordinateButtons">
             <?php
             echo $this->Form->create();
-            echo $this->Form->button('お気に入り', ['class' => 'favoriteButton']);
+            echo $this->Form->button('お気に入り',[
+                'class' => 'favoriteButton',
+                'onclick' => 'addFavorite('.$coordinate->id.')',
+                'disabled' => $coordinate->favorite_disabled,
+                'type' => 'button'
+            ]);
+            echo $this->Form->end();
             if (
                 isset($coordinate->user->id)
                 && $this->request->session()->read('Auth.User.id') === $coordinate->user_id

@@ -60,6 +60,18 @@ class CoordinatesController extends AppController
             }
         }
 
+        $access_user_id = $this->request->session()->read('Auth.User.id');
+        $isRegistered = false;
+        $coordinate->favorite_disabled = true;
+        foreach ($coordinate->favorites as $favorite) {
+            if($favorite->user_id === $access_user_id) {
+                $isRegistered = true;
+                break;
+            }
+        }
+        $coordinate->favorite_disabled = $isRegistered ||
+            is_null($access_user_id);
+
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
@@ -275,6 +287,33 @@ class CoordinatesController extends AppController
             ->where($criteria)
             ->limit(self::N_ITEM_LIST_SHOW);
         return $items;
+    }
+
+
+    /**
+     * Ajax用関数
+     * お気に入りに入れたいコーディネートの ID を受け取り，
+     * お気に入りに追加する処理を行う
+     *
+     * @throws \Exception
+     */
+    public function ajaxPostFavorite()
+    {
+        $this->autoRender = false;
+        if ($this->request->is('post')) {
+            $favorite_id = $this->request->data('coordinate_id');
+            $user_id = $this->request->session()->read('Auth.User.id');
+            $result = null;
+            try {
+                $result = $this->postFavorite($user_id, $favorite_id);
+            } catch (\Exception $e) {
+                trigger_error($e->getMessage(), E_USER_WARNING);
+                echo '{"hasSucceeded": false}';
+                exit;
+            }
+        }
+        echo '{"hasSucceeded": true, "id": ' . $result . '}';
+        exit;
     }
 
     /**

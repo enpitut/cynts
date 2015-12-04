@@ -273,7 +273,7 @@ function setBattleFilter() {
     } else {
         battle_filter["season"] = season_binary_string;
     }
-    
+
     for(var i=0,l=select_forms.length; l>i; i++)
     {
         var index = select_forms[i].selectedIndex;
@@ -376,10 +376,8 @@ function animateCoordinateImage(coordinate_data, side_id) {
 }
 
 function showCoordinateDetail(coordinate_id) {
-    $("body").append('<div id="modal_overlay"></div>');
-    $("#modal_overlay").fadeIn("slow");
-
-    $("body").append('<div id="modal_window"></div>');
+    $("body").append('<div id="modal_overlay"></div>' +
+        '<div id="modal_window"></div>');
 
     $("#modal_window").load(COORDINATE_VIEW_ROOT + "/" + coordinate_id + " #coordinateDetail", function() {
         $(document).ready(function() {
@@ -387,6 +385,7 @@ function showCoordinateDetail(coordinate_id) {
             $.getScript("../js/coordinates/view.js");
             $("#modal_window").prepend('<div id="window_header">' +
                 '<div id="window_title">コーディネートの詳細</div><div id="close_button">×</div></div>');
+            $("#modal_overlay").fadeIn("slow");
             $("#modal_window").fadeIn("slow");
 
             $("#modal_overlay").unbind().click(function() {
@@ -403,5 +402,4 @@ function showCoordinateDetail(coordinate_id) {
     });
 
     });
-
 }

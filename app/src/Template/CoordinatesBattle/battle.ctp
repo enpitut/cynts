@@ -133,7 +133,8 @@ foreach ($coordinates as $coordinate) {
             'onClick' => sprintf(
                 'showCoordinateDetail(coordinate_id%d)',
                 $side_id
-            )
+            ),
+            'type' => 'button'
         ]
         );
     echo '</li>' . PHP_EOL;
