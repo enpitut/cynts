@@ -102,8 +102,12 @@
             ($("[name=summer]").prop("checked") ? "1" : "0") +
             ($("[name=autumn]").prop("checked") ? "1" : "0") +
             ($("[name=winter]").prop("checked") ? "1" : "0");
+        if (season_binary_string === "0000") {
+            delete criteria_json["season"];
+        } else {
+            criteria_json["season"] = season_binary_string;
+        }
 
-        criteria_json["season"] = season_binary_string;
         for(var i=0,l=select_forms.length; l>i; i++)
         {
             var index = select_forms[i].selectedIndex;
