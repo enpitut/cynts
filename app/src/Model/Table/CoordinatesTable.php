@@ -18,6 +18,11 @@ class CoordinatesTable extends Table
 {
 
     const COORDINATES_CACHE_PREFIX = 'filtered_coordinates_';
+    const COORDINATES_UNLIKE_RANKING_CACHE_PREFIX
+        = self::COORDINATES_CACHE_PREFIX . '_unlike_ranking_';
+    const COORDINATES_LIKE_RANKING_CACHE_PREFIX
+        = self::COORDINATES_CACHE_PREFIX . '_like_ranking_';
+
 
     /**
      * Initialize method

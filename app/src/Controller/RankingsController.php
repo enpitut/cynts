@@ -109,7 +109,7 @@ class RankingsController extends AppController
                     'limit' => self::RANKING_SHOW_LIMIT,
                 ]
             )->cache(
-                CoordinatesTable::COORDINATES_CACHE_PREFIX . '_unlike_ranking_' . sha1(
+                CoordinatesTable::COORDINATES_UNLIKE_RANKING_CACHE_PREFIX . sha1(
                     $criteria_json_string
                 )
             );
@@ -123,7 +123,7 @@ class RankingsController extends AppController
                     'limit' => self::RANKING_SHOW_LIMIT,
                 ]
             )->cache(
-                CoordinatesTable::COORDINATES_CACHE_PREFIX . '_like_ranking_' . sha1(
+                CoordinatesTable::COORDINATES_LIKE_RANKING_CACHE_PREFIX . sha1(
                     $criteria_json_string
                 )
             );

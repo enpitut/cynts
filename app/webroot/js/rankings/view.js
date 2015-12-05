@@ -62,34 +62,34 @@ function renderRanking(coordinates, response_list) {
         var element_div_rank = elementRank(i+1);
         var element_div_span3 = template;
         element_div_span3 = element_div_span3.replace(
-            /RANKING_CLASS_EXTEND/g ,
+            /#\{ranking_class_extend}/g ,
             element_div_rank[0]
         );
         element_div_span3 = element_div_span3.replace(
-            /RANK/g ,
+            /#\{rank}/g ,
             element_div_rank[1]
         );
         element_div_span3 = element_div_span3.replace(
-            /COORDINATES_VIEW_PATH/g ,
+            /#\{coordinates_view_path}/g ,
             '/coordinates/view/' + coordinates[index]["id"]
         );
         element_div_span3 = element_div_span3.replace(
-            /COORDINATES_PHOTO_PATH/g ,
+            /#\{coordinates_photo_path}/g ,
             '/img/' + coordinates[index]["photo_path"]
         );
         if (coordinates["type"] === "like") {
             element_div_span3 = element_div_span3.replace(
-                /COORDINATES_SCORE/g ,
+                /#\{coordinates_score}/g ,
                 parseInt(coordinates[index]["n_like"])
             );
         } else {
             element_div_span3 = element_div_span3.replace(
-                /COORDINATES_SCORE/g ,
+                /#\{coordinates_score}/g ,
                 parseInt(coordinates[index]["n_unlike"])
             );
         }
         element_div_span3 = element_div_span3.replace(
-            /COORDINATES_PRICE/g ,
+            /#\{coordinates_price}/g ,
             coordinates[index]["total_price"]
         );
 
@@ -97,20 +97,20 @@ function renderRanking(coordinates, response_list) {
         if (coordinates[index]["user_id"] !== "" && coordinates[index]["user_name"] !== "") {
             var element_div_user = element_div_user_template;
             element_div_user = element_div_user.replace(
-                /COORDINATES_USER_VIEW_PATH/g ,
+                /#\{coordinates_user_view_path}/g ,
                 '/users/view/' + coordinates[index]["user_id"]
             );
             element_div_user = element_div_user.replace(
-                /COORDINATES_USER_NAME/g ,
+                /#\{coordinates_user_name}/g ,
                 coordinates[index]["user_name"]
             );
             element_div_span3 = element_div_span3.replace(
-                /COORDINATES_USER_INFORMATION/g,
+                /#\{coordinates_user_information}/g,
                 element_div_user
             )
         } else {
             element_div_span3 = element_div_span3.replace(
-                /COORDINATES_USER_INFORMATION/g ,
+                /#\{coordinates_user_information}/g ,
                 ""
             );
         }
