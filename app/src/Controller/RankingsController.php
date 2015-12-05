@@ -44,58 +44,19 @@ class RankingsController extends AppController
      */
     public function view($type = null)
     {
-        switch ($type) {
-            case self::RANKING_TYPE_UNLIKE:
-                $ranking = $this->Coordinates->find('all',
-                    [
-                        'order' => ['Coordinates.n_unlike' => 'DESC'],
-                        'contain' => ['Users', 'Items', 'Favorites'],
-                        'limit' => self::RANKING_SHOW_LIMIT,
-                    ]
-                );
-                break;
-            default:
-                $ranking = $this->Coordinates->find('all',
-                    [
-                        'order' => ['Coordinates.n_like' => 'DESC'],
-                        'contain' => ['Users', 'Items', 'Favorites'],
-                        'limit' => self::RANKING_SHOW_LIMIT,
-                    ]
-                );
-        }
-
-        /** @var Coordinate $coordinate */
-        $ranking_array = $ranking->toArray();
-        foreach ($ranking_array as $key => $coordinate) {
-            $total_price = 0;
-            /** @var Item $item */
-            foreach ($coordinate->items as $item) {
-                $total_price += $item->price;
-            }
-            $ranking_array[$key]->set('total_price', $total_price);
-        }
+        $ranking_array = $this->_getRanking($type);
 
         $this->set('sex_list', Item::getSexes());
         $this->set('ranking', $ranking_array);
         $this->set('_serialize', ['ranking']);
     }
 
-    public function ajaxUpdateRanking()
+    public function ajaxUpdateRanking($type = null)
     {
         if ($this->request->is('post')) {
-            $criteria_json_string = $this->request->data('coordinate_criteria');
-
-            // 条件にあったコーデ群を取得する
-            // 検索条件毎に一意の文字列(JSON文字列に対してSHA-1を使用する)を生成し，
-            // それをキーとしてキャッシュする
-            $filtered_coordinates = Criteria\CoordinatesCriteria::createQueryFromJson(
-                $criteria_json_string
-            )->cache(CoordinatesTable::COORDINATES_CACHE_PREFIX . sha1($criteria_json_string));
-            $coordinates = $filtered_coordinates
-                ->limit(self::RANKING_SHOW_LIMIT)
-                ->all()
-                ->sortBy(
-                'n_like', SORT_DESC, SORT_NUMERIC
+            $coordinates = $this->_getRanking(
+                $type,
+                $this->request->data('coordinate_criteria')
             );
 
             // javascript で処理するため，配列に変換する
@@ -116,6 +77,39 @@ class RankingsController extends AppController
             echo json_encode($coordinates_array);
         } else {
             return $this->redirect(['action' => 'battle']);
+        }
+    }
+
+    private function _getRanking($type, $criteria_json_string="{}")
+    {
+        switch ($type) {
+        case self::RANKING_TYPE_UNLIKE:
+            return $ranking = Criteria\CoordinatesCriteria::createQueryFromJson(
+                $criteria_json_string,
+                [
+                    'order' => ['Coordinates.n_unlike' => 'DESC'],
+                    'contain' => ['Users', 'Items', 'Favorites'],
+                    'limit' => self::RANKING_SHOW_LIMIT,
+                ]
+            )->cache(
+                CoordinatesTable::COORDINATES_CACHE_PREFIX . '_ranking_' . sha1(
+                    $criteria_json_string
+                )
+            );
+            break;
+        default:
+            return $ranking = Criteria\CoordinatesCriteria::createQueryFromJson(
+                $criteria_json_string,
+                [
+                    'order' => ['Coordinates.n_like' => 'DESC'],
+                    'contain' => ['Users', 'Items', 'Favorites'],
+                    'limit' => self::RANKING_SHOW_LIMIT,
+                ]
+            )->cache(
+                CoordinatesTable::COORDINATES_CACHE_PREFIX . '_ranking_' . sha1(
+                    $criteria_json_string
+                )
+            );
         }
     }
 }

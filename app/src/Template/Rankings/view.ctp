@@ -58,7 +58,7 @@
                         <span class="point_number" id="point_<?= $rank ?>"><?= $coordinate->n_like * 1000 ?></span> Points
                     </div>
                     <div class="total_price">
-                        ¥<span class="price_number" id="price_<?= $rank ?>"><?= $coordinate->total_price ?></span>
+                        ¥<span class="price_number" id="price_<?= $rank ?>"><?= $coordinate->price ?></span>
                     </div>
                 </div>
                 <div class="information_right">

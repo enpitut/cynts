@@ -14,11 +14,22 @@ class CoordinatesCriteria {
      * 条件は JSON 形式で指定する
      *
      * @param string $criteria_string
+     * @param $options
      *
      * @return \Cake\ORM\Query $query
      */
-    public static function createQueryFromJson($criteria_string)
+    public static function createQueryFromJson(
+        $criteria_string,
+        $options = ['contain' => ['Users', 'Items', 'Favorites']]
+    )
     {
+        if ($criteria_string === "{}") {
+            return $query = TableRegistry::get('Coordinates')->find(
+                'all',
+                $options
+            );
+        }
+
         $criteria_json = json_decode($criteria_string, true);
 
         /**
@@ -36,9 +47,7 @@ class CoordinatesCriteria {
          */
         $query = TableRegistry::get('Coordinates')->find(
             'all',
-            [
-                'contain' => ['Users', 'Favorites', 'Items']
-            ]
+            $options
         )
             ->innerJoin(
                 'coordinates_items',
