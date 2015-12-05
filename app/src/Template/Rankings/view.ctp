@@ -2,6 +2,10 @@
 <html>
 <head>
     <?= $this->Html->script('rankings/view.js') ?>
+    <script type="text/javascript">
+        // rankings/view.js で使用する
+        var ranking_type = '<?= $type ?>';
+    </script>
     <?= $this->Html->script('common.js') ?>
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('ranking/base.css') ?>
@@ -55,7 +59,15 @@
             <div class="information">
                 <div class="information_left">
                     <div class="point">
-                        <span class="point_number" id="point_<?= $rank ?>"><?= $coordinate->n_like * 1000 ?></span> Points
+                        <span class="point_number" id="point_<?= $rank ?>">
+                            <?php
+                            if ( $type === \App\Controller\RankingsController::RANKING_TYPE_LIKE) {
+                                echo $coordinate->n_like;
+                            } else {
+                                echo $coordinate->n_unlike;
+                            }
+                            ?>
+                        </span> Points
                     </div>
                     <div class="total_price">
                         ¥<span class="price_number" id="price_<?= $rank ?>"><?= $coordinate->price ?></span>

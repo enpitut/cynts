@@ -46,14 +46,28 @@ class RankingsController extends AppController
     {
         $ranking_array = $this->_getRanking($type);
 
+        $this->set('type', is_null($type) ? self::RANKING_TYPE_LIKE : $type);
         $this->set('sex_list', Item::getSexes());
         $this->set('ranking', $ranking_array);
         $this->set('_serialize', ['ranking']);
     }
 
-    public function ajaxUpdateRanking($type = null)
+    public function ajaxUpdateRanking()
     {
         if ($this->request->is('post')) {
+            $type = $this->request->data('type');
+            if (
+                $type !== self::RANKING_TYPE_LIKE &&
+                $type !== self::RANKING_TYPE_UNLIKE
+            ) {
+                error_log('Received illegal ranking type.');
+                echo sprintf(
+                    '{"hasSucceeded":false, "errorMessage":"%s"}',
+                    "POSTメソッドで送信された値が不正でした．"
+                );
+                exit;
+            }
+
             $coordinates = $this->_getRanking(
                 $type,
                 $this->request->data('coordinate_criteria')
@@ -68,11 +82,14 @@ class RankingsController extends AppController
                     "total_price" => $coordinate->price,
                     "photo_path" => $coordinate->photo_path,
                     "n_like" => $coordinate->n_like,
+                    "n_unlike" => $coordinate->n_unlike,
                     "user_name" => is_null($coordinate->user) ? "" : $coordinate->user->name,
                     "user_id" => is_null($coordinate->user) ? "" : $coordinate->user->id,
                 ];
             }
             $coordinates_array["RANKING_SHOW_LIMIT"] = self::RANKING_SHOW_LIMIT;
+            $coordinates_array["type"] = $type;
+            $coordinates_array["hasSucceeded"] = true;
 
             echo json_encode($coordinates_array);
         } else {
@@ -92,7 +109,7 @@ class RankingsController extends AppController
                     'limit' => self::RANKING_SHOW_LIMIT,
                 ]
             )->cache(
-                CoordinatesTable::COORDINATES_CACHE_PREFIX . '_ranking_' . sha1(
+                CoordinatesTable::COORDINATES_CACHE_PREFIX . '_unlike_ranking_' . sha1(
                     $criteria_json_string
                 )
             );
@@ -106,7 +123,7 @@ class RankingsController extends AppController
                     'limit' => self::RANKING_SHOW_LIMIT,
                 ]
             )->cache(
-                CoordinatesTable::COORDINATES_CACHE_PREFIX . '_ranking_' . sha1(
+                CoordinatesTable::COORDINATES_CACHE_PREFIX . '_like_ranking_' . sha1(
                     $criteria_json_string
                 )
             );

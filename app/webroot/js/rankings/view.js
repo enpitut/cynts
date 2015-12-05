@@ -4,14 +4,21 @@ function didChangeCoordinatesCriteria() {
 }
 
 function updateRanking() {
-    sendPost("ajaxUpdateRanking",
+    sendPost("/rankings/ajaxUpdateRanking",
         {
             // criteria_json は，Rankings/view.ctp で criteria_table.ctp が読み込まれることを前提として利用する
-            coordinate_criteria: JSON.stringify(criteria_json)
+            coordinate_criteria: JSON.stringify(criteria_json),
+            type: ranking_type
         },
         null
     ).done(
-        function (result) {
+        function (ranking) {
+            var json_result = JSON.parse(ranking);
+
+            if (json_result["hasSucceeded"] === false) {
+                throw new Error(json_result["errorMessage"]);
+            }
+
             var dfd = $.Deferred().resolve().promise();
 
             dfd.then(function() {
@@ -19,7 +26,7 @@ function updateRanking() {
             }).then(function (html) {
                 return readHtml("/html/rankings/coordinates_user_template.html", html)
             }).done(function(response_list) {
-                renderRanking(JSON.parse(result), response_list);
+                renderRanking(json_result, response_list);
             });
         }
     );
@@ -39,7 +46,7 @@ function renderRanking(coordinates, response_list) {
     }
 
     for (var i = 0, len = coordinates["RANKING_SHOW_LIMIT"]; i < len; i++) {
-        var index = String(i)
+        var index = String(i);
         if (coordinates[index] === undefined) {
             if (i % 3 !== 0) {
                 render_result += "</div>";
@@ -64,16 +71,23 @@ function renderRanking(coordinates, response_list) {
         );
         element_div_span3 = element_div_span3.replace(
             /COORDINATES_VIEW_PATH/g ,
-            '../coordinates/view/' + coordinates[index]["id"]
+            '/coordinates/view/' + coordinates[index]["id"]
         );
         element_div_span3 = element_div_span3.replace(
             /COORDINATES_PHOTO_PATH/g ,
-            '../img/' + coordinates[index]["photo_path"]
+            '/img/' + coordinates[index]["photo_path"]
         );
-        element_div_span3 = element_div_span3.replace(
-            /COORDINATES_SCORE/g ,
-            parseInt(coordinates[index]["n_like"]) * 1000
-        );
+        if (coordinates["type"] === "like") {
+            element_div_span3 = element_div_span3.replace(
+                /COORDINATES_SCORE/g ,
+                parseInt(coordinates[index]["n_like"])
+            );
+        } else {
+            element_div_span3 = element_div_span3.replace(
+                /COORDINATES_SCORE/g ,
+                parseInt(coordinates[index]["n_unlike"])
+            );
+        }
         element_div_span3 = element_div_span3.replace(
             /COORDINATES_PRICE/g ,
             coordinates[index]["total_price"]
@@ -84,7 +98,7 @@ function renderRanking(coordinates, response_list) {
             var element_div_user = element_div_user_template;
             element_div_user = element_div_user.replace(
                 /COORDINATES_USER_VIEW_PATH/g ,
-                '../users/vew/' + coordinates[index]["user_id"]
+                '/users/view/' + coordinates[index]["user_id"]
             );
             element_div_user = element_div_user.replace(
                 /COORDINATES_USER_NAME/g ,
