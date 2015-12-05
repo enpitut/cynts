@@ -110,18 +110,9 @@
         </div>
     <?php endforeach; ?>
     <hr style="position: relative; float: right;" width="470px"/>
-    <div style="position: relative; float: right; margin: 10px 0; width: 470px;">
+    <div style="position: relative; float: right; margin: 10px 0 0 0; width: 470px;">
         <div id="buyAll"><br/>
-            すべて購入<br/>
-
-            <p id="coordinatePrice">
-                <?php echo "￥" . $total_price; ?>
-            </p>
-            <?php
-            echo $this->Form->create();
-            echo $this->Form->button('買う', ['class' => 'buyButton disabled']);
-            echo $this->Form->end();
-            ?>
+            <?php echo "合計金額 : ￥" . $total_price; ?>
         </div>
     </div>
 </div>
