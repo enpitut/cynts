@@ -36,6 +36,8 @@ class Item extends Entity
     const CATEGORY_PANTS = 3;
     const CATEGORY_JACKET = 4;
     const CATEGORY_SHOES = 5;
+    const CATEGORY_SKIRT = 6;
+    const ATEGORY_CARDIGAN = 7;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -98,6 +100,8 @@ class Item extends Entity
             Item::CATEGORY_PANTS => 'Pants',
             Item::CATEGORY_JACKET => 'Jacket',
             Item::CATEGORY_SHOES => 'Shoes',
+            Item::CATEGORY_SKIRT => 'Skirt',
+            Item::CATEGORY_CARDIGAN => 'Cardigan',
         ];
     }
 
