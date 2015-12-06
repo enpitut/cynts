@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Model\Entity\User;
 use App\Model\Table\CoordinatesTable;
+use Cake\Core\Exception\Exception;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 use App\Model\Entity\Item;
@@ -95,48 +96,133 @@ class CoordinatesBattleController extends AppController
                 exit();
             }
 
-            $n_loop = 0;
-            $err_message = sprintf(
-                '{"hasSucceeded":false, "errorMessage":"%s"}',
-                "条件に一致するコーデが存在しません"
-            );
-            while (true) {
-                // 条件にあったコーデ群を取得する
-                // 検索条件毎に一意の文字列(JSON文字列に対してSHA-1を使用する)を生成し，
-                // それをキーとしてキャッシュする
-                $filtered_coordinates = Criteria\CoordinatesCriteria::createQueryFromJson(
+            try {
+                $coordinate = $this->_findCoordinateNotDuplicated(
+                    [
+                        $like_coordinate_id,
+                        $dislike_coordinate_id
+                    ],
                     $criteria_json_string
-                )->cache(CoordinatesTable::COORDINATES_CACHE_PREFIX . sha1($criteria_json_string));
-                $coordinate = $filtered_coordinates->all()->shuffle()->first();
-
-                if ($coordinate === null) {
-                    echo $err_message;
-                    break;
-                }
-
-                if ($like_coordinate_id == $coordinate->id ||
-                    $dislike_coordinate_id == $coordinate->id
-                ) {
-                    // セーフティブレーク
-                    if (++$n_loop > 20) {
-                        // 条件に一致するコーデは存在しているが，現在表示されているコーデと重複している
-                        // (1~2着しか条件に一致するコーデがない)
-                        echo $err_message;
-                        break;
-                    }
-                    continue;
-                } else {
-                    echo sprintf(
-                        '{"id":%d, "url":"%s", "hasSucceeded":true}',
-                        $coordinate->id,
-                        $coordinate->photo_path
-                    );
-                    break;
-                }
+                );
+            } catch (Exception $e) {
+                echo sprintf(
+                    '{"hasSucceeded":false, "errorMessage":"%s"}',
+                    "条件に一致するコーデが存在しません"
+                );
+                exit;
             }
+
+            echo sprintf(
+                '{"id":%d, "url":"%s", "hasSucceeded":true}',
+                $coordinate->id,
+                $coordinate->photo_path
+            );
+
         } else {
             return $this->redirect(['action' => 'battle']);
         }
+    }
+
+    public function ajaxGetCoordinatesPairMeetCriteria() {
+        if ($this->request->is('post')) {
+            $a_side_coordinate_id = filter_input(
+                INPUT_POST, 'a_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT
+            );
+            $b_side_coordinate_id = filter_input(
+                INPUT_POST, 'b_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT
+            );
+            if (is_null($a_side_coordinate_id) || $a_side_coordinate_id === false ||
+                is_null($b_side_coordinate_id) || $b_side_coordinate_id === false
+            ) {
+                error_log('Illegal value type');
+                echo sprintf(
+                    '{"hasSucceeded":false, "errorMessage":"%s"}',
+                    "POSTメソッドで送信された値が不正でした．" .
+                    "ページをリロードするか，ヘッダーの「Unichronicle」からTOPページへ" .
+                    "戻り，Play しなおしてください(これまでのバトル経過は破棄されます)．"
+                );
+                exit;
+            }
+            $criteria_json_string = $this->request->data('coordinate_criteria');
+
+            try {
+
+                $new_a_side_coordinate = $this->_findCoordinateNotDuplicated(
+                    [
+                        $a_side_coordinate_id,
+                        $b_side_coordinate_id
+                    ],
+                    $criteria_json_string
+                );
+
+                $new_b_side_coordinate = $this->_findCoordinateNotDuplicated(
+                    [
+                        $a_side_coordinate_id,
+                        $b_side_coordinate_id,
+                        $new_a_side_coordinate->id
+                    ],
+                    $criteria_json_string
+                );
+
+            } catch (Exception $e) {
+                echo sprintf(
+                    '{"hasSucceeded":false, "errorMessage":"%s"}',
+                    "条件に一致するコーデが存在しません"
+                );
+                exit;
+            }
+
+            echo sprintf(
+                '{"0":{"id":%d, "url":"%s"}, "1":{"id":%d, "url":"%s"}, "hasSucceeded":true}',
+                $new_a_side_coordinate->id,
+                $new_a_side_coordinate->photo_path,
+                $new_b_side_coordinate->id,
+                $new_b_side_coordinate->photo_path
+            );
+        }
+    }
+
+    private function _findCoordinateNotDuplicated($coordinate_ids, $criteria_json_string){
+        $n_loop = 0;
+
+        while (true) {
+            $coordinate = $this->_extractRandomCoordinateMeetCriteria($criteria_json_string);
+
+            if ($coordinate === null) {
+                throw new Exception("Not coordinate found");
+            }
+
+            if (in_array($coordinate->id, $coordinate_ids)) {
+                // セーフティブレーク
+                if (++$n_loop > 20) {
+                    // 条件に一致するコーデは存在しているが，現在表示されているコーデと重複している
+                    // (1~2着しか条件に一致するコーデがない)
+                    throw new Exception("Not coordinate found");
+                }
+                continue;
+            } else {
+                return $coordinate;
+            }
+        }
+    }
+
+    /**
+     * @param $criteria_json_string
+     *
+     * @return \App\Model\Entity\Coordinate $coordinate
+     */
+    private function _extractRandomCoordinateMeetCriteria($criteria_json_string)
+    {
+        /*
+         * 条件にあったコーデ群を取得する
+         * 検索条件毎に一意の文字列(JSON文字列に対してSHA-1を使用する)を生成し，それをキーとしてキャッシュする
+         */
+        $filtered_coordinates = Criteria\CoordinatesCriteria::createQueryFromJson(
+            $criteria_json_string
+        )->cache(CoordinatesTable::COORDINATES_CACHE_PREFIX . sha1($criteria_json_string));
+
+        // 取得したコーデ群からランダムに 1 つ抽出し返す
+        return $coordinate = $filtered_coordinates->all()->shuffle()->first();
     }
 
     /**

@@ -37,57 +37,67 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
     try {
         var dfd = $.Deferred().resolve().promise();
 
-        // コーデが押下された際の通常処理(スコアの計算・保持, 新たなコーデの取得・表示)
-        dfd = dfd.then(function() {
-                return getNewCoordinate(like_coordinate_id, dislike_coordinate_id);
-            }
-        ).then(function(new_coordinate_data) {
-                return animateCoordinateImage(new_coordinate_data, dislike_side_id);
-            }
-        );
+        dfd.then(function() {
 
-        // 10回連続でコーデが押下された際の処理(お気に入りの判定・登録)
-        if (like_coordinate_id == previous_like_coordinate_id) {
-            if (++n_continuously_like >= NUM_FOR_FAV) {
-                // getNewCoordinate で取得した新たなコーデのデータを受け取る必用がある
-                // 現状は，animateCoordinateImage を介して受け取っている
-                dfd = dfd.then(function(new_coordinate_data) {
-                        return favoriteCoordinate(new_coordinate_data["id"], like_coordinate_id, like_side_id);
-                    }
-                );
+            return dfdGetScore(like_coordinate_id);
+
+        }).then(function() {
+
+            return dfdGetNewCoordinate(like_coordinate_id, dislike_coordinate_id);
+
+        }).then(function(new_coordinate_data) {
+
+            return dfdAnimateCoordinateImage(new_coordinate_data, dislike_side_id);
+
+        }).then(function(new_coordinate_data) {
+
+            // 前回と同じコーデが選択されたかどうか
+            if (like_coordinate_id == previous_like_coordinate_id) {
+                if (++n_continuously_like >= NUM_FOR_FAV) {
+
+                    n_continuously_like = 1;
+                    return dfdFavoriteCoordinate(new_coordinate_data["id"], like_coordinate_id, like_side_id);
+
+                }
+            } else {
+
                 n_continuously_like = 1;
-            }
-        } else {
-            n_continuously_like = 1;
-        }
-        previous_like_coordinate_id = like_coordinate_id;
+                return $.Deferred().resolve().promise();
 
-        dfd = dfd.then(function() {
-                return getScore(like_coordinate_id);
             }
-        );
 
-        dfd.done(function() {
+        }).done(function() {
             n_battle++;
             // バトル終了判定
             if (n_battle >= MAX_N_BATTLE) {
+
                 finishBattle()
+
             }
             // 1回以上押下されたら finish ボタンを追加する
             if (n_battle == 1) {
-                var element = document.getElementById('finish_button');
-                var buttonElement = document.createElement('button');
-                buttonElement.innerHTML = 'ゲーム終了!!';
-                var action = "finishBattle();";
-                buttonElement.setAttribute('onclick', action);
-                element.appendChild(buttonElement);
+
+                addFinishButton();
+
             }
-        }).fail(function() {
-            // TODO: ちゃんとエラーハンドリングする
+        }).fail(function(e) {
+            alert(e);
         });
+
+        previous_like_coordinate_id = like_coordinate_id;
+
     } catch (exception) {
         alert(exception);
     }
+}
+
+function addFinishButton() {
+    var element = document.getElementById('finish_button');
+    var buttonElement = document.createElement('button');
+    buttonElement.innerHTML = 'ゲーム終了!!';
+    var action = "finishBattle();";
+    buttonElement.setAttribute('onclick', action);
+    element.appendChild(buttonElement);
 }
 
 function finishBattle() {
@@ -109,7 +119,7 @@ function finishBattle() {
  * @param like_coordinate_id 選択されたコーデのコーデID
  * @returns {*}
  */
-function getScore(like_coordinate_id) {
+function dfdGetScore(like_coordinate_id) {
     var dfd = $.Deferred();
 
     sendPost("getScore",
@@ -155,7 +165,7 @@ function getScore(like_coordinate_id) {
  * @param disliked_coordinate_id 選択されなかった側のコーデ
  * @returns {*}
  */
-function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
+function dfdGetNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
     var dfd = $.Deferred();
 
     sendPost("getNewCoordinate",
@@ -170,11 +180,13 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
         function(coordinate_data) {
             // 重複しない新たなコーデを取得する
             var new_coordinate = JSON.parse(coordinate_data);
+
             if (!new_coordinate["hasSucceeded"]) {
                 alert(new_coordinate["errorMessage"]);
                 $.Deferred().reject('Fail to get new coordinate');
                 throw new Error('Fail to get new coordinate');
             }
+
             // 取得したコーデを次の then ブロックに渡す
             dfd.resolve(new_coordinate);
         }
@@ -191,7 +203,7 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
  * @param like_side_obj_id
  * @returns {*}
  */
-function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side_obj_id) {
+function dfdFavoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side_obj_id) {
     var dfd = $.Deferred();
 
     sendPost("ajaxPostFavorite",
@@ -205,9 +217,11 @@ function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side
         }
     ).done(function (result) {
             var register_favorite = JSON.parse(result);
+
             // hasSucceeded : POST したデータの validate 結果. やりとりしたデータの型が正しいかどうか
             // hasRegistered : お気に入り登録したか(既に登録されていた場合には登録されない
             if (register_favorite["hasSucceeded"]) {
+
                 if (register_favorite["hasRegistered"]) {
                     alert(NUM_FOR_FAV + "回連続で同じコーデを選んだので, お気に入りに登録しました!");
                 }
@@ -216,20 +230,21 @@ function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side
                 var side_id = this.like_side_id;
                 var like_coordinate_id = this.like_coordinate_id;
                 var dislike_coordinate_id = this.dislike_coordinate_id;
+
                 // 既にお気にいりだった場合でも，10回連続で同じコーデが選ばれたら切り替える
                 // その方がゲームが面白いので(ランキング1位のものをずっと選んでいれば高得点が簡単に取れてしまう)
                 $.Deferred().resolve().promise().then(function() {
-                    return getNewCoordinate(
-                        like_coordinate_id,
-                        dislike_coordinate_id
-                    );
+
+                    return dfdGetNewCoordinate(like_coordinate_id, dislike_coordinate_id);
+
                 }).then(function(new_coordinate_data) {
-                    return animateCoordinateImage(
-                        new_coordinate_data,
-                        side_id
-                    );
+
+                    return dfdAnimateCoordinateImage(new_coordinate_data, side_id);
+
                 }).done(function() {
+
                     dfd.resolve();
+
                 });
             } else {
                 throw new Error("Illegal post value");
@@ -242,6 +257,45 @@ function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side
 
 function didChangeCoordinatesCriteria() {
     updateCriteriaJson();
+    updateCoordinateImagesByCriteria();
+}
+
+/**
+ * 絞り込みの条件に合わせて新たな二つのコーデを取得し，アニメーションで切り替える
+ */
+function updateCoordinateImagesByCriteria() {
+    sendPost("ajaxGetCoordinatesPairMeetCriteria",
+        {
+            a_side_coordinate_id: coordinate_id0,
+            b_side_coordinate_id: coordinate_id1,
+            // criteria_json は，battle.ctp で criteria_table.ctp が読み込まれることを前提として利用する
+            coordinate_criteria: JSON.stringify(criteria_json)
+        },
+        null
+    ).done(
+        function(coordinates) {
+            console.log(coordinates);
+            // 重複しない新たなコーデを2つ取得する
+            var new_coordinates = JSON.parse(coordinates);
+
+            if (!new_coordinates["hasSucceeded"]) {
+                alert(new_coordinates["errorMessage"]);
+                $.Deferred().reject('Fail to get new coordinate');
+            }
+
+            // 現在のコーデを切り替える
+            var dfd = $.Deferred().resolve().promise();
+            dfd.then(function() {
+
+                dfdAnimateCoordinateImage(new_coordinates[0], 0)
+
+            }).then(function() {
+
+                dfdAnimateCoordinateImage(new_coordinates[1], 1)
+
+            })
+        }
+    );
 }
 
 /**
@@ -252,7 +306,7 @@ function didChangeCoordinatesCriteria() {
  * @param side_id どちらの側のコーデをアニメーションさせるか(0: 左, 1: 右)
  * @returns {*}
  */
-function animateCoordinateImage(coordinate_data, side_id) {
+function dfdAnimateCoordinateImage(coordinate_data, side_id) {
     var dfd = $.Deferred();
 
     var firstAnimate = function() {
