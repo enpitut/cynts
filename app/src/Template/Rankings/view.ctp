@@ -11,6 +11,7 @@
     <?= $this->Html->css('ranking/base.css') ?>
     <?= $this->Html->css('criteria/table.css') ?>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $(".coordinate_image").fadeIn(700);

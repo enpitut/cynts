@@ -24,7 +24,7 @@ function sendPost(action, send_data, args) {
  * @param file_name
  * @param args_list
  */
-function readHtml(file_name, args_list) {
+function fetchHtml(file_name, args_list) {
     var dfd = $.Deferred();
     var httpObj = new XMLHttpRequest();
     httpObj.addEventListener('loadend', function(){

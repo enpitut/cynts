@@ -1,8 +1,17 @@
+const FADE_DURATION = 300;
+
+/**
+ * 条件の絞り込みがユーザによって操作された際に呼び出される
+ */
 function didChangeCoordinatesCriteria() {
     updateCriteriaJson();
     updateRanking();
 }
 
+/**
+ * 条件の絞り込みに応じて Controller と通信を行い，
+ * ランキング表示を更新する
+ */
 function updateRanking() {
     sendPost("/rankings/ajaxUpdateRanking",
         {
@@ -21,130 +30,208 @@ function updateRanking() {
 
             var dfd = $.Deferred().resolve().promise();
 
+            /*
+             GET メソッドで html のテンプレートを順に読み込み，
+             renderRanking の引数に渡す
+              */
             dfd.then(function() {
-                return readHtml("/html/rankings/ranking_template.html")
-            }).then(function (html) {
-                return readHtml("/html/rankings/coordinates_user_template.html", html)
-            }).done(function(response_list) {
-                renderRanking(json_result, response_list);
+                return fetchHtml("/html/rankings/ranking_template.html")
+            }).then(function (base_template) {
+                return fetchHtml("/html/rankings/coordinates_user_template.html", base_template)
+            }).then(function(templates) {
+                renderRanking(json_result, templates);
             });
         }
     );
 }
 
-function renderRanking(coordinates, response_list) {
-    var template = response_list[0];
-    var element_div_user_template = response_list[1];
+/**
+ * コーデ情報と html テンプレートから，
+ * アニメーションを利用してランキングを描画する
+ *
+ * @param coordinates
+ * @param templates
+ */
+function renderRanking(coordinates, templates) {
+    var dfd = $.Deferred().resolve().promise();
 
-    var render_result = "";
+    // アニメーション効果を付加するために，ここでも jQuery Deferred を利用する
+    dfd.then(function() {
 
-    // 一度ランキングを消去
-    var element_div_rankings = document.getElementById("rankings");
-    var child;
-    while (child = element_div_rankings.lastChild) {
-        element_div_rankings.removeChild(child);
-    }
+        return dfdRemoveRankingElements();
+
+    }).then(function() {
+
+        return dfdCreateRankingHtmlByTemplate(coordinates, templates);
+
+    }).done(function(html) {
+
+        $("#rankings")
+            .css({
+                'visibility':'hidden',
+                'opacity':0
+            })
+            .append(html)
+            .css({'visibility':'visible'})
+            .animate({opacity: 1}, FADE_DURATION);
+
+    });
+}
+
+/**
+ * 現在描画されているランキングをフェードアウトさせ，消去する
+ *
+ * @returns {*}
+ */
+function dfdRemoveRankingElements() {
+    var dfd = $.Deferred();
+
+    $("#rankings")
+        .animate( {opacity: 0},
+        {
+            duration: FADE_DURATION,
+            complete: function () {
+                $("#rankings").empty();
+                dfd.resolve();
+            }
+        });
+
+    return dfd.promise();
+}
+
+/**
+ * コーデ情報と html テンプレートから，
+ * 絞り込み結果を反映したランキングの html を生成する
+ *
+ * @param coordinates 絞り込み結果を反映したコーデの情報群
+ * @param templates html テンプレート．ranking と user information の2つのテンプレートを含む
+ * @returns {*}
+ */
+function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
+    var dfd = $.Deferred();
+    var html = "";
+    var base_template = templates[0];
+    var user_information_template = templates[1];
 
     for (var i = 0, len = coordinates["RANKING_SHOW_LIMIT"]; i < len; i++) {
         var index = String(i);
+
+        // コーデが1つも存在しない場合のエラーメッセージ
+        if (i === 0 && coordinates[index] === undefined) {
+            return"</br><span>条件に該当するが存在しません</span>";
+        }
+
+        // 該当するランクのコーデが存在しない場合には何もしない
         if (coordinates[index] === undefined) {
             if (i % 3 !== 0) {
-                render_result += "</div>";
-                render_result += '<div class="clear"></div>';
+                html += "</div>";
+                html += '<div class="clear"></div>';
             }
             continue;
         }
 
         if (i % 3 === 0) {
-            render_result += "<div class='row'>";
+            html += "<div class='row'>";
         }
 
-        var element_div_rank = elementRank(i+1);
-        var element_div_span3 = template;
-        element_div_span3 = element_div_span3.replace(
+        var div_rank = getWordAndClassByRank(i+1);
+        var div_span3 = base_template;
+        div_span3 = div_span3.replace(
             /#\{ranking_class_extend}/g ,
-            element_div_rank[0]
+            div_rank[0]
         );
-        element_div_span3 = element_div_span3.replace(
+        div_span3 = div_span3.replace(
             /#\{rank}/g ,
-            element_div_rank[1]
+            div_rank[1]
         );
-        element_div_span3 = element_div_span3.replace(
+        div_span3 = div_span3.replace(
             /#\{coordinates_view_path}/g ,
             '/coordinates/view/' + coordinates[index]["id"]
         );
-        element_div_span3 = element_div_span3.replace(
+        div_span3 = div_span3.replace(
             /#\{coordinates_photo_path}/g ,
             '/img/' + coordinates[index]["photo_path"]
         );
+        // url に unlike が付加されていた場合には，表示ポイントを n_unlike に変更する
         if (coordinates["type"] === "like") {
-            element_div_span3 = element_div_span3.replace(
+            div_span3 = div_span3.replace(
                 /#\{coordinates_score}/g ,
                 parseInt(coordinates[index]["n_like"])
             );
         } else {
-            element_div_span3 = element_div_span3.replace(
+            div_span3 = div_span3.replace(
                 /#\{coordinates_score}/g ,
                 parseInt(coordinates[index]["n_unlike"])
             );
         }
-        element_div_span3 = element_div_span3.replace(
+        div_span3 = div_span3.replace(
             /#\{coordinates_price}/g ,
             coordinates[index]["total_price"]
         );
 
         // コーデの制作者が存在すれば中身を生成
-        if (coordinates[index]["user_id"] !== "" && coordinates[index]["user_name"] !== "") {
-            var element_div_user = element_div_user_template;
-            element_div_user = element_div_user.replace(
+        if (
+            coordinates[index]["user_id"] !== ""
+            && coordinates[index]["user_name"] !== ""
+        ) {
+            var div_user = user_information_template;
+            div_user = div_user.replace(
                 /#\{coordinates_user_view_path}/g ,
                 '/users/view/' + coordinates[index]["user_id"]
             );
-            element_div_user = element_div_user.replace(
+            div_user = div_user.replace(
                 /#\{coordinates_user_name}/g ,
                 coordinates[index]["user_name"]
             );
-            element_div_span3 = element_div_span3.replace(
+            div_span3 = div_span3.replace(
                 /#\{coordinates_user_information}/g,
-                element_div_user
+                div_user
             )
         } else {
-            element_div_span3 = element_div_span3.replace(
+            div_span3 = div_span3.replace(
                 /#\{coordinates_user_information}/g ,
                 ""
             );
         }
 
-        render_result += element_div_span3;
+        html += div_span3;
 
         if (i % 3 === 2) {
-            render_result += "</div>";
-            render_result += '<div class="clear"></div>';
+            html += "</div>";
+            html += '<div class="clear"></div>';
         }
     }
 
-    element_div_rankings.innerHTML = render_result;
+    dfd.resolve(html);
+
+    return dfd.promise();
 }
 
-function elementRank(rank) {
-    var class_rank = "rank";
-    var view_rank = "";
+/**
+ * ランクに応じて，ページに表示する文言と class を取得する
+ *
+ * @param rank
+ * @returns {*[]}
+ */
+function getWordAndClassByRank(rank) {
+    var rank_class = "rank";
+    var rank_word = "";
     switch (rank) {
         case 1:
-            class_rank += " rank_1st";
-            view_rank = "1st";
+            rank_class += " rank_1st";
+            rank_word = "1st";
             break;
         case 2:
-            class_rank += " rank_2nd";
-            view_rank = "2nd";
+            rank_class += " rank_2nd";
+            rank_word = "2nd";
             break;
         case 3:
-            class_rank += " rank_3rd";
-            view_rank = "3rd";
+            rank_class += " rank_3rd";
+            rank_word = "3rd";
             break;
         default:
-            view_rank = String(rank) + "th";
+            rank_word = String(rank) + "th";
             break;
     }
-    return [class_rank, view_rank];
+    return [rank_class, rank_word];
 }
