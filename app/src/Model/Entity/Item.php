@@ -37,7 +37,7 @@ class Item extends Entity
     const CATEGORY_JACKET = 4;
     const CATEGORY_SHOES = 5;
     const CATEGORY_SKIRT = 6;
-    const ATEGORY_CARDIGAN = 7;
+    const CATEGORY_CARDIGAN = 7;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
