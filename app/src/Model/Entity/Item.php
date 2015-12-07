@@ -84,8 +84,8 @@ class Item extends Entity
     public static function getSexes()
     {
         return [
-            Item::SEX_MAN => '男',
-            Item::SEX_WOMAN => '女',
+            Item::SEX_MAN => '男性',
+            Item::SEX_WOMAN => '女性',
         ];
     }
 
@@ -101,7 +101,7 @@ class Item extends Entity
             Item::CATEGORY_JACKET => 'ジャケット',
             Item::CATEGORY_SHOES => 'シューズ',
             Item::CATEGORY_SKIRT => 'スカート',
-            Item::CATEGORY_CARDIGAN => 'カーデイガン',
+            Item::CATEGORY_CARDIGAN => 'カーディガン',
         ];
     }
 
@@ -111,20 +111,20 @@ class Item extends Entity
     public static function getColors()
     {
         return [
-            Item::COLOR_WHITE => '白',
-            Item::COLOR_BLACK => '黒',
-            Item::COLOR_RED => '赤',
+            Item::COLOR_WHITE => 'ホワイト',
+            Item::COLOR_BLACK => 'ブラック',
+            Item::COLOR_RED => 'レッド',
             Item::COLOR_ORANGE => 'オレンジ',
-            Item::COLOR_DARK_GREEN => '深緑',
-            Item::COLOR_BLUE => '青',
-            Item::COLOR_NAVY => '濃青',
+            Item::COLOR_DARK_GREEN => 'ダークグリーン',
+            Item::COLOR_BLUE => 'ブルー',
+            Item::COLOR_NAVY => 'ネイビー',
             Item::COLOR_GRAY => 'グレー',
-            Item::COLOR_BROWN => '茶',
-            Item::COLOR_GREEN => '緑',
+            Item::COLOR_BROWN => 'ブラウン',
+            Item::COLOR_GREEN => 'グリーン',
             Item::COLOR_PINK => 'ピンク',
-            Item::COLOR_BEIGE => '灰黄',
-            Item::COLOR_YELLOW => '黄色',
-            Item::COLOR_OLIVE => '薄緑',
+            Item::COLOR_BEIGE => 'ベージュ',
+            Item::COLOR_YELLOW => 'イエロー',
+            Item::COLOR_OLIVE => 'オリーブ',
             Item::COLOR_OFF_WHITE => 'クリーム',
             Item::COLOR_WINE => 'ワイン',
         ];
