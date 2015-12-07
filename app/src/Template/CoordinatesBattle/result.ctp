@@ -3,6 +3,7 @@
 <head>
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('battle.css') ?>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body>
 
@@ -63,7 +64,7 @@
             ]
         );
         echo sprintf(
-            '<p class="each_actual_point %s">point : %d</p>',
+            '<p class="each_actual_point %s">ポイント : %d</p>',
             $a_side_p_class, $battle_result->{"a_side_coordinate_point"}
         );
         echo "</li>";
@@ -88,7 +89,7 @@
             ]
         );
         echo sprintf(
-            '<p class="each_actual_point %s">point : %d</p>',
+            '<p class="each_actual_point %s">ポイント : %d</p>',
             $b_side_p_class, $battle_result->{"b_side_coordinate_point"}
         );
         echo "</li>";

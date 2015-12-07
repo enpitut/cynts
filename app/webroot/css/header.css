@@ -44,6 +44,10 @@ header {
     font-size: 24px;
 }
 
+#modal_open label {
+    cursor: pointer;
+}
+
 #header ul {
     margin: 25px 15%;
     font-size: 0;

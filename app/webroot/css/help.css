@@ -46,6 +46,11 @@
     font-weight: bold;
 }
 
+.help_window a {
+    color: orange;
+    font-weight: bold;
+}
+
 #close_message {
     z-index: 5;
     display:none;

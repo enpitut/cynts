@@ -77,10 +77,7 @@ class CoordinatesController extends AppController
         if ($this->request->is('post')) {
             $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
             if ($this->Coordinates->save($coordinate)) {
-                $this->Flash->success(__('The coordinate has been saved.'));
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The coordinate could not be saved. Please, try again.'));
             }
         }
 
