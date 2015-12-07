@@ -89,9 +89,29 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
     }
 }
 
+function uuid() {
+    // ランダム文字列を生成
+    var uuid = "", i, random;
+    for (var i = 0; i < 32; i++) {
+        random = Math.random() * 16 | 0;
+
+        if (i == 8 || i == 12 || i == 16 || i == 20) {
+            uuid += "-"
+        }
+        uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+    }
+
+    return uuid;
+}
+
 function finishBattle() {
     battle_info.max_n_battle = n_battle;
     battle_info.score = usr_score;
+
+    // ランダム文字列からチケットを発行
+    var ticket = uuid();
+    battle_info.ticket = ticket;  // battle_infoにチケットをセットしてPOST
+    $.session.set("ticket", ticket);  // セッションにも同様のチケットをセット
 
     // redirect
     var html =

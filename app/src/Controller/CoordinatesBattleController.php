@@ -300,12 +300,20 @@ class CoordinatesBattleController extends AppController
             $max_n_battle = $json_data->{"max_n_battle"};
             $battle_history = $json_data->{"battle_history"};
             $score_win = self::SCORE_WIN;
+            $ticket = $json_data->{"ticket"};
 
             /** @var User $user */
             $user = TableRegistry::get('Users')->get($this->Auth->user('id'));
 
             $previous_level = $user->getCoordinateLevel();
-            self::incrementUserCoordinatePoint($user, $score);
+            // セッションとPOSTされてきたチケットが同じか照合
+            if (isset($_SESSION['ticket']) && $_SESSION['ticket'] === $ticket) {
+              // 使用済みチケットの無効化
+              unset($_SESSION['ticket']);
+
+              // コーディネートポイントのアップデート
+              self::incrementUserCoordinatePoint($user, $score);
+            }
             $current_level = $user->getCoordinateLevel();
             $point_to_next_level = $user->getPointToNextLevel();
 
