@@ -17,6 +17,13 @@ body {
     float: left;
 }
 
+.span5 {
+    width: 280px;
+    margin: 0 10px;
+    float: left;
+    zoom: 0.6;
+}
+
 .rank {
     font-size: 24px;
     margin: 4px 0;

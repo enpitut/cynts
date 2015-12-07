@@ -14,7 +14,7 @@ use App\Model\Criteria;
  */
 class RankingsController extends AppController
 {
-    const RANKING_SHOW_LIMIT = 9;
+    const RANKING_SHOW_LIMIT = 13;
     const RANKING_TYPE_LIKE = 'like';
     const RANKING_TYPE_UNLIKE = 'unlike';
 
