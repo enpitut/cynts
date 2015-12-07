@@ -100,7 +100,7 @@ class Item extends Entity
             Item::CATEGORY_PANTS => 'パンツ',
             Item::CATEGORY_JACKET => 'ジャケット',
             Item::CATEGORY_SHOES => 'シューズ',
-            Item::CATEGORY_SKIRT => 'シャツ',
+            Item::CATEGORY_SKIRT => 'スカート',
             Item::CATEGORY_CARDIGAN => 'カーデイガン',
         ];
     }
