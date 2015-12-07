@@ -1,5 +1,6 @@
-[id^="modal_help"] {
-    position: absolute;
+#modal_help {
+    position: fixed;
+    display: table;
     top: 0;
     left: 0;
     width: 100%;
@@ -9,25 +10,40 @@
     color: #eee;
 }
 
+#center_window {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+[id^="modal_help_"] {
+    display: inline-flex;
+    flex-direction: column;
+}
+
 [class^="help_window"] {
-    background-color: #444;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    padding: 10px 25px 10px 25px;
-    position: absolute;
+    background-color: #666;
+    padding: 20px 25px 20px 25px;
+    text-align: left;
+    display: inline-block;
+    line-height: 1.5em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
-.help_window_header_title {
-    margin: 8% 0 0 8%;
+#help_title {
+    padding: 10px;
+    color: darkorange;
+    background-color: #222;
+    text-align: center;
+    display: inline-block;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
-.help_window_battlecolumn {
-    margin: 20% 0 0 31.5%;
-}
-
-.help_window_finish_button {
-    margin: 70% 0 0 32%;
+.help_window span {
+    color: #000;
+    font-weight: bold;
 }
 
 #close_message {
