@@ -30,6 +30,10 @@ class Item extends Entity
     const COLOR_OLIVE = 14;
     const COLOR_OFF_WHITE = 15;
     const COLOR_WINE = 16;
+    const COLOR_DARK_GRAY = 17;
+    const COLOR_LIGHT_BLUE = 18;
+    const COLOR_LIGHT_GRAY = 19;
+    const COLOR_NATURAL = 20;
 
     const CATEGORY_T_SHIRT = 1;
     const CATEGORY_SHIRT = 2;
@@ -38,6 +42,7 @@ class Item extends Entity
     const CATEGORY_SHOES = 5;
     const CATEGORY_SKIRT = 6;
     const CATEGORY_CARDIGAN = 7;
+    const CATEGORY_SWEATER = 8;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -102,6 +107,7 @@ class Item extends Entity
             Item::CATEGORY_SHOES => 'シューズ',
             Item::CATEGORY_SKIRT => 'スカート',
             Item::CATEGORY_CARDIGAN => 'カーディガン',
+            Item::CATEGORY_SWEATER => 'セーター',
         ];
     }
 
@@ -127,6 +133,10 @@ class Item extends Entity
             Item::COLOR_OLIVE => 'オリーブ',
             Item::COLOR_OFF_WHITE => 'クリーム',
             Item::COLOR_WINE => 'ワイン',
+            Item::COLOR_DARK_GRAY => 'ダークグレー',
+            Item::COLOR_LIGHT_BLUE => 'ライトブルー',
+            Item::COLOR_LIGHT_GRAY => 'ライトグレー',
+            Item::COLOR_NATURAL => 'ナチュラル',
         ];
     }
 }
