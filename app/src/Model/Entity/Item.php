@@ -10,6 +10,33 @@ class Item extends Entity
 {
     const ITEM_PHOTO_DIRECTORY_ROOT = 'items/';
 
+    const SEX_MAN = 0;
+    const SEX_WOMAN = 1;
+    const SEX_UNISEX = 2;  // Union of man and woman
+
+    const COLOR_WHITE = 1;
+    const COLOR_BLACK = 2;
+    const COLOR_RED = 3;
+    const COLOR_ORANGE = 4;
+    const COLOR_DARK_GREEN = 5;
+    const COLOR_BLUE = 6;
+    const COLOR_NAVY = 7;
+    const COLOR_GRAY = 8;
+    const COLOR_BROWN = 9;
+    const COLOR_GREEN = 10;
+    const COLOR_PINK = 11;
+    const COLOR_BEIGE = 12;
+    const COLOR_YELLOW = 13;
+    const COLOR_OLIVE = 14;
+    const COLOR_OFF_WHITE = 15;
+    const COLOR_WINE = 16;
+
+    const CATEGORY_T_SHIRT = 1;
+    const CATEGORY_SHIRT = 2;
+    const CATEGORY_PANTS = 3;
+    const CATEGORY_JACKET = 4;
+    const CATEGORY_SHOES = 5;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      * Note that '*' is set to true, which allows all unspecified fields to be
@@ -48,13 +75,15 @@ class Item extends Entity
     }
 
     /**
+     * 定数としては Item::SEX_UNISEX も存在するが，このリストは検索条件であるため，ここには含めない
+     *
      * @return array
      */
     public static function getSexes()
     {
         return [
-            0 => 'men',
-            1 => 'women',
+            Item::SEX_MAN => 'men',
+            Item::SEX_WOMAN => 'women',
         ];
     }
 
@@ -64,11 +93,11 @@ class Item extends Entity
     public static function getCategories()
     {
         return [
-            1 => 'T-shirt',
-            2 => 'Shirt',
-            3 => 'Pants',
-            4 => 'Jacket',
-            5 => 'Shoes',
+            Item::CATEGORY_T_SHIRT => 'T-shirt',
+            Item::CATEGORY_SHIRT => 'Shirt',
+            Item::CATEGORY_PANTS => 'Pants',
+            Item::CATEGORY_JACKET => 'Jacket',
+            Item::CATEGORY_SHOES => 'Shoes',
         ];
     }
 
@@ -78,22 +107,22 @@ class Item extends Entity
     public static function getColors()
     {
         return [
-            1 => 'WHITE',
-            2 => 'BLACK',
-            3 => 'RED',
-            4 => 'ORANGE',
-            5 => 'DARK_GREEN',
-            6 => 'BLUE',
-            7 => 'NAVY',
-            8 => 'GRAY',
-            9 => 'BROWN',
-            10 => 'GREEN',
-            11 => 'PINK',
-            12 => 'BEIGE',
-            13 => 'YELLOW',
-            14 => 'OLIVE',
-            15 => 'OFF_WHITE',
-            16 => 'WINE',
+            Item::COLOR_WHITE => 'WHITE',
+            Item::COLOR_BLACK => 'BLACK',
+            Item::COLOR_RED => 'RED',
+            Item::COLOR_ORANGE => 'ORANGE',
+            Item::COLOR_DARK_GREEN => 'DARK_GREEN',
+            Item::COLOR_BLUE => 'BLUE',
+            Item::COLOR_NAVY => 'NAVY',
+            Item::COLOR_GRAY => 'GRAY',
+            Item::COLOR_BROWN => 'BROWN',
+            Item::COLOR_GREEN => 'GREEN',
+            Item::COLOR_PINK => 'PINK',
+            Item::COLOR_BEIGE => 'BEIGE',
+            Item::COLOR_YELLOW => 'YELLOW',
+            Item::COLOR_OLIVE => 'OLIVE',
+            Item::COLOR_OFF_WHITE => 'OFF_WHITE',
+            Item::COLOR_WINE => 'WINE',
         ];
     }
 }

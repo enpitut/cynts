@@ -32,7 +32,8 @@ class UsersTable extends Table
         ]);
 
         $this->hasMany('Favorites', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
+            'sort' => ['Favorites.created_at' => 'DESC'],
         ]);
     }
 
@@ -110,6 +111,10 @@ class UsersTable extends Table
             )
             ->requirePresence('retype_password', 'create')
             ->notEmpty('retype_password', 'パスワードを再入力してください');
+
+        $validator
+            ->add('coordinate_point', 'valid', ['rule' => 'integer'])
+            ->allowEmpty('coordinate_point');
 
         $validator
             ->add('created_at', 'valid', ['rule' => 'datetime'])

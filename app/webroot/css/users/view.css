@@ -1,0 +1,10 @@
+.mode_tab {
+    font-size: 22px;
+    margin: 10px 10px 0 10px;
+    color: white;
+}
+
+.clickable a {
+    color: lightslategray;
+    font-size: 18px;
+}

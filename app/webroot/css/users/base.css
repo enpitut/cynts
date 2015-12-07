@@ -13,11 +13,9 @@
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
 }
-.side_contents h1{
-    text-align: center;
-    color: white;
-    font-size: small;
-    border-bottom: 1px solid white;
+
+.coordinate_level {
+    font-size: 15px;
 }
 
 #profile table{
@@ -36,6 +34,13 @@
     width: 570px;
     text-align: center;
 }
+
+.side_contents h3 {
+    text-align: center;
+    border-bottom: 1px solid white;
+    color: orange;
+}
+
 #main_contents h3 {
     text-align: center;
     border-bottom: 1px solid white;
@@ -45,8 +50,3 @@
     width: 150px;
     margin: 10px;
 }
-
-#related_coordinates {
-    margin: 0 auto;
-}
-

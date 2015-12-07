@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * Coordinate Entity.
@@ -30,5 +31,26 @@ class Coordinate extends Entity
     protected function _getPhotoPath()
     {
         return self::COORDINATE_PHOTO_DIRECTORY_ROOT . $this->_properties['photo'];
+    }
+
+    protected function _getPrice()
+    {
+        // もっとうまい持ってき方があるかも...?
+        if(array_key_exists('id', $this->_properties)) {
+            $coordinate_id = $this->_properties['id'];
+            $coordinate_table = TableRegistry::get('Coordinates');
+            $coordinate = $coordinate_table->get($coordinate_id, [
+                    'contain' => ['Items']
+                ]
+            );
+            $coordinate_price = 0;
+            foreach($coordinate->items as $item) {
+                $coordinate_price += (int)$item->price;
+            }
+            return $coordinate_price;
+        } else {
+            return 0;
+        }
+
     }
 }

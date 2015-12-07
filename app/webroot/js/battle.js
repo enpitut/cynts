@@ -11,6 +11,7 @@ var n_continuously_like = 1;
 var n_battle = 0;
 var usr_score = 0;
 var battle_info = {};
+var battle_filter = {};
 const MAX_N_BATTLE = 30;
 const NUM_FOR_FAV = 10;
 
@@ -37,9 +38,6 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
 
         // コーデが押下された際の通常処理(スコアの計算・保持, 新たなコーデの取得・表示)
         dfd = dfd.then(function() {
-                return getScore(like_coordinate_id);
-            }
-        ).then(function() {
                 return getNewCoordinate(like_coordinate_id, dislike_coordinate_id);
             }
         ).then(function(new_coordinate_data) {
@@ -63,6 +61,11 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
         }
         previous_like_coordinate_id = like_coordinate_id;
 
+        dfd = dfd.then(function() {
+                return getScore(like_coordinate_id);
+            }
+        );
+
         dfd.done(function() {
             n_battle++;
             // バトル終了判定
@@ -78,6 +81,8 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
                 buttonElement.setAttribute('onclick', action);
                 element.appendChild(buttonElement);
             }
+        }).fail(function() {
+            // TODO: ちゃんとエラーハンドリングする
         });
     } catch (exception) {
         alert(exception);
@@ -132,7 +137,7 @@ function getScore(like_coordinate_id) {
     ).done(function(result) {
             var result_data = JSON.parse(result);
             if (!result_data["hasSucceeded"]) {
-                throw new Error("Illegal post value");
+                throw new Error(result_data["errorMessage"]);
             }
 
             // コーデバトルの履歴を保持する
@@ -171,7 +176,8 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
     sendPost("getNewCoordinate",
         {
             liked_coordinate_id: liked_coordinate_id,
-            disliked_coordinate_id: disliked_coordinate_id
+            disliked_coordinate_id: disliked_coordinate_id,
+            coordinate_criteria: JSON.stringify(battle_filter)
         },
         null
     ).done(
@@ -179,7 +185,9 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
             // 重複しない新たなコーデを取得する
             var new_coordinate = JSON.parse(coordinate_data);
             if (!new_coordinate["hasSucceeded"]) {
-                throw new Error("Illegal post value");
+                alert(new_coordinate["errorMessage"]);
+                $.Deferred().reject('Fail to get new coordinate');
+                throw new Error('Fail to get new coordinate');
             }
             // 取得したコーデを次の then ブロックに渡す
             dfd.resolve(new_coordinate);
@@ -245,6 +253,37 @@ function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side
 
     return dfd.promise();
 }
+
+
+/**
+ * バトルの条件(性別，季節等)が選択された際に呼び出される
+ * バトルのフィルタリング条件をリストで格納しておく
+ * 季節に関しては，春夏秋冬を4bitのビット列(選択されていれば1，そうでなければ0)として保持する
+ */
+function setBattleFilter() {
+    var select_forms = document.getElementsByClassName('criteria_value');
+    var season_binary_string =
+        ($("[name=spring]").prop("checked") ? "1" : "0") +
+        ($("[name=summer]").prop("checked") ? "1" : "0") +
+        ($("[name=autumn]").prop("checked") ? "1" : "0") +
+        ($("[name=winter]").prop("checked") ? "1" : "0");
+    if (season_binary_string === "0000") {
+        delete battle_filter["season"];
+    } else {
+        battle_filter["season"] = season_binary_string;
+    }
+    
+    for(var i=0,l=select_forms.length; l>i; i++)
+    {
+        var index = select_forms[i].selectedIndex;
+        if (index != "") {
+            battle_filter[select_forms[i].name] = select_forms[i].options[index].value;
+        } else {
+            delete battle_filter[select_forms[i].name];
+        }
+    }
+}
+
 
 /**
  * コーデ画像をアニメーションで置き換える
