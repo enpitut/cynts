@@ -229,6 +229,7 @@ select {
     display: inline-block;
     font-size: large;
     width: 206px;
+    cursor: pointer;
 }
 
 p.each_actual_point {
