@@ -25,7 +25,7 @@ class UsersController extends AppController
      * @param string|null $user_id
      * @param string|null $mode 'coordinates' or 'favorites'
      */
-    public function view($user_id = null, $mode = null)
+    public function view(string $user_id = null, string $mode = null)
     {
         if ((int)$this->Auth->user('id') === (int)$user_id) {
             $this->set('is_self_page', true);

@@ -53,12 +53,9 @@ class Item extends Entity
     /**
      * @return string[]
      */
-    protected function _getPhotoPaths()
+    protected function _getPhotoPaths() : array
     {
-        $photos = json_decode($this->_properties['photos']);
-        if (is_null($photos)) {
-            $photos = [];
-        }
+        $photos = json_decode($this->_properties['photos']) ?? [];
         $photo_paths = [];
         foreach ($photos as $photo) {
             $photo_paths[] = self::ITEM_PHOTO_DIRECTORY_ROOT . $photo;
@@ -69,7 +66,7 @@ class Item extends Entity
     /**
      * @return string[]
      */
-    protected function _getSizeArray()
+    protected function _getSizeArray() : array
     {
         return json_decode($this->_properties['sizes']);
     }
@@ -79,7 +76,7 @@ class Item extends Entity
      *
      * @return array
      */
-    public static function getSexes()
+    public static function getSexes() : array
     {
         return [
             Item::SEX_MAN => 'men',
@@ -90,7 +87,7 @@ class Item extends Entity
     /**
      * @return array
      */
-    public static function getCategories()
+    public static function getCategories() : array
     {
         return [
             Item::CATEGORY_T_SHIRT => 'T-shirt',
@@ -104,7 +101,7 @@ class Item extends Entity
     /**
      * @return array
      */
-    public static function getColors()
+    public static function getColors() : array
     {
         return [
             Item::COLOR_WHITE => 'WHITE',

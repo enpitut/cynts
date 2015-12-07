@@ -34,13 +34,9 @@ class RankingsController extends AppController
     }
 
     /**
-     * View method
-     *
-     * @param null $type
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @param string|null $type
      */
-    public function view($type = null)
+    public function view(string $type = null)
     {
         switch ($type) {
             case self::RANKING_TYPE_UNLIKE:

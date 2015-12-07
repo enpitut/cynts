@@ -57,9 +57,13 @@ class User extends Entity
      * @see https://goo.gl/mXUJRz google graph
      *
      * @return float
+     * @throws \Exception
      */
     public function getCoordinateLevel()
     {
+        if (($this->_properties['coordinate_point'] <=> 0) === -1) {
+            throw new \Exception('Invalid coordinate_point');
+        }
         return floor(
             log(
                 $this->_properties['coordinate_point'] / self::LEVEL_METHOD_DIV + self::LEVEL_METHOD_PLUS
