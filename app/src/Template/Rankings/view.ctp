@@ -26,20 +26,20 @@
 <?= $this->element('criteria_table') ?>
 
 <div id="rankings">
-    <?php $loop = (2 - SHOW_NUMBER_UNDER_4); ?>
+    <?php $loop = -3; ?>
     <?php foreach ($ranking as $coordinate): ?>
-<?php $rank = $loop + (SHOW_NUMBER_UNDER_4 - 1); ?>
-<?php if ($loop % SHOW_NUMBER_UNDER_4 === 0 || $loop === (2 - SHOW_NUMBER_UNDER_4)) { ?>
+<?php $rank = $loop + 4; ?>
+<?php if ($loop % (SHOW_NUMBER_UNDER_4) === 0 || $loop === -3) { ?>
     <div class="row">
         <?php } ?>
 
-        <?php if ($loop > (4 - SHOW_NUMBER_UNDER_4)) { ?>
+        <?php if ($loop > -1) { ?>
         <div class="span5">
             <?php } else { ?>
             <div class="span3">
                 <?php } ?>
                 <div class="rank">
-                    <?= $this->element('rank', ['rank' => $rank]) ?>
+                    <?= $this->element('rank', ['rank' => $rank]); ?>
                 </div>
                 <div class="photo">
                     <?= $this->Html->link(
