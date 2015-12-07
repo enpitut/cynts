@@ -84,8 +84,8 @@ class Item extends Entity
     public static function getSexes()
     {
         return [
-            Item::SEX_MAN => 'men',
-            Item::SEX_WOMAN => 'women',
+            Item::SEX_MAN => '男',
+            Item::SEX_WOMAN => '女',
         ];
     }
 
@@ -95,13 +95,13 @@ class Item extends Entity
     public static function getCategories()
     {
         return [
-            Item::CATEGORY_T_SHIRT => 'T-shirt',
-            Item::CATEGORY_SHIRT => 'Shirt',
-            Item::CATEGORY_PANTS => 'Pants',
-            Item::CATEGORY_JACKET => 'Jacket',
-            Item::CATEGORY_SHOES => 'Shoes',
-            Item::CATEGORY_SKIRT => 'Skirt',
-            Item::CATEGORY_CARDIGAN => 'Cardigan',
+            Item::CATEGORY_T_SHIRT => 'Tシャツ',
+            Item::CATEGORY_SHIRT => 'シャツ',
+            Item::CATEGORY_PANTS => 'パンツ',
+            Item::CATEGORY_JACKET => 'ジャケット',
+            Item::CATEGORY_SHOES => 'シューズ',
+            Item::CATEGORY_SKIRT => 'シャツ',
+            Item::CATEGORY_CARDIGAN => 'カーデイガン',
         ];
     }
 
@@ -111,22 +111,22 @@ class Item extends Entity
     public static function getColors()
     {
         return [
-            Item::COLOR_WHITE => 'WHITE',
-            Item::COLOR_BLACK => 'BLACK',
-            Item::COLOR_RED => 'RED',
-            Item::COLOR_ORANGE => 'ORANGE',
-            Item::COLOR_DARK_GREEN => 'DARK_GREEN',
-            Item::COLOR_BLUE => 'BLUE',
-            Item::COLOR_NAVY => 'NAVY',
-            Item::COLOR_GRAY => 'GRAY',
-            Item::COLOR_BROWN => 'BROWN',
-            Item::COLOR_GREEN => 'GREEN',
-            Item::COLOR_PINK => 'PINK',
-            Item::COLOR_BEIGE => 'BEIGE',
-            Item::COLOR_YELLOW => 'YELLOW',
-            Item::COLOR_OLIVE => 'OLIVE',
-            Item::COLOR_OFF_WHITE => 'OFF_WHITE',
-            Item::COLOR_WINE => 'WINE',
+            Item::COLOR_WHITE => '白',
+            Item::COLOR_BLACK => '黒',
+            Item::COLOR_RED => '赤',
+            Item::COLOR_ORANGE => 'オレンジ',
+            Item::COLOR_DARK_GREEN => '深緑',
+            Item::COLOR_BLUE => '青',
+            Item::COLOR_NAVY => '濃青',
+            Item::COLOR_GRAY => 'グレー',
+            Item::COLOR_BROWN => '茶',
+            Item::COLOR_GREEN => '緑',
+            Item::COLOR_PINK => 'ピンク',
+            Item::COLOR_BEIGE => '灰黄',
+            Item::COLOR_YELLOW => '黄色',
+            Item::COLOR_OLIVE => '薄緑',
+            Item::COLOR_OFF_WHITE => 'クリーム',
+            Item::COLOR_WINE => 'ワイン',
         ];
     }
 }
