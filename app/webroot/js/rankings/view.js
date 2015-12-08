@@ -113,31 +113,31 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
     var base_template = templates[0];
     var user_information_template = templates[1];
 
-    for (var i = -3, len = coordinates["RANKING_SHOW_LIMIT"] - 3; i < len; i++) {
-        var index = String(i + 3);
+    for (var i = 0, len = coordinates["RANKING_SHOW_LIMIT"]; i < len; i++) {
+        var index = String(i);
 
         // コーデが1つも存在しない場合のエラーメッセージ
-        if (i === -3 && coordinates[index] === undefined) {
+        if ((i - 3) === 0 && coordinates[index] === undefined) {
             return"</br><span>条件に該当するコーディネートが存在しません</span>";
         }
 
         // 該当するランクのコーデが存在しない場合には何もしない
         if (coordinates[index] === undefined) {
-            if (i % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] !== 0) {
+            if ((i - 3) % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] !== 0) {
                 html += "</div>";
                 html += '<div class="clear"></div>';
             }
             continue;
         }
 
-        if (i % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] === 0 || i === -3) {
+        if ((i - 3) % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] === 0 || i === 0) {
             html += "<div class='row'>";
         }
 
-        var div_rank = getWordAndClassByRank(i+4);
+        var div_rank = getWordAndClassByRank(i + 1);
 
         var div_span = "";
-        if(i > -1) {
+        if(i > 2) {
             div_span = "div.span5";
         } else {
             div_span = "div.span3";
@@ -208,7 +208,7 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
 
         html += span;
 
-        if ((i + 1) % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] === 0) {
+        if ((i - 2) % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] === 0) {
             html += "</div>";
             html += '<div class="clear"></div>';
         }
