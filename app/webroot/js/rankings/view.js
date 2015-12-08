@@ -118,7 +118,7 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
 
         // コーデが1つも存在しない場合のエラーメッセージ
         if (i === 0 && coordinates[index] === undefined) {
-            return"</br><span>条件に該当するが存在しません</span>";
+            return"</br><span>条件に該当するコーディネートが存在しません</span>";
         }
 
         // 該当するランクのコーデが存在しない場合には何もしない
