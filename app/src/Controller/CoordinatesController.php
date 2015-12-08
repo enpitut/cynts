@@ -301,18 +301,19 @@ class CoordinatesController extends AppController
     {
         $this->autoRender = false;
         if ($this->request->is('post')) {
-            $favorite_id = $this->request->data('coordinate_id');
+            $favorite_id = filter_input(
+                INPUT_POST, 'coordinate_id', FILTER_SANITIZE_NUMBER_INT
+            );
             $user_id = $this->request->session()->read('Auth.User.id');
-            $result = null;
             try {
-                $result = $this->postFavorite($user_id, $favorite_id);
+                $this->postFavorite($user_id, $favorite_id);
             } catch (\Exception $e) {
                 trigger_error($e->getMessage(), E_USER_WARNING);
                 echo '{"hasSucceeded": false}';
                 exit;
             }
         }
-        echo '{"hasSucceeded": true, "id": ' . $result . '}';
+        echo '{"hasSucceeded": true}';
         exit;
     }
 

@@ -37,10 +37,13 @@ function sendPostInView(action, send_data, args) {
 }
 
 function addFavorite(favorite_id) {
-    var dfd = $.Deferred();
-
     sendPostInView("ajaxPostFavorite", {coordinate_id: favorite_id}, null)
-        .done(function() {
+        .done(function(response) {
+            var response_json = JSON.parse(response);
+            console.log(response_json);
+            if ( response_json["hasSucceeded"] === false ) {
+                throw new Error("Error adding favorite coordinate");
+            }
             alert("お気に入りに登録しました！");
             if(location.pathname === "/coordinates_battle/battle") {
                 showCoordinateDetail(favorite_id);
@@ -49,6 +52,4 @@ function addFavorite(favorite_id) {
             }
 
         });
-
-    return dfd.promise();
 }

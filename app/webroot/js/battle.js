@@ -413,7 +413,6 @@ function showCoordinateDetail(coordinate_id) {
                     $( 'html, body' ).prop({ scrollTop: now })
                 })
             });
-    });
-
+        });
     });
 }
