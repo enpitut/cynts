@@ -5,7 +5,7 @@
     <?= $this->Html->css('coordinates_battle/battle.css') ?>
     <?= $this->Html->css('coordinates/view.css') ?>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <?= $this->Html->script('battle.js') ?>
+    <?= $this->Html->script('coordinates_battle/battle.js') ?>
 
 </head>
 <body>
