@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php const SHOW_NUMBER_UNDER_4 = 5 ?>
     <?= $this->Html->script('rankings/view.js') ?>
     <script type="text/javascript">
         // rankings/view.js で使用する
@@ -29,7 +28,9 @@
     <?php $loop = -3; ?>
     <?php foreach ($ranking as $coordinate): ?>
 <?php $rank = $loop + 4; ?>
-<?php if ($loop % (SHOW_NUMBER_UNDER_4) === 0 || $loop === -3) { ?>
+<?php if ($loop
+% (\App\Controller\RankingsController::NUM_COLUMN_UNDER_RANK_4TH) === 0
+|| $loop === -3) { ?>
     <div class="row">
         <?php } ?>
 
@@ -103,12 +104,16 @@
                     </div>
                 </div>
             </div>
-            <?php if (++$loop % SHOW_NUMBER_UNDER_4 === 0) { ?>
+            <?php if (++$loop
+            % \App\Controller\RankingsController::NUM_COLUMN_UNDER_RANK_4TH
+            === 0) { ?>
         </div>
         <div class="clear"></div>
     <?php } ?>
         <?php endforeach; ?>
-        <?php if ($loop % SHOW_NUMBER_UNDER_4 !== 0) { ?>
+        <?php if ($loop
+        % \App\Controller\RankingsController::NUM_COLUMN_UNDER_RANK_4TH
+        !== 0) { ?>
     </div>
     <div class="clear"></div>
 <?php } ?>

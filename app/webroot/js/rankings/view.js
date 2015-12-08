@@ -113,58 +113,70 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
     var base_template = templates[0];
     var user_information_template = templates[1];
 
-    for (var i = 0, len = coordinates["RANKING_SHOW_LIMIT"]; i < len; i++) {
-        var index = String(i);
+    for (var i = -3, len = coordinates["RANKING_SHOW_LIMIT"] - 3; i < len; i++) {
+        var index = String(i + 3);
 
         // コーデが1つも存在しない場合のエラーメッセージ
-        if (i === 0 && coordinates[index] === undefined) {
-            return"</br><span>条件に該当するが存在しません</span>";
+        if (i === -3 && coordinates[index] === undefined) {
+            return"</br><span>条件に該当するコーディネートが存在しません</span>";
         }
 
         // 該当するランクのコーデが存在しない場合には何もしない
         if (coordinates[index] === undefined) {
-            if (i % 3 !== 0) {
+            if (i % "NUM_COLUMN_UNDER_RANK_4TH" !== 0) {
                 html += "</div>";
                 html += '<div class="clear"></div>';
             }
             continue;
         }
 
-        if (i % 3 === 0) {
+        if (i % "NUM_COLUMN_UNDER_RANK_4TH" === 0 || i === -3) {
             html += "<div class='row'>";
         }
 
-        var div_rank = getWordAndClassByRank(i+1);
-        var div_span3 = base_template;
-        div_span3 = div_span3.replace(
+        var div_rank = getWordAndClassByRank(i+4);
+
+        var div_span = "";
+        if(i > -1) {
+            div_span = "div.span5";
+        } else {
+            div_span = "div.span3";
+        }
+        var tmp = (($(base_template).filter(div_span).get())[0]);
+        var span = $('<div>').append($(tmp).clone());
+        $(span).each(function() {
+            span = $(this).html();
+        });
+
+        span = span.replace(
             /#\{ranking_class_extend}/g ,
             div_rank[0]
         );
-        div_span3 = div_span3.replace(
+        span = span.replace(
             /#\{rank}/g ,
             div_rank[1]
         );
-        div_span3 = div_span3.replace(
+        span = span.replace(
             /#\{coordinates_view_path}/g ,
             '/coordinates/view/' + coordinates[index]["id"]
         );
-        div_span3 = div_span3.replace(
+        span = span.replace(
             /#\{coordinates_photo_path}/g ,
             '/img/' + coordinates[index]["photo_path"]
         );
         // url に unlike が付加されていた場合には，表示ポイントを n_unlike に変更する
         if (coordinates["type"] === "like") {
-            div_span3 = div_span3.replace(
+            span = span.replace(
                 /#\{coordinates_score}/g ,
                 parseInt(coordinates[index]["n_like"])
             );
         } else {
-            div_span3 = div_span3.replace(
+            span = span.replace(
                 /#\{coordinates_score}/g ,
                 parseInt(coordinates[index]["n_unlike"])
             );
         }
-        div_span3 = div_span3.replace(
+        span = span.replace(
             /#\{coordinates_price}/g ,
             coordinates[index]["total_price"]
         );
@@ -183,20 +195,20 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
                 /#\{coordinates_user_name}/g ,
                 coordinates[index]["user_name"]
             );
-            div_span3 = div_span3.replace(
+            span = span.replace(
                 /#\{coordinates_user_information}/g,
                 div_user
             )
         } else {
-            div_span3 = div_span3.replace(
+            span = span.replace(
                 /#\{coordinates_user_information}/g ,
                 ""
             );
         }
 
-        html += div_span3;
+        html += span;
 
-        if (i % 3 === 2) {
+        if ((i + 1) % "NUM_COLUMN_UNDER_RANK_4TH" === 0) {
             html += "</div>";
             html += '<div class="clear"></div>';
         }
