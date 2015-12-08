@@ -64,7 +64,7 @@ class CoordinatesController extends AppController
         $isRegistered = false;
         $coordinate->favorite_disabled = true;
         foreach ($coordinate->favorites as $favorite) {
-            if($favorite->user_id === $access_user_id) {
+            if ($favorite->user_id === $access_user_id) {
                 $isRegistered = true;
                 break;
             }
@@ -243,25 +243,25 @@ class CoordinatesController extends AppController
     protected static function validateCriteria(array $request_data)
     {
         $criteria = [];
-        if (!empty($request_data['sex'])) {
+        if (strlen($request_data['sex']) !== 0) {
             if (array_key_exists($request_data['sex'], Item::getSexes())) {
                 $criteria['sex in'] = [(int)$request_data['sex'], Item::SEX_UNISEX];
             }
         }
 
-        if (!empty($request_data['category'])) {
+        if (strlen($request_data['category']) !== 0) {
             if (array_key_exists($request_data['category'], Item::getCategories())) {
                 $criteria['category'] = Item::getCategories()[$request_data['category']];
             }
         }
 
-        if (!empty($request_data['color'])) {
+        if (strlen(!empty($request_data['color'])) !== 0) {
             if (array_key_exists($request_data['color'], Item::getColors())) {
                 $criteria['color'] = Item::getColors()[$request_data['color']];
             }
         }
 
-        if (!empty($request_data['price'])) {
+        if (strlen(!empty($request_data['price'])) !== 0) {
             $price_limit = explode(',', $request_data['price']);
             if (count($price_limit) === 2) {
                 $criteria['price >='] = (int)$price_limit[0];
