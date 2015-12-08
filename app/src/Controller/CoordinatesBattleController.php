@@ -286,6 +286,19 @@ class CoordinatesBattleController extends AppController
         }
     }
 
+    public function createTicket() {
+        if ($this->request->is('post'))
+        {
+            $this->Session = $this->request->session();
+          
+            $ticket = md5(uniqid().mt_rand());
+            $this->Session->write('ticket', $ticket);
+            
+            echo sprintf('{"hasSucceeded": true, "ticket": "%s"}', $ticket);
+            exit;
+        }
+    }
+
     /**
      * POST メソッドで画面遷移してきた場合にのみ利用可能
      * JS 側のデータを受け渡すために，現在は JS 上で form タグを動的に生成し，それを実行することで result 画面に遷移させている
@@ -306,7 +319,15 @@ class CoordinatesBattleController extends AppController
             $user = TableRegistry::get('Users')->get($this->Auth->user('id'));
 
             $previous_level = $user->getCoordinateLevel();
-            self::incrementUserCoordinatePoint($user, $score);
+            
+            $this->Session = $this->request->session();
+            $ticket = $this->Session->read('ticket');
+
+            if ($ticket === $json_data->{'ticket'}) {
+                self::incrementUserCoordinatePoint($user, $score);
+            }
+            $this->Session->delete('ticket');
+            
             $current_level = $user->getCoordinateLevel();
             $point_to_next_level = $user->getPointToNextLevel();
 
