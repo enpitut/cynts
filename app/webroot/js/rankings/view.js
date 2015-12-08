@@ -113,7 +113,6 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
     var base_template = templates[0];
     var user_information_template = templates[1];
 
-    console.log(coordinates["RANKING_SHOW_LIMIT"]);
     for (var i = -3, len = coordinates["RANKING_SHOW_LIMIT"] - 3; i < len; i++) {
         var index = String(i + 3);
 
