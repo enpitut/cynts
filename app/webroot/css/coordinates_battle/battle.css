@@ -283,9 +283,3 @@ img.selected_coordinate_photo {
     line-height: 1;
     transition: .2s;
 }
-
-.search_area {
-    font-size: small;
-    margin: auto;
-}
-
