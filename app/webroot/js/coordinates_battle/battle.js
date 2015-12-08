@@ -1,6 +1,8 @@
 /**
  * battle.ctp で利用することを前提で作成しています
  * 他の場所では使用しないでください
+ *
+ * common.js をロードしていることを前提としています
  */
 
 var coordinate_id0; // mean side_a
@@ -11,7 +13,6 @@ var n_continuously_like = 1;
 var n_battle = 0;
 var usr_score = 0;
 var battle_info = {};
-var battle_filter = {};
 const MAX_N_BATTLE = 30;
 const NUM_FOR_FAV = 10;
 const COORDINATE_VIEW_ROOT = location.origin + "/coordinates/view"
@@ -108,22 +109,6 @@ function finishBattle() {
     });
 }
 
-/**
- * controller の action へ POST メソッドで ajax による通信を行う
- * @param action データ送信先の action
- * @param send_data action へ送信するデータ
- * @param args done ブロック等に引数でデータを渡したい場合には, ここに記述する
- * @returns {*}
- */
-function sendPost(action, send_data, args) {
-    return $.ajax({
-        type: "POST",
-        url: action,
-        data: send_data,
-        context: args
-    })
-}
-
 
 /**
  * 選択されたコーデからスコアを取得する
@@ -183,7 +168,8 @@ function getNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
         {
             liked_coordinate_id: liked_coordinate_id,
             disliked_coordinate_id: disliked_coordinate_id,
-            coordinate_criteria: JSON.stringify(battle_filter)
+            // criteria_json は，battle.ctp で criteria_table.ctp が読み込まれることを前提として利用する
+            coordinate_criteria: JSON.stringify(criteria_json)
         },
         null
     ).done(
@@ -260,36 +246,9 @@ function favoriteCoordinate(dislike_coordinate_id, like_coordinate_id, like_side
     return dfd.promise();
 }
 
-
-/**
- * バトルの条件(性別，季節等)が選択された際に呼び出される
- * バトルのフィルタリング条件をリストで格納しておく
- * 季節に関しては，春夏秋冬を4bitのビット列(選択されていれば1，そうでなければ0)として保持する
- */
-function setBattleFilter() {
-    var select_forms = document.getElementsByClassName('criteria_value');
-    var season_binary_string =
-        ($("[name=spring]").prop("checked") ? "1" : "0") +
-        ($("[name=summer]").prop("checked") ? "1" : "0") +
-        ($("[name=autumn]").prop("checked") ? "1" : "0") +
-        ($("[name=winter]").prop("checked") ? "1" : "0");
-    if (season_binary_string === "0000") {
-        delete battle_filter["season"];
-    } else {
-        battle_filter["season"] = season_binary_string;
-    }
-
-    for(var i=0,l=select_forms.length; l>i; i++)
-    {
-        var index = select_forms[i].selectedIndex;
-        if (index != "") {
-            battle_filter[select_forms[i].name] = select_forms[i].options[index].value;
-        } else {
-            delete battle_filter[select_forms[i].name];
-        }
-    }
+function didChangeCoordinatesCriteria() {
+    updateCriteriaJson();
 }
-
 
 /**
  * コーデ画像をアニメーションで置き換える
