@@ -36,6 +36,11 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
     try {
         var dfd = $.Deferred().resolve().promise();
 
+        dfd = dfd.then(function() {
+                return getScore(like_coordinate_id);
+            }
+        );
+
         // コーデが押下された際の通常処理(スコアの計算・保持, 新たなコーデの取得・表示)
         dfd = dfd.then(function() {
                 return getNewCoordinate(like_coordinate_id, dislike_coordinate_id);
@@ -60,11 +65,6 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
             n_continuously_like = 1;
         }
         previous_like_coordinate_id = like_coordinate_id;
-
-        dfd = dfd.then(function() {
-                return getScore(like_coordinate_id);
-            }
-        );
 
         dfd.done(function() {
             n_battle++;
@@ -272,7 +272,7 @@ function setBattleFilter() {
     } else {
         battle_filter["season"] = season_binary_string;
     }
-    
+
     for(var i=0,l=select_forms.length; l>i; i++)
     {
         var index = select_forms[i].selectedIndex;
