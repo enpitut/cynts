@@ -34,6 +34,8 @@ class Item extends Entity
     const COLOR_LIGHT_BLUE = 18;
     const COLOR_LIGHT_GRAY = 19;
     const COLOR_NATURAL = 20;
+    const COLOR_KHAKI = 21;
+    const COLOR_PURPLE = 22;
 
     const CATEGORY_T_SHIRT = 1;
     const CATEGORY_SHIRT = 2;
@@ -137,6 +139,8 @@ class Item extends Entity
             Item::COLOR_LIGHT_BLUE => 'ライトブルー',
             Item::COLOR_LIGHT_GRAY => 'ライトグレー',
             Item::COLOR_NATURAL => 'ナチュラル',
+            Item::COLOR_KHAKI => 'カーキ',
+            Item::COLOR_PURPLE => 'パープル',
         ];
     }
 }
