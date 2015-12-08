@@ -3,6 +3,10 @@
 <head>
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('coordinates_battle/battle.css') ?>
+    <?= $this->Html->css('coordinates/view.css') ?>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <?= $this->Html->script('battle.js') ?>
+
 </head>
 <body>
 
@@ -48,24 +52,16 @@
         }
 
         echo "<li>";
-        $a_side_coordinate_image = $this->Html->image(
-            $battle_result->{"a_side_coordinate_photo_path"},
-            [
-                'class' => $a_side_coordinate_class
-            ]
-        );
-        echo $this->Html->link(
-            $a_side_coordinate_image,
-            [
-                'controller' => 'Coordinates',
-                'action' => 'view',
-                $battle_result->{"a_side_coordinate_id"}
-            ],
-            [
-                'target' => '_blank',
-                'escape' => false
-            ]
-        );
+        echo $this->Html->image(
+                $battle_result->{"a_side_coordinate_photo_path"},
+                [
+                    'onClick' => sprintf(
+                        'showCoordinateDetail(%d)',
+                        $battle_result->{"a_side_coordinate_id"}
+                    ),
+                    'class' => $a_side_coordinate_class
+
+                ]) . PHP_EOL;
         echo sprintf(
             '<p class="each_actual_point %s">point : %d</p>',
             $a_side_p_class, $battle_result->{"a_side_coordinate_point"}
@@ -73,24 +69,16 @@
         echo "</li>";
 
         echo "<li>";
-        $b_side_coordinate_image = $this->Html->image(
-            $battle_result->{"b_side_coordinate_photo_path"},
-            [
-                'class' => $b_side_coordinate_class
-            ]
-        );
-        echo $this->Html->link(
-            $b_side_coordinate_image,
-            [
-                'controller' => 'Coordinates',
-                'action' => 'view',
-                $battle_result->{"b_side_coordinate_id"}
-            ],
-            [
-                'target' => '_blank',
-                'escape' => false
-            ]
-        );
+        echo $this->Html->image(
+                $battle_result->{"b_side_coordinate_photo_path"},
+                [
+                    'onClick' => sprintf(
+                        'showCoordinateDetail(%d)',
+                        $battle_result->{"b_side_coordinate_id"}
+                    ),
+                    'class' => $b_side_coordinate_class
+
+                ]) . PHP_EOL;
         echo sprintf(
             '<p class="each_actual_point %s">point : %d</p>',
             $b_side_p_class, $battle_result->{"b_side_coordinate_point"}
