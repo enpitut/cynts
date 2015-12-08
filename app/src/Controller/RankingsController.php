@@ -14,9 +14,10 @@ use App\Model\Criteria;
  */
 class RankingsController extends AppController
 {
-    const RANKING_SHOW_LIMIT = 9;
+    const RANKING_SHOW_LIMIT = 23;
     const RANKING_TYPE_LIKE = 'like';
     const RANKING_TYPE_UNLIKE = 'unlike';
+    const NUM_COLUMN_UNDER_RANK_4TH = 5;
 
     /** @var \App\Model\Table\CoordinatesTable $Coordinates */
     protected $Coordinates;
@@ -88,6 +89,7 @@ class RankingsController extends AppController
                 ];
             }
             $coordinates_array["RANKING_SHOW_LIMIT"] = self::RANKING_SHOW_LIMIT;
+            $coordinates_array["NUM_COLUMN_UNDER_RANK_4TH"] = self::NUM_COLUMN_UNDER_RANK_4TH;
             $coordinates_array["type"] = $type;
             $coordinates_array["hasSucceeded"] = true;
 
