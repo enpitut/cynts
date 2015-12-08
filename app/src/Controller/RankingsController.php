@@ -89,6 +89,7 @@ class RankingsController extends AppController
                 ];
             }
             $coordinates_array["RANKING_SHOW_LIMIT"] = self::RANKING_SHOW_LIMIT;
+            $coordinates_array["NUM_COLUMN_UNDER_RANK_4TH"] = self::NUM_COLUMN_UNDER_RANK_4TH;
             $coordinates_array["type"] = $type;
             $coordinates_array["hasSucceeded"] = true;
 

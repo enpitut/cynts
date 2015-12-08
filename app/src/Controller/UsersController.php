@@ -10,6 +10,9 @@ use Cake\Event\Event;
  */
 class UsersController extends AppController
 {
+    const MODE_COORDINATES = 'coordinates';
+    const MODE_FAVORITES = 'favorites';
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
@@ -19,25 +22,36 @@ class UsersController extends AppController
     }
 
     /**
-     * View method
-     *
-     * @param string|null $id User id.
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @param string|null $user_id
+     * @param string|null $mode 'coordinates' or 'favorites'
      */
-    public function view($id = null)
+    public function view($user_id = null, $mode = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Coordinates', 'Favorites']
-        ]);
-        $this->set('user', $user);
-        $this->set('_serialize', ['user']);
-
-        if ((int)$this->Auth->user('id') === (int)$id) {
+        if ((int)$this->Auth->user('id') === (int)$user_id) {
             $this->set('is_self_page', true);
         } else {
             $this->set('is_self_page', false);
         }
+
+        switch ($mode) {
+            case self::MODE_FAVORITES:
+                $user = $this->Users->get($user_id, ['contain' => ['Favorites.Coordinates']]);
+                $favorites = $user->favorites;
+                $coordinates = [];
+                foreach ($favorites as $_val) {
+                    $coordinates[] = $_val->coordinate;
+                }
+                break;
+            case self::MODE_COORDINATES:
+            default:
+                $user = $this->Users->get($user_id, ['contain' => ['Coordinates']]);
+                $coordinates = $user->coordinates;
+                $mode = self::MODE_COORDINATES;
+        }
+
+        $this->set('user', $user);
+        $this->set('mode', $mode);
+        $this->set('coordinates', $coordinates);
     }
 
     /**

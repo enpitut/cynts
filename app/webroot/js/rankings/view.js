@@ -113,6 +113,7 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
     var base_template = templates[0];
     var user_information_template = templates[1];
 
+    console.log(coordinates["RANKING_SHOW_LIMIT"]);
     for (var i = -3, len = coordinates["RANKING_SHOW_LIMIT"] - 3; i < len; i++) {
         var index = String(i + 3);
 
@@ -123,14 +124,14 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
 
         // 該当するランクのコーデが存在しない場合には何もしない
         if (coordinates[index] === undefined) {
-            if (i % "NUM_COLUMN_UNDER_RANK_4TH" !== 0) {
+            if (i % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] !== 0) {
                 html += "</div>";
                 html += '<div class="clear"></div>';
             }
             continue;
         }
 
-        if (i % "NUM_COLUMN_UNDER_RANK_4TH" === 0 || i === -3) {
+        if (i % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] === 0 || i === -3) {
             html += "<div class='row'>";
         }
 
@@ -208,7 +209,7 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
 
         html += span;
 
-        if ((i + 1) % "NUM_COLUMN_UNDER_RANK_4TH" === 0) {
+        if ((i + 1) % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] === 0) {
             html += "</div>";
             html += '<div class="clear"></div>';
         }

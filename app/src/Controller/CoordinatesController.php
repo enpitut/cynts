@@ -60,6 +60,18 @@ class CoordinatesController extends AppController
             }
         }
 
+        $access_user_id = $this->request->session()->read('Auth.User.id');
+        $isRegistered = false;
+        $coordinate->favorite_disabled = true;
+        foreach ($coordinate->favorites as $favorite) {
+            if ($favorite->user_id === $access_user_id) {
+                $isRegistered = true;
+                break;
+            }
+        }
+        $coordinate->favorite_disabled = $isRegistered ||
+            is_null($access_user_id);
+
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
@@ -234,25 +246,25 @@ class CoordinatesController extends AppController
     protected static function validateCriteria(array $request_data)
     {
         $criteria = [];
-        if (!empty($request_data['sex'])) {
+        if (strlen($request_data['sex']) !== 0) {
             if (array_key_exists($request_data['sex'], Item::getSexes())) {
                 $criteria['sex in'] = [(int)$request_data['sex'], Item::SEX_UNISEX];
             }
         }
 
-        if (!empty($request_data['category'])) {
+        if (strlen($request_data['category']) !== 0) {
             if (array_key_exists($request_data['category'], Item::getCategories())) {
                 $criteria['category'] = Item::getCategories()[$request_data['category']];
             }
         }
 
-        if (!empty($request_data['color'])) {
+        if (strlen(!empty($request_data['color'])) !== 0) {
             if (array_key_exists($request_data['color'], Item::getColors())) {
                 $criteria['color'] = Item::getColors()[$request_data['color']];
             }
         }
 
-        if (!empty($request_data['price'])) {
+        if (strlen(!empty($request_data['price'])) !== 0) {
             $price_limit = explode(',', $request_data['price']);
             if (count($price_limit) === 2) {
                 $criteria['price >='] = (int)$price_limit[0];
@@ -275,6 +287,34 @@ class CoordinatesController extends AppController
             ->where($criteria)
             ->limit(self::N_ITEM_LIST_SHOW);
         return $items;
+    }
+
+
+    /**
+     * Ajax用関数
+     * お気に入りに入れたいコーディネートの ID を受け取り，
+     * お気に入りに追加する処理を行う
+     *
+     * @throws \Exception
+     */
+    public function ajaxPostFavorite()
+    {
+        $this->autoRender = false;
+        if ($this->request->is('post')) {
+            $favorite_id = filter_input(
+                INPUT_POST, 'coordinate_id', FILTER_SANITIZE_NUMBER_INT
+            );
+            $user_id = $this->request->session()->read('Auth.User.id');
+            try {
+                $this->postFavorite($user_id, $favorite_id);
+            } catch (\Exception $e) {
+                trigger_error($e->getMessage(), E_USER_WARNING);
+                echo '{"hasSucceeded": false}';
+                exit;
+            }
+        }
+        echo '{"hasSucceeded": true}';
+        exit;
     }
 
     /**
