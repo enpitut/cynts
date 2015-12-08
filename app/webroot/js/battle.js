@@ -14,6 +14,8 @@ var battle_info = {};
 var battle_filter = {};
 const MAX_N_BATTLE = 30;
 const NUM_FOR_FAV = 10;
+const COORDINATE_VIEW_ROOT = location.origin + "/coordinates/view"
+const OFFSET_BOTTOM = 70;
 
 /**
  * コーデ画像を更新する
@@ -372,4 +374,45 @@ function animateCoordinateImage(coordinate_data, side_id) {
     );
 
     return dfd.promise();
+}
+
+function showCoordinateDetail(coordinate_id) {
+    var now = $( window ).scrollTop() ;
+
+    $("body").wrapInner('<div id="wrapper"></div>');
+    $("#wrapper").css({
+        position: 'fixed',
+        width: '100%',
+        top: -1 * now
+    });
+
+    $("body").append('<div id="modal_overlay"></div>' +
+        '<div id="modal_window"></div>');
+
+    $("#modal_window").load(COORDINATE_VIEW_ROOT + "/" + coordinate_id + " #coordinateDetail", function() {
+        $(document).ready(function() {
+            $("#modal_window").css("margin-bottom", OFFSET_BOTTOM + "px");
+
+            $(".image").fadeIn(700);
+            $.getScript("../js/coordinates/view.js");
+            $("#modal_window").prepend('<div id="window_header">' +
+                '<div id="window_title">コーディネートの詳細</div><div id="close_button">×</div></div>');
+            $("#modal_overlay").fadeIn("slow");
+            $("#modal_window").fadeIn("slow");
+
+            $("#modal_overlay").unbind().click(function() {
+                $("#modal_overlay, #modal_window").fadeOut("slow", function() {
+                    $("#modal_overlay, #modal_window").remove();
+                })
+            });
+
+            $("#close_button").unbind().click(function() {
+                $("#modal_overlay, #modal_window").fadeOut("slow", function() {
+                    $("#modal_overlay, #modal_window").remove();
+                    $("body > #wrapper").contents().unwrap();
+                    $( 'html, body' ).prop({ scrollTop: now })
+                })
+            });
+        });
+    });
 }
