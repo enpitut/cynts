@@ -95,13 +95,17 @@ function finishBattle() {
     battle_info.max_n_battle = n_battle;
     battle_info.score = usr_score;
 
-    // redirect
-    var html =
-        "<form method='post' action='result' id='refresh' style='display: none;'>" +
-        "<input type='hidden' name='battle_info' value='" + JSON.stringify(battle_info) + "' >" +
-        "</form>";
-    $("body").append(html);
-    $("#refresh").submit();
+    sendPost("createTicket", {ticket: null}, null).done(function(result) {
+        var result_data = JSON.parse(result);
+        battle_info.ticket = result_data.ticket;
+        // redirect
+        var html =
+            "<form method='post' action='result' id='refresh' style='display: none;'>" +
+            "<input type='hidden' name='battle_info' value='" + JSON.stringify(battle_info) + "' >" +
+            "</form>";
+        $("body").append(html);
+        $("#refresh").submit();
+    });
 }
 
 /**
