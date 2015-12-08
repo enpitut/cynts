@@ -264,7 +264,7 @@ function didChangeCoordinatesCriteria() {
  * 絞り込みの条件に合わせて新たな二つのコーデを取得し，アニメーションで切り替える
  */
 function updateCoordinateImagesByCriteria() {
-    sendPost("ajaxGetCoordinatesPairMeetCriteria",
+    sendPost("ajaxGetCoordinatesPairMatchCriteria",
         {
             a_side_coordinate_id: coordinate_id0,
             b_side_coordinate_id: coordinate_id1,

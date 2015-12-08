@@ -57,8 +57,8 @@ class RankingsController extends AppController
         if ($this->request->is('post')) {
             $type = $this->request->data('type');
             if (
-                $type !== self::RANKING_TYPE_LIKE &&
-                $type !== self::RANKING_TYPE_UNLIKE
+                $type !== self::RANKING_TYPE_LIKE
+                && $type !== self::RANKING_TYPE_UNLIKE
             ) {
                 error_log('Received illegal ranking type.');
                 echo sprintf(
@@ -77,7 +77,7 @@ class RankingsController extends AppController
             $coordinates_array = [];
             $rank = 0;
             foreach ($coordinates as $coordinate) {
-                $coordinates_array[(String)$rank++] = [
+                $coordinates_array["coordinates"][(String)$rank++] = [
                     "id" => $coordinate->id,
                     "total_price" => $coordinate->price,
                     "photo_path" => $coordinate->photo_path,

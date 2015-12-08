@@ -123,7 +123,8 @@ class CoordinatesBattleController extends AppController
         }
     }
 
-    public function ajaxGetCoordinatesPairMeetCriteria() {
+    public function ajaxGetCoordinatesPairMatchCriteria()
+    {
         if ($this->request->is('post')) {
             $a_side_coordinate_id = filter_input(
                 INPUT_POST, 'a_side_coordinate_id', FILTER_SANITIZE_NUMBER_INT
@@ -182,7 +183,15 @@ class CoordinatesBattleController extends AppController
         }
     }
 
-    private function _findCoordinateNotDuplicated($coordinate_ids, $criteria_json_string){
+    /**
+     * 与えたコーデID群と被らないような，条件にマッチしたコーデを取得する
+     *
+     * @param int[] $coordinate_ids
+     * @param string $criteria_json_string
+     *
+     * @return \App\Model\Entity\Coordinate
+     */
+    private function _findCoordinateNotDuplicated(array $coordinate_ids, $criteria_json_string){
         $n_loop = 0;
 
         while (true) {

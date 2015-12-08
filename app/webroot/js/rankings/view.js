@@ -22,6 +22,7 @@ function updateRanking() {
         null
     ).done(
         function (ranking) {
+            console.log(ranking);
             var json_result = JSON.parse(ranking);
 
             if (json_result["hasSucceeded"] === false) {
@@ -107,13 +108,14 @@ function dfdRemoveRankingElements() {
  * @param templates html テンプレート．ranking と user information の2つのテンプレートを含む
  * @returns {*}
  */
-function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
+function dfdCreateRankingHtmlByTemplate(ranking_info, templates) {
     var dfd = $.Deferred();
     var html = "";
     var base_template = templates[0];
     var user_information_template = templates[1];
+    var coordinates = ranking_info["coordinates"];
 
-    for (var i = 0, len = coordinates["RANKING_SHOW_LIMIT"]; i < len; i++) {
+    for (var i = 0, len = ranking_info["RANKING_SHOW_LIMIT"]; i < len; i++) {
         var index = String(i);
 
         // コーデが1つも存在しない場合のエラーメッセージ
@@ -153,7 +155,7 @@ function dfdCreateRankingHtmlByTemplate(coordinates, templates) {
             '/img/' + coordinates[index]["photo_path"]
         );
         // url に unlike が付加されていた場合には，表示ポイントを n_unlike に変更する
-        if (coordinates["type"] === "like") {
+        if (ranking_info["type"] === "like") {
             div_span3 = div_span3.replace(
                 /#\{coordinates_score}/g ,
                 parseInt(coordinates[index]["n_like"])
