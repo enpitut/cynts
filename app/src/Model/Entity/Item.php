@@ -1,12 +1,15 @@
 <?php
 namespace App\Model\Entity;
+
 use Cake\ORM\Entity;
+
 /**
  * Item Entity.
  */
 class Item extends Entity
 {
     const ITEM_PHOTO_DIRECTORY_ROOT = 'items/';
+
     const SEX_MAN = 0;
     const SEX_WOMAN = 1;
     const SEX_UNISEX = 2;  // Union of man and woman
@@ -42,6 +45,7 @@ class Item extends Entity
     const CATEGORY_SKIRT = 6;
     const CATEGORY_CARDIGAN = 7;
     const CATEGORY_SWEATER = 8;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      * Note that '*' is set to true, which allows all unspecified fields to be
@@ -54,6 +58,7 @@ class Item extends Entity
         '*' => true,
         'id' => false,
     ];
+
     /**
      * @return string[]
      */
@@ -69,6 +74,7 @@ class Item extends Entity
         }
         return $photo_paths;
     }
+
     /**
      * @return string[]
      */
@@ -76,6 +82,7 @@ class Item extends Entity
     {
         return json_decode($this->_properties['sizes']);
     }
+
     /**
      * 定数としては Item::SEX_UNISEX も存在するが，このリストは検索条件であるため，ここには含めない
      *
@@ -88,6 +95,7 @@ class Item extends Entity
             Item::SEX_WOMAN => 'women',
         ];
     }
+
     /**
      * @return array
      */
@@ -104,6 +112,7 @@ class Item extends Entity
             Item::CATEGORY_SWEATER => 'Sweater',
         ];
     }
+
     /**
      * @return array
      */
