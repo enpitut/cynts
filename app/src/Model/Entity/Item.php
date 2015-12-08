@@ -1,15 +1,12 @@
 <?php
 namespace App\Model\Entity;
-
 use Cake\ORM\Entity;
-
 /**
  * Item Entity.
  */
 class Item extends Entity
 {
     const ITEM_PHOTO_DIRECTORY_ROOT = 'items/';
-
     const SEX_MAN = 0;
     const SEX_WOMAN = 1;
     const SEX_UNISEX = 2;  // Union of man and woman
@@ -45,7 +42,6 @@ class Item extends Entity
     const CATEGORY_SKIRT = 6;
     const CATEGORY_CARDIGAN = 7;
     const CATEGORY_SWEATER = 8;
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      * Note that '*' is set to true, which allows all unspecified fields to be
@@ -58,7 +54,6 @@ class Item extends Entity
         '*' => true,
         'id' => false,
     ];
-
     /**
      * @return string[]
      */
@@ -74,7 +69,6 @@ class Item extends Entity
         }
         return $photo_paths;
     }
-
     /**
      * @return string[]
      */
@@ -82,7 +76,6 @@ class Item extends Entity
     {
         return json_decode($this->_properties['sizes']);
     }
-
     /**
      * 定数としては Item::SEX_UNISEX も存在するが，このリストは検索条件であるため，ここには含めない
      *
@@ -91,56 +84,54 @@ class Item extends Entity
     public static function getSexes()
     {
         return [
-            Item::SEX_MAN => '男性',
-            Item::SEX_WOMAN => '女性',
+            Item::SEX_MAN => 'men',
+            Item::SEX_WOMAN => 'women',
         ];
     }
-
     /**
      * @return array
      */
     public static function getCategories()
     {
         return [
-            Item::CATEGORY_T_SHIRT => 'Tシャツ',
-            Item::CATEGORY_SHIRT => 'シャツ',
-            Item::CATEGORY_PANTS => 'パンツ',
-            Item::CATEGORY_JACKET => 'ジャケット',
-            Item::CATEGORY_SHOES => 'シューズ',
-            Item::CATEGORY_SKIRT => 'スカート',
-            Item::CATEGORY_CARDIGAN => 'カーディガン',
-            Item::CATEGORY_SWEATER => 'セーター',
+            Item::CATEGORY_T_SHIRT => 'T-shirt',
+            Item::CATEGORY_SHIRT => 'Shirt',
+            Item::CATEGORY_PANTS => 'Pants',
+            Item::CATEGORY_JACKET => 'Jacket',
+            Item::CATEGORY_SHOES => 'Shoes',
+            Item::CATEGORY_SKIRT => 'Skirt',
+            Item::CATEGORY_CARDIGAN => 'Cardigan',
+            Item::CATEGORY_SWEATER => 'Sweater',
         ];
     }
-
     /**
      * @return array
      */
     public static function getColors()
     {
         return [
-            Item::COLOR_WHITE => 'ホワイト',
-            Item::COLOR_BLACK => 'ブラック',
-            Item::COLOR_RED => 'レッド',
-            Item::COLOR_ORANGE => 'オレンジ',
-            Item::COLOR_DARK_GREEN => 'ダークグリーン',
-            Item::COLOR_BLUE => 'ブルー',
-            Item::COLOR_NAVY => 'ネイビー',
-            Item::COLOR_GRAY => 'グレー',
-            Item::COLOR_BROWN => 'ブラウン',
-            Item::COLOR_GREEN => 'グリーン',
-            Item::COLOR_PINK => 'ピンク',
-            Item::COLOR_BEIGE => 'ベージュ',
-            Item::COLOR_YELLOW => 'イエロー',
-            Item::COLOR_OLIVE => 'オリーブ',
-            Item::COLOR_OFF_WHITE => 'クリーム',
-            Item::COLOR_WINE => 'ワイン',
-            Item::COLOR_DARK_GRAY => 'ダークグレー',
-            Item::COLOR_LIGHT_BLUE => 'ライトブルー',
-            Item::COLOR_LIGHT_GRAY => 'ライトグレー',
-            Item::COLOR_NATURAL => 'ナチュラル',
-            Item::COLOR_KHAKI => 'カーキ',
-            Item::COLOR_PURPLE => 'パープル',
+            Item::COLOR_WHITE => 'WHITE',
+            Item::COLOR_BLACK => 'BLACK',
+            Item::COLOR_RED => 'RED',
+            Item::COLOR_ORANGE => 'ORANGE',
+            Item::COLOR_DARK_GREEN => 'DARK_GREEN',
+            Item::COLOR_BLUE => 'BLUE',
+            Item::COLOR_NAVY => 'NAVY',
+            Item::COLOR_GRAY => 'GRAY',
+            Item::COLOR_BROWN => 'BROWN',
+            Item::COLOR_GREEN => 'GREEN',
+            Item::COLOR_PINK => 'PINK',
+            Item::COLOR_BEIGE => 'BEIGE',
+            Item::COLOR_YELLOW => 'YELLOW',
+            Item::COLOR_OLIVE => 'OLIVE',
+            Item::COLOR_OFF_WHITE => 'OFF_WHITE',
+            Item::COLOR_WINE => 'WINE',
+            Item::COLOR_DARK_GRAY => 'DARK_GRAY',
+            Item::COLOR_LIGHT_BLUE => 'LIGHT_BLUE',
+            Item::COLOR_LIGHT_GRAY => 'LIGHT_GRAY',
+            Item::COLOR_NATURAL => 'NATURAL',
+            Item::COLOR_KHAKI  => 'KHAKI',
+            Item::COLOR_PURPLE  => 'PURPLE',
         ];
     }
 }
