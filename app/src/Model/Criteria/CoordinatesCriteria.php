@@ -148,16 +148,15 @@ class CoordinatesCriteria {
      */
     private static function _createQueryMatchSeasonCriteria($season_criteria)
     {
-        $expression = "";
-        foreach(str_split($season_criteria) as $season_flag){
-            $expression .= $season_flag === "1" ? "1" : "_";
+        $expression = '';
+        foreach (str_split($season_criteria) as $season_flag) {
+            $expression .= $season_flag === '1' ? '1' : '0';
         }
-        $expression .= '%';
 
-        $criteria_query = TableRegistry::get('Coordinates')->find()->newExpr()->like(
-            'Coordinates.season',
-            $expression
-        );
+        $criteria_query = TableRegistry::get('Coordinates')->find()->newExpr()
+            ->add(
+                ["CONV(Coordinates.season, 2, 10) & CONV($expression, 2, 10)"]
+            );
         return $criteria_query;
     }
 }
