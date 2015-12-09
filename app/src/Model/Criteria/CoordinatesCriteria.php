@@ -20,7 +20,7 @@ class CoordinatesCriteria {
      */
     public static function createQueryFromJson(
         $criteria_string,
-        $options = ['contain' => ['Users', 'Items', 'Favorites']]
+        $options = []
     )
     {
         if ($criteria_string === "{}") {

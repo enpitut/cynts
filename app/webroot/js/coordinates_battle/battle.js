@@ -38,7 +38,7 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
 
     try {
         var dfd = $.Deferred().resolve().promise();
-        
+
         dfd.then(function() {
 
             return dfdGetScore(like_coordinate_id);
@@ -280,7 +280,6 @@ function updateCoordinateImagesByCriteria() {
         null
     ).done(
         function(coordinates) {
-            console.log(coordinates);
             // 重複しない新たなコーデを2つ取得する
             var new_coordinates = JSON.parse(coordinates);
 
