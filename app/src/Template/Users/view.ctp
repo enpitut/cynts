@@ -84,5 +84,6 @@
     </div>
 </div>
 
+<?= $this->element('footer') ?>
 </body>
 </html>
