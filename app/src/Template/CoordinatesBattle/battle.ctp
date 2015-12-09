@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.1.0/velocity.js"></script>
-<?= $this->Html->script('coordinates_battle/battle.js') ?>
-<?= $this->Html->script('common.js') ?>
-<?= $this->Html->css('base.css') ?>
-<?= $this->Html->css('criteria/table.css') ?>
-<?= $this->Html->css('coordinates_battle/battle.css') ?>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.1.0/velocity.js"></script>
+    <?= $this->Html->script('coordinates_battle/battle.js') ?>
+    <?= $this->Html->script('common.js') ?>
+    <?= $this->Html->css('base.css') ?>
+    <?= $this->Html->css('criteria/table.css') ?>
+    <?= $this->Html->css('coordinates/view.css') ?>
+    <?= $this->Html->css('coordinates_battle/battle.css') ?>
 </head>
 <body>
 
@@ -56,7 +57,17 @@ foreach ($coordinates as $coordinate) {
         ]
     );
     echo '</div>';
-
+    echo $this->Form->button(
+        'コーディネートの詳細',
+        [
+            'class' => 'detail_button',
+            'onClick' => sprintf(
+                'showCoordinateDetail(coordinate_id%d)',
+                $side_id
+            ),
+            'type' => 'button'
+        ]
+        );
     echo '</li>' . PHP_EOL;
 
     $side_id++;

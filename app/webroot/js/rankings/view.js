@@ -22,7 +22,6 @@ function updateRanking() {
         null
     ).done(
         function (ranking) {
-            console.log(ranking);
             var json_result = JSON.parse(ranking);
 
             if (json_result["hasSucceeded"] === false) {
@@ -104,7 +103,7 @@ function dfdRemoveRankingElements() {
  * コーデ情報と html テンプレートから，
  * 絞り込み結果を反映したランキングの html を生成する
  *
- * @param coordinates 絞り込み結果を反映したコーデの情報群
+ * @param ranking_info 絞り込み結果を反映したコーデの情報群
  * @param templates html テンプレート．ranking と user information の2つのテンプレートを含む
  * @returns {*}
  */
@@ -116,89 +115,100 @@ function dfdCreateRankingHtmlByTemplate(ranking_info, templates) {
     var coordinates = ranking_info["coordinates"];
 
     for (var i = 0, len = ranking_info["RANKING_SHOW_LIMIT"]; i < len; i++) {
-        var index = String(i);
 
         // コーデが1つも存在しない場合のエラーメッセージ
-        if (i === 0 && coordinates[index] === undefined) {
-            return"</br><span>条件に該当するが存在しません</span>";
+        if (i === 0 && coordinates === undefined) {
+            return"</br><span>条件に該当するコーディネートが存在しません</span>";
         }
 
         // 該当するランクのコーデが存在しない場合には何もしない
-        if (coordinates[index] === undefined) {
-            if (i % 3 !== 0) {
+        if (coordinates[i] === undefined) {
+            if ((i - 3) % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] !== 0) {
                 html += "</div>";
                 html += '<div class="clear"></div>';
             }
             continue;
         }
 
-        if (i % 3 === 0) {
+        if ((i - 3) % ranking_info["NUM_COLUMN_UNDER_RANK_4TH"] === 0 || i === 0) {
             html += "<div class='row'>";
         }
 
-        var div_rank = getWordAndClassByRank(i+1);
-        var div_span3 = base_template;
-        div_span3 = div_span3.replace(
+        var div_rank = getWordAndClassByRank(i + 1);
+
+        var div_span = "";
+        if(i > 2) {
+            div_span = "div.span5";
+        } else {
+            div_span = "div.span3";
+        }
+        var tmp = (($(base_template).filter(div_span).get())[0]);
+        var span = $('<div>').append($(tmp).clone());
+        $(span).each(function() {
+            span = $(this).html();
+        });
+
+        span = span.replace(
             /#\{ranking_class_extend}/g ,
             div_rank[0]
         );
-        div_span3 = div_span3.replace(
+        span = span.replace(
             /#\{rank}/g ,
             div_rank[1]
         );
-        div_span3 = div_span3.replace(
+        span = span.replace(
             /#\{coordinates_view_path}/g ,
-            '/coordinates/view/' + coordinates[index]["id"]
+            '/coordinates/view/' + coordinates[i]["id"]
         );
-        div_span3 = div_span3.replace(
+        span = span.replace(
             /#\{coordinates_photo_path}/g ,
-            '/img/' + coordinates[index]["photo_path"]
+            '/img/' + coordinates[i]["photo_path"]
         );
         // url に unlike が付加されていた場合には，表示ポイントを n_unlike に変更する
-        if (ranking_info["type"] === "like") {
-            div_span3 = div_span3.replace(
+        if (coordinates["type"] === "like") {
+            span = span.replace(
                 /#\{coordinates_score}/g ,
-                parseInt(coordinates[index]["n_like"])
+                parseInt(coordinates[i]["n_like"])
             );
         } else {
-            div_span3 = div_span3.replace(
+            span = span.replace(
                 /#\{coordinates_score}/g ,
-                parseInt(coordinates[index]["n_unlike"])
+                parseInt(coordinates[i]["n_unlike"])
             );
         }
-        div_span3 = div_span3.replace(
+        span = span.replace(
             /#\{coordinates_price}/g ,
-            coordinates[index]["total_price"]
+            coordinates[i]["total_price"]
         );
 
         // コーデの制作者が存在すれば中身を生成
         if (
-            coordinates[index]["user_id"] !== ""
-            && coordinates[index]["user_name"] !== ""
+            coordinates[i]["user_id"] !== ""
+            && coordinates[i]["user_name"] !== ""
         ) {
             var div_user = user_information_template;
             div_user = div_user.replace(
                 /#\{coordinates_user_view_path}/g ,
-                '/users/view/' + coordinates[index]["user_id"]
+                '/users/view/' + coordinates[i]["user_id"]
             );
             div_user = div_user.replace(
                 /#\{coordinates_user_name}/g ,
-                coordinates[index]["user_name"]
+                coordinates[i]["user_name"]
             );
-            div_span3 = div_span3.replace(
+            span = span.replace(
                 /#\{coordinates_user_information}/g,
                 div_user
             )
         } else {
-            div_span3 = div_span3.replace(
+            span = span.replace(
                 /#\{coordinates_user_information}/g ,
                 ""
             );
         }
 
-        html += div_span3;
+        html += span;
 
-        if (i % 3 === 2) {
+        if ((i - 2) % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] === 0) {
             html += "</div>";
             html += '<div class="clear"></div>';
         }

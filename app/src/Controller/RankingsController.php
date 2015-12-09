@@ -14,9 +14,10 @@ use App\Model\Criteria;
  */
 class RankingsController extends AppController
 {
-    const RANKING_SHOW_LIMIT = 9;
+    const RANKING_SHOW_LIMIT = 23;
     const RANKING_TYPE_LIKE = 'like';
     const RANKING_TYPE_UNLIKE = 'unlike';
+    const NUM_COLUMN_UNDER_RANK_4TH = 5;
 
     /** @var \App\Model\Table\CoordinatesTable $Coordinates */
     protected $Coordinates;
@@ -44,7 +45,7 @@ class RankingsController extends AppController
      */
     public function view($type = null)
     {
-        $ranking_array = $this->_getRanking($type);
+        $ranking_array = $this->_getRanking($type)->toArray();
 
         $this->set('type', is_null($type) ? self::RANKING_TYPE_LIKE : $type);
         $this->set('sex_list', Item::getSexes());
@@ -88,6 +89,7 @@ class RankingsController extends AppController
                 ];
             }
             $coordinates_array["RANKING_SHOW_LIMIT"] = self::RANKING_SHOW_LIMIT;
+            $coordinates_array["NUM_COLUMN_UNDER_RANK_4TH"] = self::NUM_COLUMN_UNDER_RANK_4TH;
             $coordinates_array["type"] = $type;
             $coordinates_array["hasSucceeded"] = true;
 
@@ -97,6 +99,12 @@ class RankingsController extends AppController
         }
     }
 
+    /**
+     * @param string $type
+     * @param string $criteria_json_string
+     *
+     * @return \Cake\ORM\Query $query
+     */
     private function _getRanking($type, $criteria_json_string="{}")
     {
         switch ($type) {
@@ -105,7 +113,7 @@ class RankingsController extends AppController
                 $criteria_json_string,
                 [
                     'order' => ['Coordinates.n_unlike' => 'DESC'],
-                    'contain' => ['Users', 'Items', 'Favorites'],
+                    'contain' => ['Users'],
                     'limit' => self::RANKING_SHOW_LIMIT,
                 ]
             )->cache(
@@ -119,7 +127,7 @@ class RankingsController extends AppController
                 $criteria_json_string,
                 [
                     'order' => ['Coordinates.n_like' => 'DESC'],
-                    'contain' => ['Users', 'Items', 'Favorites'],
+                    'contain' => ['Users'],
                     'limit' => self::RANKING_SHOW_LIMIT,
                 ]
             )->cache(

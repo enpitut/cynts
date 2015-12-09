@@ -30,11 +30,21 @@
 button.favoriteButton {
     font-size: 14px;
     cursor: pointer;
-    padding: 5px 10px 5px 10px;
+    padding: 10px;
     background-color: #ffac00;
     color: #fff;
     border-style: none;
     margin-bottom: 10px;
+}
+
+button.favoriteButton:active {
+    background-color: darkorange;
+}
+
+button.favoriteButton:disabled {
+    background-color: #bdc3c7;
+    color: #444;
+    cursor: default;
 }
 
 #coordinateColumn {
@@ -131,12 +141,6 @@ button.favoriteButton {
     width: 320px;
     margin: 0;
     text-align: left;
-}
-
-#coordinatePrice {
-    float: left;
-    display: inline-block;
-    margin-left: 0px;
 }
 
 .image {

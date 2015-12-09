@@ -32,7 +32,8 @@ class UsersTable extends Table
         ]);
 
         $this->hasMany('Favorites', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
+            'sort' => ['Favorites.created_at' => 'DESC'],
         ]);
     }
 
