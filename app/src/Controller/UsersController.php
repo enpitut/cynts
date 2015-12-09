@@ -28,8 +28,7 @@ class UsersController extends AppController
     public function view($user_id = null, $mode = null)
     {
         //2回目以上の訪問かをチェックし， SESSION 情報を更新する
-        $this->updateRevisitStatus();
-
+        $this->updateHasVisitedFlag();
 
         if ((int)$this->Auth->user('id') === (int)$user_id) {
             $this->set('is_self_page', true);

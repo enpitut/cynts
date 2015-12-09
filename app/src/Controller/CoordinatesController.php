@@ -38,7 +38,7 @@ class CoordinatesController extends AppController
     public function view($id = null)
     {
         //2回目以上の訪問かをチェックし， SESSION 情報を更新する
-        $this->updateRevisitStatus();
+        $this->updateHasVisitedFlag();
 
         $coordinate = $this->Coordinates->get($id, [
                 'contain' => ['Users', 'Items', 'Favorites']
@@ -97,7 +97,7 @@ class CoordinatesController extends AppController
     public function create()
     {
         //2回目以上の訪問かをチェックし， SESSION 情報を更新する
-        $this->updateRevisitStatus();
+        $this->updateHasVisitedFlag();
 
         $coordinate = $this->Coordinates->newEntity();
         if ($this->request->is('post')) {
@@ -125,7 +125,7 @@ class CoordinatesController extends AppController
     public function post()
     {
         //2回目以上の訪問かをチェックし， SESSION 情報を更新する
-        $this->updateRevisitStatus();
+        $this->updateHasVisitedFlag();
 
         $this->set('sex_list', Item::getSexes());
     }

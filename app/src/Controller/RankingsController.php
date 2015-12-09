@@ -46,7 +46,7 @@ class RankingsController extends AppController
     public function view($type = null)
     {
         //2回目以上の訪問かをチェックし， SESSION 情報を更新する
-        $this->updateRevisitStatus();
+        $this->updateHasVisitedFlag();
 
         $ranking_array = $this->_getRanking($type);
 
