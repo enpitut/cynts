@@ -62,7 +62,7 @@
 
                 ]) . PHP_EOL;
         echo sprintf(
-            '<p class="each_actual_point %s">ポイント : %d</p>',
+            '<p class="each_actual_point %s">points : %d</p>',
             $a_side_p_class, $battle_result->{"a_side_coordinate_point"}
         );
         echo "</li>";
@@ -79,7 +79,7 @@
 
                 ]) . PHP_EOL;
         echo sprintf(
-            '<p class="each_actual_point %s">ポイント : %d</p>',
+            '<p class="each_actual_point %s">points : %d</p>',
             $b_side_p_class, $battle_result->{"b_side_coordinate_point"}
         );
         echo "</li>";
