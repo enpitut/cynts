@@ -1,5 +1,6 @@
 <html>
 <head>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <?= $this->Html->css('users/signup.css') ?>
     <?= $this->element('eachpage_header') ?>
 </head>

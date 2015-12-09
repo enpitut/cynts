@@ -1,0 +1,85 @@
+#modal_help {
+    position: fixed;
+    display: table;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0);
+    z-index: 4;
+    color: #eee;
+}
+
+#center_window {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+[id^="modal_help_"] {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+[class^="help_window"] {
+    background-color: #666;
+    padding: 20px 25px 20px 25px;
+    text-align: left;
+    display: inline-block;
+    line-height: 1.5em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#help_title {
+    padding: 10px;
+    color: darkorange;
+    background-color: #222;
+    text-align: center;
+    display: inline-block;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.help_window span {
+    color: #000;
+    font-weight: bold;
+}
+
+.help_window a {
+    color: orange;
+    font-weight: bold;
+}
+
+#close_message {
+    z-index: 5;
+    display:none;
+    position: fixed;
+    top: 95%;
+    right: 5%;
+}
+
+[class^="help_window"]:after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    content: '';
+    border-top: 0;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid #444;
+    margin: 0 0 0 -10px;
+}
+
+#modal_overlay {
+    z-index: 3;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
