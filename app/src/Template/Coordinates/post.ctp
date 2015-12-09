@@ -200,5 +200,6 @@
         });
     </script>
 
+<?= $this->element('footer') ?>
 </body>
 </html>
