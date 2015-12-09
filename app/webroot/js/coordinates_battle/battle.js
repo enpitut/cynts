@@ -188,13 +188,11 @@ function dfdGetNewCoordinate(liked_coordinate_id, disliked_coordinate_id) {
             var new_coordinate = JSON.parse(coordinate_data);
 
             if (!new_coordinate["hasSucceeded"]) {
-                alert(new_coordinate["errorMessage"]);
-                $.Deferred().reject('Fail to get new coordinate');
-                throw new Error('Fail to get new coordinate');
+                dfd.reject(new_coordinate["errorMessage"]);
+            } else {
+                // 取得したコーデを次の then ブロックに渡す
+                dfd.resolve(new_coordinate);
             }
-
-            // 取得したコーデを次の then ブロックに渡す
-            dfd.resolve(new_coordinate);
         }
     );
 
@@ -285,7 +283,7 @@ function updateCoordinateImagesByCriteria() {
 
             if (!new_coordinates["hasSucceeded"]) {
                 alert(new_coordinates["errorMessage"]);
-                $.Deferred().reject('Fail to get new coordinate');
+                throw new Error(new_coordinates["errorMessage"]);g d
             }
 
             // 現在のコーデを切り替える
