@@ -32,43 +32,27 @@
 
 <div id="modal_help_coordinates_post">
     <div class="help_window">
-        このページでは，<span>コーディネートを投稿</span>できます<br><br>
-        先ほどのページで選んだ<span>アイテムの配置や大きさの調節</span>をしてコーディネートを完成させましょう！<br>
-        アイテムの配置が終わったら「投稿ボタン」をクリック<br>
-        実際にコーディネートが作成されます<br><br>
-        もしも別のアイテムを選びたくなったら<span>「アイテムを選びなおす」</span>でアイテム選択ページに戻りましょう
+        アイテムの配置や大きさの調節をして<span>コーディネートの写真</span>を作ってください<br>
+        性別，季節を決めたらコーディネート完成です<br>
     </div>
 </div>
 
 <div id="modal_help_rankings_view">
     <div class="help_window">
-        このページでは，みんなから人気のある<span>コーディネートのランキング</span>を見ることができます<br><br>
-        このランキングは <?= $this->Html->Link("2択ゲーム", ["controller" => "Coordinatesbattle", "action" => "battle"]) ?>
+        このページでは<span>コーディネートの人気ランキング</span>を見ることができます<br><br>
+        このランキングは <?= $this->Html->Link('コーディネートバトル', ["controller" => "Coordinatesbattle", "action" => "battle"]) ?>
         でみんなから選ばれた回数によって決められているので，<br>
         1位のコーディネートは，<span>多くの人が好きなコーディネート</span>です<br><br>
-        自分に自信のない人は上位コーディネートの写真をクリック！<br>
-        そのコーディネートの情報ページから<span>服を購入</span>してみましょう！
+        服選びが苦手な人は上位コーディネートの写真を参考にしてみましょう<br>
     </div>
 </div>
-
-<div id="modal_help_users_view">
-    <div class="help_window">
-        このページでは，<span>自分の情報を確認</span>できます<br><br>
-        自分の<span>おしゃれレベル</span>や，作成したコーディネート，<br>
-        ゲーム中やコーディネートの情報ページからお気に入りに追加したコーディネートを見ることができます<br>
-    </div>
-</div>
-
 
 <div id="modal_help_coordinates_view">
     <div class="help_window">
-        このページでは，<span>コーディネートの情報を確認できます</span><br><br>
-        使用されているアイテムやコーディネートの合計金額を確認でき，<br>
-        気に入ったコーディネートであれば，お気に入りに入れることができます<br>
-        お気に入りに入れたコーディネートは
+        このページはコーディネートページです<br>
+        このコーディネートが気に入ったら，「お気に入り」ボタンを押してみてください<br>
+        お気に入りしたコーディネートは
         <?= $this->Html->Link("マイページ", ["controller" => "Users", "action" => "view", $this->request->session()->read('Auth.User.id')])?>
         から再び見ることができます<br><br>
-        また，気に入ったアイテムがあれば，このページからオンラインショップの購入ページに移ることができ，<br>
-        好きなコーディネートも一式そろえることができます！
     </div>
 </div>

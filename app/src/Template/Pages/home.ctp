@@ -51,8 +51,6 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
             <br>
         </li>
         <li class="battleCaption">
-            <img src="/img/view/description1.png" width="45%"
-                 style="float:left; margin: 0 30px 0 0">
             2択で自分の好きなコーディネートを選ぶだけ。
             <br>
             ゲームをしながら色々なコーディネートが見られる。
@@ -62,13 +60,10 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
             <br>
             ランキング1位はみんなが好きなコーディネート。
             <br>
-            服をあまり買ったことない人は、ランキング1位のコーディネートをまとめ買い。
+            服選びが苦手な人は、ランキング1位のコーディネートをまとめ買い。
         </li>
         <li class="postCaption">
-            自分が組み合わせたコーディネートを勝ち抜きバトルにエントリー。
-            <br>
             みんなが好きになるコーディネートを作ってみよう。
-            <br>
             <br>
             組み合わせは無限大。
         </li>
@@ -88,7 +83,7 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
                     )
                 ) ?>
                 <br>
-                好きなコーディネートを選ぶ
+                コーディネートバトルで遊ぶ
             </li>
             <li>
                 <?= $this->Html->image(
