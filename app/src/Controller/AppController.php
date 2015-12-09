@@ -48,6 +48,8 @@ class AppController extends Controller
         ],
     ];
 
+    const SESSION_KEY_PREFIX_VISITED = 'Visited.';
+
     /**
      * Initialization hook method.
      *
@@ -62,9 +64,12 @@ class AppController extends Controller
         $this->viewBuilder()->autoLayout(false);
     }
 
-    public function isVisited($key)
+    public function updateRevisitStatus()
     {
         $session = $this->request->session();
+        $controller = is_null($this->name) ? "pages": $this->name;
+        $action = is_null($this->request->action) ? "home" : $this->request->action;
+        $key = Self::SESSION_KEY_PREFIX_VISITED.strtolower($controller)."_".strtolower($action);
 
         if (!($session->check($key))) {
             $session->write($key, False);

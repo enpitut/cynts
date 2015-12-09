@@ -39,8 +39,8 @@ class CoordinatesBattleController extends AppController
      */
     public function battle()
     {
-        //再訪チェック
-        $this->isVisited('Visited.coordinatesbattle_battle');
+        //2回目以上の訪問かをチェックし， SESSION 情報を更新する
+        $this->updateRevisitStatus();
 
         $coordinates = $this->Coordinates->find(
             'all',
@@ -311,8 +311,8 @@ class CoordinatesBattleController extends AppController
      */
     public function result()
     {
-        //再訪チェック
-        $this->isVisited('Visited.coordinatesbattle_result');
+        //2回目以上の訪問かをチェックし， SESSION 情報を更新する
+        $this->updateRevisitStatus();
 
         if ($this->request->is('post')) {
             $json_data = json_decode($this->request->data('battle_info'));
