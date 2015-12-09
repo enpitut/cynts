@@ -37,6 +37,9 @@ class CoordinatesController extends AppController
      */
     public function view($id = null)
     {
+        //再訪チェック
+        $this->isVisited('Visited.coordinates_view');
+
         $coordinate = $this->Coordinates->get($id, [
                 'contain' => ['Users', 'Items', 'Favorites']
             ]
@@ -72,13 +75,12 @@ class CoordinatesController extends AppController
         $coordinate->favorite_disabled = $isRegistered ||
             is_null($access_user_id);
 
-        //モーダルから開いた時の処理
         $caller = filter_input(
             INPUT_POST, 'caller', FILTER_SANITIZE_STRING
         );
-        $visited = $this->request->session()->read('Visit.coordinates_view');
-        if($caller === 'modal' && $visited === 0) {
-            $this->request->session()->delete('Visit.coordinates_view');
+        $visited = $this->request->session()->read('Visited.coordinates_view');
+        if($caller === 'modal' && !($visited)) {
+            $this->request->session()->delete('Visited.coordinates_view');
         }
 
         $this->set('coordinate', $coordinate);
@@ -94,6 +96,9 @@ class CoordinatesController extends AppController
      */
     public function create()
     {
+        //再訪チェック
+        $this->isVisited('Visited.coordinates_create');
+
         $coordinate = $this->Coordinates->newEntity();
         if ($this->request->is('post')) {
             $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
@@ -119,6 +124,9 @@ class CoordinatesController extends AppController
      */
     public function post()
     {
+        //再訪チェック
+        $this->isVisited('Visited.coordinates_post');
+
         $this->set('sex_list', Item::getSexes());
     }
 

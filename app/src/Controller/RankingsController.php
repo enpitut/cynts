@@ -45,6 +45,9 @@ class RankingsController extends AppController
      */
     public function view($type = null)
     {
+        //再訪チェック
+        $this->isVisited('Visited.rankings_view');
+
         $ranking_array = $this->_getRanking($type);
 
         $this->set('type', is_null($type) ? self::RANKING_TYPE_LIKE : $type);

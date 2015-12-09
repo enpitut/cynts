@@ -32,7 +32,7 @@ $(function() {
     $.get(HELP_ROOT + "help #modal_help_" + caller_url, function(data, status){
         if(status === "success") {
             if(data.match(caller_url)) {
-                if(!(Number($script_id.attr('isVisited')))){
+                if(!($script_id.attr('isVisited'))) {
                     displayModalHelpWindow();
                 }
 

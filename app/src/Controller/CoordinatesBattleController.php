@@ -39,6 +39,9 @@ class CoordinatesBattleController extends AppController
      */
     public function battle()
     {
+        //再訪チェック
+        $this->isVisited('Visited.coordinatesbattle_battle');
+
         $coordinates = $this->Coordinates->find(
             'all',
             [
@@ -290,10 +293,10 @@ class CoordinatesBattleController extends AppController
         if ($this->request->is('post'))
         {
             $this->Session = $this->request->session();
-          
+
             $ticket = md5(uniqid().mt_rand());
             $this->Session->write('ticket', $ticket);
-            
+
             echo sprintf('{"hasSucceeded": true, "ticket": "%s"}', $ticket);
             exit;
         }
@@ -308,6 +311,9 @@ class CoordinatesBattleController extends AppController
      */
     public function result()
     {
+        //再訪チェック
+        $this->isVisited('Visited.coordinatesbattle_result');
+
         if ($this->request->is('post')) {
             $json_data = json_decode($this->request->data('battle_info'));
             $score = $json_data->{"score"};
@@ -319,7 +325,7 @@ class CoordinatesBattleController extends AppController
             $user = TableRegistry::get('Users')->get($this->Auth->user('id'));
 
             $previous_level = $user->getCoordinateLevel();
-            
+
             $this->Session = $this->request->session();
             $ticket = $this->Session->read('ticket');
 
@@ -327,7 +333,7 @@ class CoordinatesBattleController extends AppController
                 self::incrementUserCoordinatePoint($user, $score);
             }
             $this->Session->delete('ticket');
-            
+
             $current_level = $user->getCoordinateLevel();
             $point_to_next_level = $user->getPointToNextLevel();
 
