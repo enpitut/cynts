@@ -1,5 +1,6 @@
 <header>
     <?= $this->Html->css('header.css') ?>
+    <?= $this->Html->css('help.css') ?>
     <div id="header">
         <ul>
             <li>

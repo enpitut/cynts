@@ -37,6 +37,9 @@ class CoordinatesController extends AppController
      */
     public function view($id = null)
     {
+        //2回目以上の訪問かをチェックし， SESSION 情報を更新する
+        $this->updateHasVisitedFlag();
+
         $coordinate = $this->Coordinates->get($id, [
                 'contain' => ['Users', 'Items', 'Favorites']
             ]
@@ -72,6 +75,14 @@ class CoordinatesController extends AppController
         $coordinate->favorite_disabled = $isRegistered ||
             is_null($access_user_id);
 
+        $caller = filter_input(
+            INPUT_POST, 'caller', FILTER_SANITIZE_STRING
+        );
+        $visited = $this->request->session()->read('Visited.coordinates_view');
+        if($caller === 'modal' && !($visited)) {
+            $this->request->session()->delete('Visited.coordinates_view');
+        }
+
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);
@@ -85,14 +96,14 @@ class CoordinatesController extends AppController
      */
     public function create()
     {
+        //2回目以上の訪問かをチェックし， SESSION 情報を更新する
+        $this->updateHasVisitedFlag();
+
         $coordinate = $this->Coordinates->newEntity();
         if ($this->request->is('post')) {
             $coordinate = $this->Coordinates->patchEntity($coordinate, $this->request->data);
             if ($this->Coordinates->save($coordinate)) {
-                $this->Flash->success(__('The coordinate has been saved.'));
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The coordinate could not be saved. Please, try again.'));
             }
         }
 
@@ -113,6 +124,9 @@ class CoordinatesController extends AppController
      */
     public function post()
     {
+        //2回目以上の訪問かをチェックし， SESSION 情報を更新する
+        $this->updateHasVisitedFlag();
+
         $this->set('sex_list', Item::getSexes());
     }
 

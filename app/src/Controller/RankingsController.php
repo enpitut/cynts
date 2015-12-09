@@ -45,6 +45,9 @@ class RankingsController extends AppController
      */
     public function view($type = null)
     {
+        //2回目以上の訪問かをチェックし， SESSION 情報を更新する
+        $this->updateHasVisitedFlag();
+
         $ranking_array = $this->_getRanking($type)->toArray();
 
         $this->set('type', is_null($type) ? self::RANKING_TYPE_LIKE : $type);
