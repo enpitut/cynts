@@ -15,6 +15,8 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Event\Event;
+use Cake\Routing\Router;
 
 /**
  * Application Controller
@@ -62,8 +64,28 @@ class AppController extends Controller
         $this->viewBuilder()->autoLayout(false);
     }
 
-    public function isAuthorized($user = null)
+    public function isVisited()
     {
-        return true;
+        $session = $this->request->session();
+        $page_data = [];
+        $page_data["controller"]  = is_null($this->name) ? "pages": $this->name;
+        $page_data["action"] = is_null($this->request->action) ? "home" : $this->request->action;
+        $page_data["page"] = strtolower($page_data["controller"])."_".strtolower($page_data["action"]);
+
+        //$session->destroy('Visit');
+
+        if(!($session->check('Visit.'.$page_data["page"]))){
+            $session->write('Visit.'.$page_data["page"], 0);
+        } else if (!($session->read('Visit.'.$page_data["page"]))) {
+            $session->write('Visit.'.$page_data["page"], 1);
+        }
+
+        $this->set('page_data', $page_data);
     }
+
+    public function beforeFilter(Event $event)
+    {
+        $this->isVisited();
+    }
+
 }

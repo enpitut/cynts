@@ -40,7 +40,6 @@ function addFavorite(favorite_id) {
     sendPostInView("ajaxPostFavorite", {coordinate_id: favorite_id}, null)
         .done(function(response) {
             var response_json = JSON.parse(response);
-            console.log(response_json);
             if ( response_json["hasSucceeded"] === false ) {
                 throw new Error("Error adding favorite coordinate");
             }

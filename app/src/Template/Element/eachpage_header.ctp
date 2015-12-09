@@ -25,5 +25,14 @@
     }
     ?>
 </div>
+<?php
 
-<?= $this->Html->script('help.js', ['id' => 'help_script', 'controller' => $this->name, 'action' => $this->request->action]) ?>
+
+?>
+
+<?= $this->Html->script('help.js', [
+    'id' => 'help_script',
+    'controller' => $page_data["controller"],
+    'action' => $page_data["action"],
+    'isVisited' => $this->request->session()->read("Visit.".$page_data["page"])
+]) ?>

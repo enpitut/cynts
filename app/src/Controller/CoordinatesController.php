@@ -72,6 +72,15 @@ class CoordinatesController extends AppController
         $coordinate->favorite_disabled = $isRegistered ||
             is_null($access_user_id);
 
+        //モーダルから開いた時の処理
+        $caller = filter_input(
+            INPUT_POST, 'caller', FILTER_SANITIZE_STRING
+        );
+        $visited = $this->request->session()->read('Visit.coordinates_view');
+        if($caller === 'modal' && $visited === 0) {
+            $this->request->session()->delete('Visit.coordinates_view');
+        }
+
         $this->set('coordinate', $coordinate);
         $this->set('_serialize', ['coordinate']);
         $this->set('total_price', $total_price);

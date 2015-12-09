@@ -352,7 +352,7 @@ function showCoordinateDetail(coordinate_id) {
     $("body").append('<div id="modal_overlay"></div>' +
         '<div id="modal_window"></div>');
 
-    $("#modal_window").load(COORDINATE_VIEW_ROOT + "/" + coordinate_id + " #coordinateDetail", function() {
+    $("#modal_window").load(COORDINATE_VIEW_ROOT + "/" + coordinate_id + " #coordinateDetail", {caller: 'modal'}, function() {
         $(document).ready(function() {
             $("#modal_window").css("margin-bottom", OFFSET_BOTTOM + "px");
 
