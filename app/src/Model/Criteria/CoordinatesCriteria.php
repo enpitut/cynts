@@ -135,15 +135,15 @@ class CoordinatesCriteria {
     }
 
     /**
-     * 季節の情報は春夏秋冬を4bitのビット列で保持する
-     * ビットが立っていれば 1，そうでなければ_(任意の一文字)を正規表現に加える
+     * coordinates.season は 4bit の bit 列を string 型で保存している．
+     * MySQL の仕様で，bitwise and 演算子は入力を10進数として，その論理積を取る．
+     * coordinates.season に保存されている値と，この関数で生成する $expression は2進数であるため，
+     * MySQL の CONV 関数で2進数から10進数に変換している．
      *
-     * SQL(夏，秋がチェックされている場合):
-     *   Coordinates.season LIKE :c0
-     *   - :c0 正規表現．例) 春と秋がチェックされている場合は "1_1_%"
+     * また，cake の ORM が bitwise and 演算子をサポートしていないため，クエリをベタ書きしている．
+     * $expression はここで生成された値であるため，ユーザーが任意のクエリを発行できるわけではないが，要注意．
      *
      * @param string $season_criteria 形式は4bitのビット列  例) "1010"
-     *
      * @return \Cake\ORM\Query $criteria_query
      */
     private static function _createQueryMatchSeasonCriteria($season_criteria)
