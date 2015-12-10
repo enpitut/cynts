@@ -283,7 +283,7 @@ function updateCoordinateImagesByCriteria() {
 
             if (!new_coordinates["hasSucceeded"]) {
                 alert(new_coordinates["errorMessage"]);
-                throw new Error(new_coordinates["errorMessage"]);g d
+                throw new Error(new_coordinates["errorMessage"]);
             }
 
             // 現在のコーデを切り替える
