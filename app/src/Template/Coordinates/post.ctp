@@ -29,7 +29,7 @@
             <td>
                 <?= $this->Form->select(
                     'sex',
-                    $sex_list,
+                    array_merge(['default' => '未選択'], $sex_list),
                     ["id" => "sex"]
                 ) ?>
             </td>
@@ -164,6 +164,17 @@
         }
 
         function screenshot(selector) {
+
+            // 季節，性別が選択されていなければ投稿させない
+            console.log(document.getElementById('sex').value);
+            if(
+                getSeasonJson() === "0000" ||
+                document.getElementById('sex').value === "default"
+            ) {
+                alert("季節と性別を選択してください");
+                return;
+            }
+
             var dfd = $.Deferred();
 
             var element = $(selector)[0];
