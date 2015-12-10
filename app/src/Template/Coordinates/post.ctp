@@ -3,6 +3,7 @@
 <head>
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('coordinates/create.css') ?>
+    <?= $this->Html->css('coordinates/post.css') ?>
     <?= $this->Html->css('http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/ui-lightness/jquery-ui.css') ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"
@@ -19,47 +20,48 @@
 
     <table id="sizechanger" style="width: 430px; position: relative; float: right;">
         <tr>
-            <td>アイテムの大きさを変更 (%)</td>
+            <td class='postTd'>アイテムの大きさを変更 (%)</td>
         </tr>
     </table>
+    <hr class="postHr">
 
-    <table style="width: 430px; position: relative; float: right;">
+    <table class='postTable'>
         <tr>
-            <td>性別</td>
-            <td>
+            <td class='postTd'>対象性別</td>
+            <td class='postTd'>
                 <?= $this->Form->select(
                     'sex',
-                    $sex_list,
+                    array_merge(['default' => '未選択'], $sex_list),
                     ["id" => "sex"]
                 ) ?>
             </td>
         </tr>
         <tr>
-            <td>季節</td>
-            <td>
+            <td class='postTd'>対象季節</td>
+            <td class='postTd'>
                 <?php
-                echo "春" . $this->Form->checkbox('spring', [
+                echo $this->Form->checkbox('spring', [
                         'hiddenField' => false,
                         'value' => 'spring',
-                    ]);
-                echo "夏" . $this->Form->checkbox('summer', [
+                    ]) . '春<br>';
+                echo $this->Form->checkbox('summer', [
                         'hiddenField' => false,
                         'value' => 'summer',
-                    ]);
-                echo "秋" . $this->Form->checkbox('autumn', [
+                    ]) . '夏<br>';
+                echo $this->Form->checkbox('autumn', [
                         'hiddenField' => false,
                         'value' => 'autumn',
-                    ]);
-                echo "冬" . $this->Form->checkbox('winter', [
+                    ]) . '秋<br>';
+                echo $this->Form->checkbox('winter', [
                         'hiddenField' => false,
                         'value' => 'winter',
-                    ]);
+                    ]) . '冬<br>';
                 ?>
             </td>
         </tr>
     </table>
 
-    <button onclick="screenshot('#screen')" , style="position: relative; float: right; margin: 30px;">投稿</button>
+    <button onclick="screenshot('#screen')" class='postButton'>投稿</button>
 
     <div style="clear: both;"></div>
     <br />
@@ -164,6 +166,16 @@
         }
 
         function screenshot(selector) {
+
+            // 季節，性別が選択されていなければ投稿させない
+            if(
+                getSeasonJson() === "0000" ||
+                document.getElementById('sex').value === "default"
+            ) {
+                alert("あなたのコーディネートがどのような時期や人物に適しているか教えていただけますか？\n性別，季節の情報を入力してください\n");
+                return;
+            }
+
             var dfd = $.Deferred();
 
             var element = $(selector)[0];

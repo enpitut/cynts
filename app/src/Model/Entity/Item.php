@@ -30,12 +30,21 @@ class Item extends Entity
     const COLOR_OLIVE = 14;
     const COLOR_OFF_WHITE = 15;
     const COLOR_WINE = 16;
+    const COLOR_DARK_GRAY = 17;
+    const COLOR_LIGHT_BLUE = 18;
+    const COLOR_LIGHT_GRAY = 19;
+    const COLOR_NATURAL = 20;
+    const COLOR_KHAKI = 21;
+    const COLOR_PURPLE = 22;
 
     const CATEGORY_T_SHIRT = 1;
     const CATEGORY_SHIRT = 2;
     const CATEGORY_PANTS = 3;
     const CATEGORY_JACKET = 4;
     const CATEGORY_SHOES = 5;
+    const CATEGORY_SKIRT = 6;
+    const CATEGORY_CARDIGAN = 7;
+    const CATEGORY_SWEATER = 8;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -98,6 +107,9 @@ class Item extends Entity
             Item::CATEGORY_PANTS => 'Pants',
             Item::CATEGORY_JACKET => 'Jacket',
             Item::CATEGORY_SHOES => 'Shoes',
+            Item::CATEGORY_SKIRT => 'Skirt',
+            Item::CATEGORY_CARDIGAN => 'Cardigan',
+            Item::CATEGORY_SWEATER => 'Sweater',
         ];
     }
 
@@ -123,6 +135,12 @@ class Item extends Entity
             Item::COLOR_OLIVE => 'OLIVE',
             Item::COLOR_OFF_WHITE => 'OFF_WHITE',
             Item::COLOR_WINE => 'WINE',
+            Item::COLOR_DARK_GRAY => 'DARK_GRAY',
+            Item::COLOR_LIGHT_BLUE => 'LIGHT_BLUE',
+            Item::COLOR_LIGHT_GRAY => 'LIGHT_GRAY',
+            Item::COLOR_NATURAL => 'NATURAL',
+            Item::COLOR_KHAKI  => 'KHAKI',
+            Item::COLOR_PURPLE  => 'PURPLE',
         ];
     }
 }

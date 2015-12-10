@@ -48,7 +48,7 @@ class RankingsController extends AppController
         //2回目以上の訪問かをチェックし， SESSION 情報を更新する
         $this->updateHasVisitedFlag();
 
-        $ranking_array = $this->_getRanking($type);
+        $ranking_array = $this->_getRanking($type)->toArray();
 
         $this->set('type', is_null($type) ? self::RANKING_TYPE_LIKE : $type);
         $this->set('sex_list', Item::getSexes());
@@ -61,8 +61,8 @@ class RankingsController extends AppController
         if ($this->request->is('post')) {
             $type = $this->request->data('type');
             if (
-                $type !== self::RANKING_TYPE_LIKE &&
-                $type !== self::RANKING_TYPE_UNLIKE
+                $type !== self::RANKING_TYPE_LIKE
+                && $type !== self::RANKING_TYPE_UNLIKE
             ) {
                 error_log('Received illegal ranking type.');
                 echo sprintf(
@@ -81,7 +81,7 @@ class RankingsController extends AppController
             $coordinates_array = [];
             $rank = 0;
             foreach ($coordinates as $coordinate) {
-                $coordinates_array[(String)$rank++] = [
+                $coordinates_array["coordinates"][(String)$rank++] = [
                     "id" => $coordinate->id,
                     "total_price" => $coordinate->price,
                     "photo_path" => $coordinate->photo_path,
@@ -102,6 +102,12 @@ class RankingsController extends AppController
         }
     }
 
+    /**
+     * @param string $type
+     * @param string $criteria_json_string
+     *
+     * @return \Cake\ORM\Query $query
+     */
     private function _getRanking($type, $criteria_json_string="{}")
     {
         switch ($type) {
@@ -110,7 +116,7 @@ class RankingsController extends AppController
                 $criteria_json_string,
                 [
                     'order' => ['Coordinates.n_unlike' => 'DESC'],
-                    'contain' => ['Users', 'Items', 'Favorites'],
+                    'contain' => ['Users'],
                     'limit' => self::RANKING_SHOW_LIMIT,
                 ]
             )->cache(
@@ -124,7 +130,7 @@ class RankingsController extends AppController
                 $criteria_json_string,
                 [
                     'order' => ['Coordinates.n_like' => 'DESC'],
-                    'contain' => ['Users', 'Items', 'Favorites'],
+                    'contain' => ['Users'],
                     'limit' => self::RANKING_SHOW_LIMIT,
                 ]
             )->cache(

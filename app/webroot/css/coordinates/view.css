@@ -38,12 +38,12 @@ button.favoriteButton {
 }
 
 button.favoriteButton:active {
-    background-color: darkorange;
+    background-color: #bdc3c7;
+    color: #444;
 }
 
 button.favoriteButton:disabled {
-    background-color: #bdc3c7;
-    color: #444;
+    background-color: darkorange;
     cursor: default;
 }
 
@@ -106,9 +106,9 @@ button.favoriteButton:disabled {
     display: none;
 }
 
-.sizeButtons label.selected {
-    background-color: darkorange;
-    color: #fff;
+.sizeButtons label {
+    background-color: #bdc3c7;
+    color: #444;
 }
 
 .priceBox {
@@ -150,8 +150,8 @@ button.favoriteButton:disabled {
 .deleteButton {
     font-size: 14px;
     padding: 5px 10px 5px 10px;
-    background-color: orangered;
-    color: #fff;
+    background-color: #bdc3c7;
+    color: #444;
     text-decoration: none;
     border-style: none;
 }
