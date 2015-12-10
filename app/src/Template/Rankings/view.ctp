@@ -14,7 +14,7 @@
     <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            didChangeCoordinatesCriteria();
+            $(".coordinate_image").fadeIn(700);
         });
     </script>
 </head>
@@ -84,9 +84,9 @@
                     </div>
                     <div class="information_bottom">
                         <div class="user">
+                            制作者 :
+                            <span class="user_name">
                             <?php if (isset($coordinate->user->name)) { ?>
-                                制作者 :
-                                <span class="user_name">
                                     <?= $this->Html->link(
                                         $coordinate->user->name,
                                         [
@@ -98,8 +98,10 @@
                                             'id' => 'user_name_' . $rank
                                         ]
                                     ) ?>
-                                </span>
+                            <?php } else { ?>
+                                Anonymous
                             <?php } ?>
+                            </span>
                         </div>
                     </div>
                 </div>
