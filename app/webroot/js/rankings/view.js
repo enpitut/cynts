@@ -165,7 +165,7 @@ function dfdCreateRankingHtmlByTemplate(ranking_info, templates) {
             '/img/' + coordinates[i]["photo_path"]
         );
         // url に unlike が付加されていた場合には，表示ポイントを n_unlike に変更する
-        if (coordinates["type"] === "like") {
+        if (ranking_info["type"] === "like") {
             span = span.replace(
                 /#\{coordinates_score}/g ,
                 parseInt(coordinates[i]["n_like"])
