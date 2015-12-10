@@ -123,7 +123,7 @@ function dfdCreateRankingHtmlByTemplate(ranking_info, templates) {
 
         // 該当するランクのコーデが存在しない場合には何もしない
         if (coordinates[i] === undefined) {
-            if ((i - 3) % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] !== 0) {
+            if ((i - 3) % ranking_info["NUM_COLUMN_UNDER_RANK_4TH"] !== 0) {
                 html += "</div>";
                 html += '<div class="clear"></div>';
             }
@@ -198,17 +198,26 @@ function dfdCreateRankingHtmlByTemplate(ranking_info, templates) {
             span = span.replace(
                 /#\{coordinates_user_information}/g,
                 div_user
-            )
+            );
         } else {
+            var div_user = user_information_template;
+            div_user = div_user.replace(
+                /#\{coordinates_user_view_path}/g ,
+                '#'
+            );
+            div_user = div_user.replace(
+                /#\{coordinates_user_name}/g ,
+                "Anonymous"
+            );
             span = span.replace(
-                /#\{coordinates_user_information}/g ,
-                ""
+                /#\{coordinates_user_information}/g,
+                div_user
             );
         }
 
         html += span;
 
-        if ((i - 2) % coordinates["NUM_COLUMN_UNDER_RANK_4TH"] === 0) {
+        if ((i - 2) % ranking_info["NUM_COLUMN_UNDER_RANK_4TH"] === 0) {
             html += "</div>";
             html += '<div class="clear"></div>';
         }
