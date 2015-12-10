@@ -27,6 +27,7 @@ const OFFSET_BOTTOM = 70;
 function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_id) {
     var like_side_id = side_id.id[5];
     var dislike_side_id = String((Number(side_id.id[5]) + 1) % 2);
+    var this_time_like_coordinate_id = like_coordinate_id;
 
     if (!push_enable) {
         return;
@@ -54,7 +55,7 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
         }).then(function(new_coordinate_data) {
 
             // 前回と同じコーデが選択されたかどうか
-            if (like_coordinate_id == previous_like_coordinate_id) {
+            if (this_time_like_coordinate_id == previous_like_coordinate_id) {
                 if (++n_continuously_like >= NUM_FOR_FAV) {
 
                     n_continuously_like = 1;
@@ -82,11 +83,11 @@ function updateCoordinateImage(side_id, like_coordinate_id, dislike_coordinate_i
                 addFinishButton();
 
             }
+
+            previous_like_coordinate_id = this_time_like_coordinate_id;
         }).fail(function(e) {
             alert(e);
         });
-
-        previous_like_coordinate_id = like_coordinate_id;
 
     } catch (exception) {
         alert(exception);
