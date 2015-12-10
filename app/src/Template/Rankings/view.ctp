@@ -59,26 +59,30 @@
                     ) ?>
                 </div>
                 <div class="information">
-                    <div class="information_left">
-                        <div class="point">
-                            <span class="point_number" id="point_<?= $rank ?>">
-                                <?php
-                                if ($type
-                                    === \App\Controller\RankingsController::RANKING_TYPE_LIKE
-                                ) {
-                                    echo $coordinate->n_like;
-                                } else {
-                                    echo $coordinate->n_unlike;
-                                }
-                                ?>
-                            </span> points
+                    <div class="information_up">
+                        <div class="information_left">
+                            <div class="point">
+                                <span class="point_number" id="point_<?= $rank ?>">
+                                    <?php
+                                    if ($type
+                                        === \App\Controller\RankingsController::RANKING_TYPE_LIKE
+                                    ) {
+                                        echo $coordinate->n_like;
+                                    } else {
+                                        echo $coordinate->n_unlike;
+                                    }
+                                    ?>
+                                </span> points
+                            </div>
                         </div>
-                        <div class="total_price">
-                            ¥<span class="price_number"
-                                   id="price_<?= $rank ?>"><?= $coordinate->price ?></span>
+                        <div class="information_right">
+                            <div class="total_price">
+                                ¥<span class="price_number"
+                                       id="price_<?= $rank ?>"><?= $coordinate->price ?></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="information_right">
+                    <div class="information_bottom">
                         <div class="user">
                             <?php if (isset($coordinate->user->name)) { ?>
                                 制作者 :

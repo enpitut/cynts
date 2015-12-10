@@ -50,24 +50,38 @@ body {
     font-size: 12px;
     padding: 0 4px;
     color: darkgray;
+ }
+
+.information_up {
+    width: 100%;
+    height: 20px;
+    position: relative;
 }
 
 .information_left {
     float: left;
     text-align: left;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 .information_right {
     float: right;
     text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
-.information .point {
-    float: left;
+.information_bottom {
+    float: right;
+    text-align: right;
+    width: 100%;
 }
 
 .information .point .point_number {
-    font-size: 14px;
+    font-size: 18px;
     color: darkorange;
 }
 

@@ -45,17 +45,6 @@
             <?= $this->Form->submit('ログイン') ?>
             <?= $this->Form->end() ?>
 
-            <div class="passwordRequestLink">
-                <?=
-                $this->Html->link(
-                    'パスワードを忘れた',
-                    array(
-                        'controller' => 'users',
-                        'action' => '#',
-                    )
-                );
-                ?>
-            </div>
             <div class="signupLink">
                 <?=
                 $this->Html->link(

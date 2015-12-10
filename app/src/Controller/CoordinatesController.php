@@ -14,7 +14,7 @@ use Cake\Event\Event;
  */
 class CoordinatesController extends AppController
 {
-    const N_ITEM_LIST_SHOW = 100;
+    const N_ITEM_LIST_SHOW = 500;
     const SESSION_KEY = 'items';
     const BUTTON_SIZE = 34;
     const BUTTON_NUMBER_IN_ROW = 4;
