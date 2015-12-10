@@ -18,8 +18,8 @@
     <?php
     echo "<p><span class='result_score'>" . floor((100 * $score) / ($max_n_battle * $score_win)) . "</span><span class='max_score'> / 100</span></p>";
     ?>
-    <?= "<p>おしゃれレベル : <span class='level'>$current_level</span></p>" ?>
-    <?= "<p class='info'>次のレベルまで $point_to_next_level pt</p>" ?>
+    <?= "<p>現在のおしゃれレベル : <span class='level'>$current_level</span></p>" ?>
+    <?= "<p class='info'>（次のレベルまで $point_to_next_level pt）</p>" ?>
     <?php if ($previous_level !== $current_level): ?>
         <p class='info'>おしゃれレベルが上がりました!</p>
     <?php endif ?>

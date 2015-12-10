@@ -1,0 +1,29 @@
+.postTable {
+    width: 430px;
+    position: relative;
+    float: right;
+}
+
+.postTd {
+    padding: 15px 0;
+}
+
+.postHr {
+    color: darkgray;
+    width: 430px;
+    position: relative;
+    float: right;
+}
+
+button.postButton {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px 10px;
+    background-color: darkorange;
+    color: #fff;
+    border-style: none;
+    position: relative;
+    float: right;
+    margin: 30px;
+}
+
