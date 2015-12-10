@@ -346,5 +346,9 @@ return [
      */
     'Session' => [
         'defaults' => 'php',
+        'timeout' => 1800,
+        'ini' => [
+            'session.cookie_lifetime' => 1800,
+        ],
     ],
 ];
