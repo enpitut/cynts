@@ -25,7 +25,7 @@
 
     <table style="width: 430px; position: relative; float: right;">
         <tr>
-            <td>性別</td>
+            <td>対象性別</td>
             <td>
                 <?= $this->Form->select(
                     'sex',
@@ -35,7 +35,7 @@
             </td>
         </tr>
         <tr>
-            <td>季節</td>
+            <td>対象季節</td>
             <td>
                 <?php
                 echo "春" . $this->Form->checkbox('spring', [
@@ -166,12 +166,11 @@
         function screenshot(selector) {
 
             // 季節，性別が選択されていなければ投稿させない
-            console.log(document.getElementById('sex').value);
             if(
                 getSeasonJson() === "0000" ||
                 document.getElementById('sex').value === "default"
             ) {
-                alert("季節と性別を選択してください");
+                alert("あなたのコーディネートがどのような時期や人物に適しているか教えていただけますか？\n性別，季節の情報を入力してください\n");
                 return;
             }
 
