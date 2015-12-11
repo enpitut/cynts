@@ -202,8 +202,12 @@ function dfdCreateRankingHtmlByTemplate(ranking_info, templates) {
         } else {
             var div_user = user_information_template;
             div_user = div_user.replace(
-                /#\{coordinates_user_view_path}/g ,
-                '#'
+                /<a href="#\{coordinates_user_view_path}">/g ,
+                ''
+            );
+            div_user = div_user.replace(
+                /<\/a>/g ,
+                ''
             );
             div_user = div_user.replace(
                 /#\{coordinates_user_name}/g ,
