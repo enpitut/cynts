@@ -21,14 +21,15 @@
         <?php
             echo $this->Form->input('name');
             echo $this->Form->input('shop_id', ['options' => $shops, 'empty' => true]);
-            echo $this->Form->input('color');
+            echo $this->Form->input('color', ['options' => $color_list, 'empty' => false]);
             echo $this->Form->input('sizes');
-            echo $this->Form->input('category');
+            echo $this->Form->input('category', ['options' => $category_list, 'empty' => false]);
             echo $this->Form->input('price');
             echo $this->Form->input('photos');
             echo $this->Form->input('description');
-            echo $this->Form->input('sex');
+            echo $this->Form->input('sex', ['options' => $sex_list, 'empty' => false]);
             echo $this->Form->input('status');
+            echo $this->Form->input('purchase_url');
             echo $this->Form->input('created_at');
             echo $this->Form->input('updated_at');
             echo $this->Form->input('coordinates._ids', ['options' => $coordinates]);

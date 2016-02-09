@@ -1,15 +1,14 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\CoordinatesController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Controller\CoordinatesController Test Case
+ * Class CoordinatesControllerTest
+ * @package App\Test\TestCase\Controller
  */
 class CoordinatesControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures
      *
@@ -24,52 +23,32 @@ class CoordinatesControllerTest extends IntegrationTestCase
         'app.coordinates_items'
     ];
 
-    /**
-     * Test index method
-     *
-     * @return void
-     */
-    public function testIndex()
+    public function setUp()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        parent::setUp();
     }
 
     /**
-     * Test view method
-     *
      * @return void
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/coordinates/view/1');
+        $this->assertResponseOk();
     }
 
     /**
-     * Test add method
-     *
      * @return void
      */
-    public function testAdd()
+    public function testCreate()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
-     * Test edit method
-     *
      * @return void
      */
-    public function testEdit()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test delete method
-     *
-     * @return void
-     */
-    public function testDelete()
+    public function testPostFavorite()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

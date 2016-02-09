@@ -1,0 +1,1 @@
+<?php /* @see RankingsController.php */

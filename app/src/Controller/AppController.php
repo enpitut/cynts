@@ -26,6 +26,29 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    /**
+     * @var array
+     * @see \Cake\Controller\Component\AuthComponent::$components
+     */
+    public $components = [
+        'Auth' => [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'mail',
+                        'password' => 'password',
+                    ],
+                ],
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Pages',
+                'action' => 'home'
+            ],
+            'authError' => 'ログインしてください'
+        ],
+    ];
+
+    const SESSION_KEY_PREFIX_HAS_VISITED = 'Visited.';
 
     /**
      * Initialization hook method.
@@ -38,6 +61,26 @@ class AppController extends Controller
     {
         parent::initialize();
         $this->loadComponent('Flash');
-        $this->autoLayout = false;
+        $this->viewBuilder()->autoLayout(false);
+    }
+
+    public function updateHasVisitedFlag()
+    {
+        $session = $this->request->session();
+        $controller = is_null($this->name) ? "pages": $this->name;
+        $action = is_null($this->request->action) ? "home" : $this->request->action;
+        $key = Self::SESSION_KEY_PREFIX_HAS_VISITED
+            . strtolower($controller) . "_" . strtolower($action);
+
+        if (!($session->check($key))) {
+            $session->write($key, False);
+        } else {
+            $session->write($key, True);
+        }
+    }
+
+    public function isAuthorized($user = null)
+    {
+        return true;
     }
 }

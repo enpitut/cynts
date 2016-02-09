@@ -1,0 +1,285 @@
+div#centermessage p {
+    margin: 10px 0 0 0;
+    padding: 0;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#battlecolumn {
+    position: relative;
+    min-width: 720px;
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+    color: white;
+}
+
+div#battlecolumn ul {
+    padding: 0;
+    font-size: 0;
+    text-align: center;
+    overflow:hidden;
+}
+
+div#battlecolumn li {
+    display: inline-block;
+    overflow: hidden;
+}
+
+div.photo {
+    height: 540px; /* コーデの height + タグの height */
+    position: relative;
+}
+
+div.photo img {
+    height: 510px;
+    width: 340px;
+}
+
+img.battlephoto {
+    position: relative;
+    opacity:0.75;
+    filter:alpha(opacity=75);
+    -ms-filter: "alpha( opacity=75 )";
+    -moz-opacity:0.75;
+    z-index: 1;
+    margin: -2px 0 0 0;
+}
+
+img:hover.battlephoto {
+    opacity:1.0;
+    filter:alpha(opacity=100);
+    -ms-filter: "alpha( opacity=100 )";
+    -moz-opacity:1.0;
+}
+
+img.fadephoto {
+    display: block;
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    margin: 0 auto;
+    opacity:0.75;
+    filter:alpha(opacity=75);
+    -ms-filter: "alpha( opacity=75 )";
+    -moz-opacity:0.75;
+    padding: 0;
+    opacity: 0;
+    z-index: 0;
+}
+
+img#photo0, img#fadephoto0 {
+    padding-right: 20px;
+}
+
+img#photo1, img#fadephoto1 {
+    padding-left: 20px;
+}
+
+div.phototags img {
+    position: relative;
+    float: right;
+    top: 30px; /* phototag の height */
+    width: 80px;
+    height: 30px;
+    margin: 0px 2px 0 0;
+    z-index: 2;
+}
+
+img#phototag0 {
+    right: 20px; /* photo0 の padding-right */
+}
+
+.detail_button {
+    margin: 0 auto;
+    display: inline-block;
+    font-size: 14px;
+    padding: 5px 10px 5px 10px;
+    background-color: #e40;
+    color: #fff;
+    border-style: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal_window {
+    background-color: #212121;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 10px 25px 10px 25px;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    display: none;
+    z-index: 4;
+}
+
+#modal_overlay {
+    z-index:3;
+    display:none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5);
+}
+
+#window_header {
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+#window_title {
+    color: darkorange;
+    font-size: 24px;
+    display: inline-block;
+}
+
+#close_button {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    position: relative;
+    float: right;
+}
+
+select {
+    width: 100px;
+    height: 33px;
+    text-align: -webkit-center;
+    background: #eaeaea url('../../img/view/select_arrow.jpg') no-repeat right;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    border: 0;
+    margin: 0;
+    padding: 0 33px 0 0;
+    vertical-align: middle;
+    font-size: inherit;
+    color: #000;
+    box-sizing: content-box;
+}
+
+.select_box {
+    text-align: center;
+    padding: 30px;
+}
+
+.play_btn {
+    font-size: large;
+    text-align: center;
+    background: #EEE;
+    border: 3px solid #DDD;
+    color: #111;
+    width: 80px;
+    padding: 5px 0;
+    margin: 20px;
+}
+
+#centerposition {
+    text-align: center;
+}
+
+.result_score {
+    font-size: xx-large;
+    color: orange;
+    padding: 0;
+    margin: 0;
+}
+
+.level {
+    font-size: x-large;
+    color: cornflowerblue;
+}
+
+.info {
+    font-size: smaller;
+}
+
+.max_score {
+    font-size: small;
+    padding: 0;
+    margin: 0;
+}
+
+.battle_result {
+    margin: 50px 0 0 0;
+    padding: 0;
+    text-align: center;
+    font-size: 0;
+}
+
+.battle_result > li {
+    margin: 0 10px 30px 10px;
+    background-color: #222222;
+    display: inline-block;
+    font-size: large;
+    width: 206px;
+    cursor: pointer;
+}
+
+p.each_actual_point {
+    margin: 5px;
+    vertical-align: middle;
+}
+
+p.win_coordinate_string {
+    color: #cd2c24;
+}
+
+p.loose_coordinate_string {
+    color: #005580;
+}
+
+p.draw_coordinate_string {
+    color: yellow;
+}
+
+img.result_coordinate_photo {
+    width: 200px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: transparent;
+}
+
+img.selected_coordinate_photo {
+    width: 200px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: red;
+}
+
+#finish_button {
+    width: 150px;
+    height: auto;
+    margin: 0 auto;
+}
+
+#finish_button button {
+    float: left;
+    cursor: pointer;
+    width: 150px;
+    margin: 0 auto;
+    padding: 5px;
+    border: 1px solid #611411;
+    background: #b71930;
+    color: #e3e3e3;
+    font-size: 20px;
+    text-align: center;
+    line-height: 1;
+    transition: .2s;
+}

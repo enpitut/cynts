@@ -1,21 +1,46 @@
 <header>
+    <?= $this->Html->css('header.css') ?>
+    <?= $this->Html->css('help.css') ?>
     <div id="header">
         <ul>
             <li>
-                <a href="/coordinates/battle">
-                    Play
-                </a>
+                <?=
+                $this->Html->link(
+                    'Play',
+                    array(
+                        'controller' => 'CoordinatesBattle',
+                        'action' => 'battle',
+                    )
+                );
+                ?>
             </li>
             <li>
-                <a href="/rankings/view">
-                    Ranking
-                </a>
+                <?=
+                $this->Html->link(
+                    'Ranking',
+                    array(
+                        'controller' => 'Rankings',
+                        'action' => 'view',
+                    )
+                );
+                ?>
             </li>
             <li>
-                <a href="#">
-                    Post
-                </a>
+                <?=
+                $this->Html->link(
+                    'Post',
+                    array(
+                        'controller' => 'Coordinates',
+                        'action' => 'create',
+                    )
+                );
+                ?>
             </li>
         </ul>
     </div>
+    <?php
+    if (!in_array($this->request->here, ['/users/signup'])) {
+        echo $this->element('login');
+    }
+    ?>
 </header>

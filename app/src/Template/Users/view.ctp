@@ -1,116 +1,89 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Coordinates'), ['controller' => 'Coordinates', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Coordinate'), ['controller' => 'Coordinates', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Favorites'), ['controller' => 'Favorites', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Favorite'), ['controller' => 'Favorites', 'action' => 'add']) ?> </li>
-    </ul>
-</div>
-<div class="users view large-10 medium-9 columns">
-    <h2><?= h($user->name) ?></h2>
-    <div class="row">
-        <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Name') ?></h6>
-            <p><?= h($user->name) ?></p>
-            <h6 class="subheader"><?= __('Mail') ?></h6>
-            <p><?= h($user->mail) ?></p>
-            <h6 class="subheader"><?= __('Password') ?></h6>
-            <p><?= h($user->password) ?></p>
-        </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($user->id) ?></p>
-        </div>
-        <div class="large-2 columns dates end">
-            <h6 class="subheader"><?= __('Created At') ?></h6>
-            <p><?= h($user->created_at) ?></p>
-            <h6 class="subheader"><?= __('Updated At') ?></h6>
-            <p><?= h($user->updated_at) ?></p>
+<!DOCTYPE html>
+<html>
+<head>
+    <?= $this->Html->css('base.css') ?>
+    <?= $this->Html->css('users/base.css') ?>
+    <?= $this->Html->css('users/view.css') ?>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+
+<?= $this->element('eachpage_header') ?>
+
+<div id="body">
+    <div id="side_contents">
+        <div class="side_contents">
+            <h3><?= $this->Html->tableCells(
+                    [
+                        [$user->name]
+                    ]
+                ); ?>
+            </h3>
+            <div class="coordinate_level">
+                おしゃれレベル : <?= $user->getCoordinateLevel() ?>
+            </div>
         </div>
     </div>
-</div>
-<div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Coordinates') ?></h4>
-    <?php if (!empty($user->coordinates)): ?>
-    <table cellpadding="0" cellspacing="0">
-        <tr>
-            <th><?= __('Id') ?></th>
-            <th><?= __('User Id') ?></th>
-            <th><?= __('Photo') ?></th>
-            <th><?= __('N Like') ?></th>
-            <th><?= __('N Unlike') ?></th>
-            <th><?= __('Status') ?></th>
-            <th><?= __('Created At') ?></th>
-            <th><?= __('Updated At') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
-        </tr>
-        <?php foreach ($user->coordinates as $coordinates): ?>
-        <tr>
-            <td><?= h($coordinates->id) ?></td>
-            <td><?= h($coordinates->user_id) ?></td>
-            <td><?= h($coordinates->photo) ?></td>
-            <td><?= h($coordinates->n_like) ?></td>
-            <td><?= h($coordinates->n_unlike) ?></td>
-            <td><?= h($coordinates->status) ?></td>
-            <td><?= h($coordinates->created_at) ?></td>
-            <td><?= h($coordinates->updated_at) ?></td>
+    <div id="main_contents">
+        <?php if ($mode === 'coordinates'): ?>
+            <span class="mode_tab">コーディネート</span>
+            <span class="mode_tab clickable">
+                <?=
+                $this->Html->link(
+                    'お気に入り',
+                    [
+                        'controller' => 'Users',
+                        'action' => 'view',
+                        $user->id,
+                        'favorites'
+                    ]
+                );
+                ?>
+            </span>
+        <?php elseif ($mode === 'favorites'): ?>
+            <span class="mode_tab clickable">
+                <?=
+                $this->Html->link(
+                    'コーディネート',
+                    [
+                        'controller' => 'Users',
+                        'action' => 'view',
+                        $user->id,
+                        'coordinates'
+                    ]
+                );
+                ?>
+            </span>
+            <span class="mode_tab">お気に入り</span>
+        <?php endif ?>
 
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Coordinates', 'action' => 'view', $coordinates->id]) ?>
+        <hr>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Coordinates', 'action' => 'edit', $coordinates->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Coordinates', 'action' => 'delete', $coordinates->id], ['confirm' => __('Are you sure you want to delete # {0}?', $coordinates->id)]) ?>
-
-            </td>
-        </tr>
-
-        <?php endforeach; ?>
-    </table>
-    <?php endif; ?>
+        <?php if (!empty($coordinates)): ?>
+            <?= $this->element('coordinate_list', ['coordinates' => $coordinates]); ?>
+        <?php else: ?>
+            <?php if ($mode === 'coordinates'): ?>
+                <?php if ($is_self_page): ?>
+                    <?=
+                    $this->Html->link(
+                        'Post',
+                        [
+                            'controller' => 'Coordinates',
+                            'action' => 'create',
+                        ],
+                        ['class' => 'link']
+                    );
+                    ?> からコーディネートを作ってみてください！
+                <?php else: ?>
+                    投稿がありません
+                <?php endif; ?>
+            <?php elseif ($mode === 'favorites'): ?>
+                お気に入りコーディネートがありません
+            <?php endif ?>
+        <?php endif; ?>
     </div>
 </div>
-<div class="related row">
-    <div class="column large-12">
-    <h4 class="subheader"><?= __('Related Favorites') ?></h4>
-    <?php if (!empty($user->favorites)): ?>
-    <table cellpadding="0" cellspacing="0">
-        <tr>
-            <th><?= __('Id') ?></th>
-            <th><?= __('User Id') ?></th>
-            <th><?= __('Coordinate Id') ?></th>
-            <th><?= __('Status') ?></th>
-            <th><?= __('Created At') ?></th>
-            <th><?= __('Updated At') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
-        </tr>
-        <?php foreach ($user->favorites as $favorites): ?>
-        <tr>
-            <td><?= h($favorites->id) ?></td>
-            <td><?= h($favorites->user_id) ?></td>
-            <td><?= h($favorites->coordinate_id) ?></td>
-            <td><?= h($favorites->status) ?></td>
-            <td><?= h($favorites->created_at) ?></td>
-            <td><?= h($favorites->updated_at) ?></td>
 
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'Favorites', 'action' => 'view', $favorites->id]) ?>
-
-                <?= $this->Html->link(__('Edit'), ['controller' => 'Favorites', 'action' => 'edit', $favorites->id]) ?>
-
-                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Favorites', 'action' => 'delete', $favorites->id], ['confirm' => __('Are you sure you want to delete # {0}?', $favorites->id)]) ?>
-
-            </td>
-        </tr>
-
-        <?php endforeach; ?>
-    </table>
-    <?php endif; ?>
-    </div>
-</div>
+<?= $this->element('footer') ?>
+</body>
+</html>

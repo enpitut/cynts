@@ -17,6 +17,13 @@ use Cake\Validation\Validator;
 class CoordinatesTable extends Table
 {
 
+    const COORDINATES_CACHE_PREFIX = 'filtered_coordinates_';
+    const COORDINATES_UNLIKE_RANKING_CACHE_PREFIX
+        = self::COORDINATES_CACHE_PREFIX . '_unlike_ranking_';
+    const COORDINATES_LIKE_RANKING_CACHE_PREFIX
+        = self::COORDINATES_CACHE_PREFIX . '_like_ranking_';
+
+
     /**
      * Initialize method
      *
@@ -80,6 +87,14 @@ class CoordinatesTable extends Table
         $validator
             ->requirePresence('updated_at', 'create')
             ->notEmpty('updated_at');
+
+        $validator
+            ->add('sex', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('sex');
+
+        $validator
+            ->add('season', 'valid', ['rule' => 'binary'])
+            ->allowEmpty('season');
 
         return $validator;
     }

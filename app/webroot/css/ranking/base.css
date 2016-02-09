@@ -17,32 +17,81 @@ body {
     float: left;
 }
 
+.span5 {
+    width: 280px;
+    margin: 0 10px;
+    float: left;
+    zoom: 0.6;
+}
+
 .rank {
     font-size: 24px;
     margin: 4px 0;
 }
 
+.rank .rank_1st {
+    color: gold;
+}
+
+.rank .rank_2nd {
+    color: silver;
+}
+
+.rank .rank_3rd {
+    color: sandybrown;
+}
+
 .photo img {
     width: 280px;
+    display: none;
 }
 
 .information {
     font-size: 12px;
     padding: 0 4px;
+    color: darkgray;
+ }
+
+.information_up {
+    width: 100%;
+    height: 20px;
+    position: relative;
 }
 
-.information .point {
+.information_left {
     float: left;
-    color: darkgray;
+    text-align: left;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.information_right {
+    float: right;
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.information_bottom {
+    float: right;
+    text-align: right;
+    width: 100%;
 }
 
 .information .point .point_number {
-    font-size: 14px;
+    font-size: 18px;
     color: darkorange;
 }
 
+.information .price_number {
+    margin: 0 0 0 3px;
+    font-size: 14px;
+    color: lightgray;
+}
+
 .information .user {
-    color: darkgray;
     float: right;
 }
 

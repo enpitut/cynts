@@ -1,41 +1,57 @@
 <?php
 namespace App\Controller;
 
-use App\Model\Entity\User;
+use Cake\Event\Event;
 
 /**
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends PostsController
+class UsersController extends AppController
 {
+    const MODE_COORDINATES = 'coordinates';
+    const MODE_FAVORITES = 'favorites';
 
-    /**
-     * Index method
-     *
-     * @return void
-     */
-    public function index()
+    public function beforeFilter(Event $event)
     {
-        $this->set('users', $this->paginate($this->Users));
-        $this->set('_serialize', ['users']);
+        parent::beforeFilter($event);
+        $this->Auth->allow(
+            ['signup', 'logout']
+        );
     }
 
     /**
-     * View method
-     *
-     * @param string|null $id User id.
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @param string|null $user_id
+     * @param string|null $mode 'coordinates' or 'favorites'
      */
-    public function view($id = null)
+    public function view($user_id = null, $mode = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Coordinates', 'Favorites']
-        ]);
+        if ((int)$this->Auth->user('id') === (int)$user_id) {
+            $this->set('is_self_page', true);
+        } else {
+            $this->set('is_self_page', false);
+        }
+
+        switch ($mode) {
+            case self::MODE_FAVORITES:
+                $user = $this->Users->get($user_id, ['contain' => ['Favorites.Coordinates']]);
+                $favorites = $user->favorites;
+                $coordinates = [];
+                foreach ($favorites as $_val) {
+                    $coordinates[] = $_val->coordinate;
+                }
+                break;
+            case self::MODE_COORDINATES:
+            default:
+                $user = $this->Users->get($user_id, ['contain' => ['Coordinates']]);
+                $coordinates = $user->coordinates;
+                $mode = self::MODE_COORDINATES;
+        }
+
         $this->set('user', $user);
-        $this->set('_serialize', ['user']);
+        $this->set('mode', $mode);
+        $this->set('coordinates', $coordinates);
     }
 
     /**
@@ -43,72 +59,18 @@ class UsersController extends PostsController
      *
      * @return \Cake\Network\Response|void
      */
-    public function add()
+    public function signup()
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            $user->set('password', User::hashPassword($user->get('password')));
             $user->set('created_at', time());
             $user->set('updated_at', time());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                return $this->redirect(['action' => 'login']);
             }
         }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Network\Response|void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
-            }
-        }
-        $this->set(compact('user'));
-        $this->set('_serialize', ['user']);
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Network\Response|void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
-        }
-        return $this->redirect(['action' => 'index']);
-    }
-
-    public function signup()
-    {
-        $this->add();
+        $this->set('user', $user);
     }
 
     public function login()
@@ -119,29 +81,19 @@ class UsersController extends PostsController
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error('Your username or password is incorrect');
+            $this->Flash->error(
+                __('メールアドレスかパスワードが間違っています'),
+                'default',
+                [],
+                'auth'
+            );
+            $this->request->data['mail'] = '';
+            $this->request->data['password'] = '';
         }
     }
 
     public function logout()
     {
-        $this->Flash->success('You are now logged out.');
         return $this->redirect($this->Auth->logout());
-    }
-
-    public function beforeFilter(\cake\Event\Event $event)
-    {
-        parent::beforeFilter($event);
-        $this->Auth->allow(['signup']);
-    }
-
-    public function isAuthorized($user = null)
-    {
-        $action = $this->request->params['action'];
-
-        if (in_array($action, ['index', 'logout'])) {
-            return true;
-        }
-
     }
 }

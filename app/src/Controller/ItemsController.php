@@ -1,7 +1,8 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
+use App\Model\Entity\Item;
+use Cake\Event\Event;
 
 /**
  * Items Controller
@@ -10,6 +11,13 @@ use App\Controller\AppController;
  */
 class ItemsController extends AppController
 {
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(
+            ['view']
+        );
+    }
 
     /**
      * Index method
@@ -23,6 +31,7 @@ class ItemsController extends AppController
         ];
         $this->set('items', $this->paginate($this->Items));
         $this->set('_serialize', ['items']);
+        $this->set('sex_list', self::_getSexesIncludingUnisex());
     }
 
     /**
@@ -39,6 +48,7 @@ class ItemsController extends AppController
         ]);
         $this->set('item', $item);
         $this->set('_serialize', ['item']);
+        $this->set('sex_list', self::_getSexesIncludingUnisex());
     }
 
     /**
@@ -62,6 +72,9 @@ class ItemsController extends AppController
         $coordinates = $this->Items->Coordinates->find('list', ['limit' => 200]);
         $this->set(compact('item', 'shops', 'coordinates'));
         $this->set('_serialize', ['item']);
+        $this->set('sex_list', self::_getSexesIncludingUnisex());
+        $this->set('color_list', self::_getColorsForFormOption());
+        $this->set('category_list', self::_getCategoriesForFormOption());
     }
 
     /**
@@ -89,6 +102,9 @@ class ItemsController extends AppController
         $coordinates = $this->Items->Coordinates->find('list', ['limit' => 200]);
         $this->set(compact('item', 'shops', 'coordinates'));
         $this->set('_serialize', ['item']);
+        $this->set('sex_list', self::_getSexesIncludingUnisex());
+        $this->set('color_list', self::_getColorsForFormOption());
+        $this->set('category_list', self::_getCategoriesForFormOption());
     }
 
     /**
@@ -108,5 +124,43 @@ class ItemsController extends AppController
             $this->Flash->error(__('The item could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * こういうこと書きたくなかった
+     *
+     * @return array
+     */
+    private static function _getSexesIncludingUnisex()
+    {
+        return array_merge(Item::getSexes(), [Item::SEX_UNISEX => 'unisex']);
+    }
+
+    /**
+     * こういうこと書きたくなかった
+     *
+     * @return array
+     */
+    private static function _getCategoriesForFormOption()
+    {
+        $category_list_for_form_option = [];
+        foreach (item::getcategories() as $_val) {
+            $category_list_for_form_option[$_val] = $_val;
+        }
+        return $category_list_for_form_option;
+    }
+
+    /**
+     * こういうこと書きたくなかった
+     *
+     * @return array
+     */
+    private static function _getColorsForFormOption()
+    {
+        $color_list_for_form_option = [];
+        foreach (item::getColors() as $_val) {
+            $color_list_for_form_option[$_val] = $_val;
+        }
+        return $color_list_for_form_option;
     }
 }

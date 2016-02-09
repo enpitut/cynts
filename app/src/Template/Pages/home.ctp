@@ -10,106 +10,129 @@ $cakeDescription = 'Unichronicle もうダサいなんて言わせない';
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<?= $this->Html->charset() ?>
-<title>
-<?= $cakeDescription ?>
-</title>
-<?= $this->Html->css('base.css') ?>  
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <?= $this->Html->charset() ?>
+    <title><?= $cakeDescription ?></title>
+    <?= $this->Html->css('base.css') ?>
 </head>
-
 <body class="home">
-<div id="topcolumn">
-
-<?= $this->element('header') ?>
-
 <script>
-$(function(){
-    $('#fader > :gt(0)').hide();
-    setInterval(function(){
-        $('#fader > :first-child').fadeOut(1000).next().fadeIn(1000).end().appendTo('#fader');}, 5000);
-    });
+    (function ($) {
+        $(function () {
+            $('#centerMenu ul li').hover(function () {
+                $('#fader li:nth-child(' + 1 + ')').stop(true, true).fadeOut("fast");
+                var menuNumber = $('#centerMenu ul li').index(this);
+                var showCaption = menuNumber + 2;
+                $('#fader li:nth-child(' + showCaption + ')').stop(true, true).fadeIn("normal");
+            }, function () {
+                var menuNumber = $('#centerMenu ul li').index(this);
+                var showCaption = menuNumber + 2;
+                $('#fader li:nth-child(' + showCaption + ')').stop(true, true).fadeOut("fast");
+                $('#fader li:nth-child(' + 1 + ')').stop(true, true).fadeIn("normal");
+            })
+        });
+    })(jQuery);
 </script>
-<div id="title">
-<div style="font-size: 64px; margin: 150px 0 25px 0;">Unichronicle</div>
-</div>
-<div id="fader">
-<div>
-<div style="font-size: 32px; margin: 0 0 25px 0;">もうダサいなんて言わせない</div>
-<br />
-<div style="width: 800px;">
-何を着ればいいか分からない問題を解決したい、おしゃれしないけど、ダサいのは嫌な大学生向けの服選びの楽しさを理解させ、小奇麗にするオンラインコーディネートバトルサービスです。
-</div>
-</div>
-<div>
-<div style="width: 800px;">
-ここにコーデバトルの説明文とかが入ります
-</div>
-</div>
-<div>
-<div style="width: 800px;">
-<img src="https://camo.githubusercontent.com/c635a8cf40b8bf8dacd31e2aca4d0f466caef8b2/68747470733a2f2f692e6779617a6f2e636f6d2f66656663363665616434313262316534353637393738346631653566363663342e706e67" />
-</div>
-</div>
-</div>
-
-</div>
-
-<div id="maincolumn">
-<div id="centermenu">
-<ul>
-  <li>
-    <?= $this->Html->image(
-        'view/menu1.png',
-        array(
-            'height' => '160px',
-            'url' => array('controller'=>'coordinates','action'=>'battle')
-        )) ?><br />
-    好きなコーディネートを選ぶ
-  </li>
-  <li>
-    <?= $this->Html->image(
-        'view/menu2.png',
-        array(
-            'height' => '160px',
-            'url' => array('controller'=>'rankings','action'=>'view')
-        )) ?><br />
-    コーディネートランキングを見る
-  </li>
-  <li>
-    <?= $this->Html->image(
-        'view/menu3.png',
-        array(
-            'height' => '160px',
-        )) ?><br />
-    オリジナルコーディネートを投稿する
-  </li>
-</ul>
+<div id="topColumn">
+    <?= $this->element('header') ?>
+    <div id="title">
+        Unichronicle
+    </div>
+    <div id="fader">
+        <li class="homeCaption">
+            <div class="homeCaptionTitle">
+                もうダサいなんて言わせない
+            </div>
+            <div class="homeCaptionDescription">
+                今の自分より少しだけおしゃれに。
+                <br>
+                ゲーム感覚でおしゃれを知ろう。
+            </div>
+            <br>
+        </li>
+        <li class="battleCaption">
+            2択で自分の好きなコーディネートを選ぶだけ。
+            <br>
+            ゲームをしながら色々なコーディネートが見られる。
+        </li>
+        <li class="rankingCaption">
+            初めて来た人はまずコーディネートランキングへ。
+            <br>
+            ランキング1位はみんなが好きなコーディネート。
+            <br>
+            服選びが苦手な人は、ランキング1位のコーディネートをまとめ買い。
+        </li>
+        <li class="postCaption">
+            みんなが好きになるコーディネートを作ってみよう。
+            <br>
+            組み合わせは無限大。
+        </li>
+    </div>
 </div>
 
-<?= $this->element('footer') ?>
+<div id="mainColumn">
+    <div id="centerMenu">
+        <ul>
+            <li>
+                <?= $this->Html->image(
+                    'view/menu1.png', array(
+                        'height' => '160px', 'url' => array(
+                            'controller' => 'CoordinatesBattle',
+                            'action' => 'battle'
+                        )
+                    )
+                ) ?>
+                <br>
+                コーディネートバトルで遊ぶ
+            </li>
+            <li>
+                <?= $this->Html->image(
+                    'view/menu2.png', array(
+                        'height' => '160px', 'url' => array(
+                            'controller' => 'Rankings', 'action' => 'view'
+                        )
+                    )
+                ) ?>
+                <br>
+                コーディネートランキングを見る
+            </li>
+            <li>
+                <?= $this->Html->image(
+                    'view/menu3.png', array(
+                        'height' => '160px', 'url' => array(
+                            'controller' => 'Coordinates', 'action' => 'create'
+                        )
+                    )
+                ) ?>
+                <br>
+                オリジナルコーディネートを投稿する
+            </li>
+        </ul>
+    </div>
 
-<script>
-var fit_topcolumn = function() {
-  var topcolumn = $('#topcolumn');
-  var fader = $('#fader');
-  topcolumn.height(topcolumn.width() / 1440.0 * 564);
-  fader.height(fader.width() * 0.4);
-};
+    <?= $this->element('footer') ?>
 
-var timer = false;
+    <script>
+        var fitTopColumn = function () {
+            var topColumn = $('#topColumn');
+            var fader = $('#fader');
+            topColumn.height(topColumn.width() / 1440.0 * 564);
+            fader.height(fader.width() * 0.4);
+        };
 
-$(window).resize(function() {
-    if (timer !== false) {
-    clearTimeout(timer);
-    }
-    timer = setTimeout(function() {
-        fit_topcolumn();
-        }, 100);
-    });
+        var timer = false;
 
-fit_topcolumn();
-</script>
+        $(window).resize(function () {
+            if (timer !== false) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function () {
+                fitTopColumn();
+            }, 100);
+        });
+
+        fitTopColumn();
+    </script>
 
 </body>
 </html>

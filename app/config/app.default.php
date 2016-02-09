@@ -86,6 +86,13 @@ return [
             'path' => CACHE,
         ],
 
+        'filtered_coordinates' => [
+            'className' => 'File',
+            'duration' => '+30 minutes',
+            'path' => CACHE,
+            'prefix' => 'filtered_coordinates_'
+        ],
+
         /**
          * Configure the cache used for general framework caching. Path information,
          * object listings, and translation cache files are stored with this
@@ -222,6 +229,7 @@ return [
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
+            'log' => true,
 
             /**
              * Set identifier quoting to true if you are using reserved words or
@@ -260,6 +268,23 @@ return [
             'cacheMetadata' => true,
             'quoteIdentifiers' => false,
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+            'log' => true,
+        ],
+        'debug_kit' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Mysql',
+            'persistent' => false,
+            'host' => 'localhost',
+            //'port' => 'nonstandard_port_number',
+            'username' => 'my_app',
+            'password' => 'secret',
+            'database' => 'test_myapp',
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+            'log' => true,
         ],
     ],
 
